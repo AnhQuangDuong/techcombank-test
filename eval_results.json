@@ -1,0 +1,3316 @@
+{
+  "dataset": "sample_questions.json",
+  "total_questions": 10,
+  "evaluated_questions": 9,
+  "aggregated_metrics": {
+    "Recall@1": 0.3333,
+    "nDCG@1": 0.3333,
+    "MAP@1": 0.3333,
+    "Recall@3": 0.4444,
+    "nDCG@3": 0.3445,
+    "MAP@3": 0.3148,
+    "Recall@5": 0.7778,
+    "nDCG@5": 0.4003,
+    "MAP@5": 0.3294,
+    "Recall@10": 0.8889,
+    "nDCG@10": 0.3901,
+    "MAP@10": 0.3177,
+    "Recall@20": 0.8889,
+    "nDCG@20": 0.3856,
+    "MAP@20": 0.3152
+  },
+  "per_query_details": [
+    {
+      "id": "sq-01",
+      "question": "Tính đến năm 2025, Techcombank có bao nhiêu chi nhánh và phòng giao dịch, và hiện diện tại bao nhiêu tỉnh thành?",
+      "category": "company_profile",
+      "answerable": true,
+      "gold_printed_pages": [
+        4
+      ],
+      "gold_answer": "302 chi nhánh và phòng giao dịch, tại 29 trên 34 tỉnh thành trên toàn quốc.",
+      "total_relevant_in_corpus": 2,
+      "first_hit_rank": 5,
+      "metrics": {
+        "recall@1": 0.0,
+        "ndcg@1": 0.0,
+        "ap@1": 0.0,
+        "recall@3": 0.0,
+        "ndcg@3": 0.0,
+        "ap@3": 0.0,
+        "recall@5": 1.0,
+        "ndcg@5": 0.2372,
+        "ap@5": 0.1,
+        "recall@10": 1.0,
+        "ndcg@10": 0.2372,
+        "ap@10": 0.1,
+        "recall@20": 1.0,
+        "ndcg@20": 0.2372,
+        "ap@20": 0.1
+      },
+      "retrieved_top_k": [
+        {
+          "rank": 1,
+          "chunk_id": 46,
+          "score": 0.9909,
+          "semantic_score": 0.754,
+          "lexical_score": 30.22,
+          "logical_page": [
+            27
+          ],
+          "pdf_page": 14,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "CƠ CẤU VÀ TỶ LỆ SỞ HỮU CỦA TECHCOMBANK TẠI CÁC CÔNG TY CON (31/12/2025)",
+          "is_relevant": false,
+          "content_snippet": "### CƠ CẤU VÀ TỶ LỆ SỞ HỮU CỦA TECHCOMBANK TẠI CÁC CÔNG TY CON (31/12/2025) (Tiếp tục)\n\n**Techcombank mang sứ mệnh tiên phong** dẫn dắt quá trình chuyển đổi số của ngành tài chính – ngân hàng Việt Nam"
+        },
+        {
+          "rank": 2,
+          "chunk_id": 114,
+          "score": 0.887,
+          "semantic_score": 0.7567,
+          "lexical_score": 21.8,
+          "logical_page": [
+            60
+          ],
+          "pdf_page": 31,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Năm 2025 ghi dấu bước phát triển mạnh mẽ của Techcombank trong củng cố năng lực nội tại và duy trì vị thế dẫn đầu thị trường.",
+          "is_relevant": false,
+          "content_snippet": "### Năm 2025 ghi dấu bước phát triển mạnh mẽ của Techcombank trong củng cố năng lực nội tại và duy trì vị thế dẫn đầu thị trường.\n\n- **146%**: Tỷ lệ chuyển đổi từ khách hàng tiềm năng sang giao dịch t"
+        },
+        {
+          "rank": 3,
+          "chunk_id": 288,
+          "score": 0.8585,
+          "semantic_score": 0.7299,
+          "lexical_score": 25.2,
+          "logical_page": [
+            165
+          ],
+          "pdf_page": 83,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản",
+          "is_relevant": false,
+          "content_snippet": "### Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản (Tiếp tục)\n\n<table><thead><tr><th>STT</th><th>Số Nghị quyết</th><th>Ngày ban hành</th><th>Nội dung chính</th></tr></thead><tbo"
+        },
+        {
+          "rank": 4,
+          "chunk_id": 289,
+          "score": 0.847,
+          "semantic_score": 0.7326,
+          "lexical_score": 23.78,
+          "logical_page": [
+            166
+          ],
+          "pdf_page": 84,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản",
+          "is_relevant": false,
+          "content_snippet": "### Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản (Tiếp tục)\n\n<table><thead><tr><th>STT</th><th>Số Nghị quyết</th><th>Ngày ban hành</th><th>Nội dung chính</th></tr></thead><tbo"
+        },
+        {
+          "rank": 5,
+          "chunk_id": 0,
+          "score": 0.8397,
+          "semantic_score": 0.7193,
+          "lexical_score": 25.99,
+          "logical_page": [
+            4
+          ],
+          "pdf_page": 3,
+          "chapter": "Chúng tôi là ai",
+          "heading": "Chúng tôi là ai",
+          "is_relevant": true,
+          "content_snippet": "### Chúng tôi là ai\n\nNgân hàng đầu tiên và duy nhất tại Việt Nam giành giải thưởng\n\n**“Ngân hàng tốt nhất Việt Nam”**\n\ntừ các tổ chức quốc tế Global Finance, FinanceAsia và Euromoney trong hai năm liê"
+        },
+        {
+          "rank": 6,
+          "chunk_id": 117,
+          "score": 0.8395,
+          "semantic_score": 0.7046,
+          "lexical_score": 29.04,
+          "logical_page": [
+            61
+          ],
+          "pdf_page": 31,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Hiện đại hóa mạng lưới",
+          "is_relevant": false,
+          "content_snippet": "### Hiện đại hóa mạng lưới\n\nTrong năm, Ngân hàng đã khai trương 19 chi nhánh mới tại các tỉnh và nâng cấp mặt ngoài của khoảng 75 chi nhánh trên toàn quốc. Những nỗ lực này giúp cải thiện đáng kể khả "
+        },
+        {
+          "rank": 7,
+          "chunk_id": 180,
+          "score": 0.8159,
+          "semantic_score": 0.7459,
+          "lexical_score": 18.67,
+          "logical_page": [
+            98
+          ],
+          "pdf_page": 50,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Điểm nhấn 2025",
+          "is_relevant": false,
+          "content_snippet": "### Điểm nhấn 2025\n\nNăm 2025 ghi dấu một bước phát triển nền tảng quan trọng của TCGI (Công ty cổ phần Bảo hiểm Phi nhân thọ Techcom) khi Công ty hoàn thiện danh mục 65 sản phẩm bảo hiểm và phục vụ hơ"
+        },
+        {
+          "rank": 8,
+          "chunk_id": 176,
+          "score": 0.8132,
+          "semantic_score": 0.731,
+          "lexical_score": 21.57,
+          "logical_page": [
+            95
+          ],
+          "pdf_page": 48,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Trọng tâm năm 2026",
+          "is_relevant": false,
+          "content_snippet": "### Trọng tâm năm 2026\n\n**MỞ RỘNG, NÂNG CHẤT VÀ DẪN DẮT TĂNG TRƯỞNG**\n\nTrong bối cảnh thị trường bảo hiểm nhân thọ đối mặt với nhiều thách thức, Techcom Life đã xác lập định hướng phát triển rõ ràng v"
+        },
+        {
+          "rank": 9,
+          "chunk_id": 49,
+          "score": 0.8128,
+          "semantic_score": 0.7303,
+          "lexical_score": 21.67,
+          "logical_page": [
+            27
+          ],
+          "pdf_page": 14,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "MẠNG LƯỚI GIAO DỊCH",
+          "is_relevant": false,
+          "content_snippet": "### MẠNG LƯỚI GIAO DỊCH\n\n- 1 Trụ sở chính\n- 2 Văn phòng đại diện\n- 302 Chi nhánh và phòng giao dịch trên toàn quốc"
+        },
+        {
+          "rank": 10,
+          "chunk_id": 615,
+          "score": 0.8101,
+          "semantic_score": 0.7041,
+          "lexical_score": 26.91,
+          "logical_page": [
+            303
+          ],
+          "pdf_page": 152,
+          "chapter": "CHƯƠNG 06: Báo cáo tài chính hợp nhất kiểm toán năm 2025",
+          "heading": "Thuyết minh báo cáo tài chính hợp nhất<br>tại ngày 31 tháng 12 năm 2025 và cho năm tài chính kết thúc cùng ngày<br><br>### 1. THÔNG TIN CHUNG<br><br>Ngân hàng Thương mại Cổ phần Kỹ thương Việt Nam (sau đây gọi tắt là \"Ngân hàng\") là một ngân hàng thương mại cổ phần được thành lập và đăng ký tại nước Cộng hòa Xã hội Chủ nghĩa Việt Nam.<br><br><strong>Thành lập và hoạt động</strong><br>Ngân hàng hoạt động theo Giấy phép thành lập và hoạt động Ngân hàng số 0038/GP-NHNN do Ngân hàng Nhà nước Việt Nam (\"NHNN\") cấp ngày 6 tháng 3 năm 2018 (cấp đổi lại cho Giấy phép hoạt động số 0040/NH-GP cấp ngày 6 tháng 8 năm 1993) và các Quyết định sửa đổi, bổ sung Giấy phép thành lập và hoạt động Ngân hàng từng thời kỳ. Thời gian hoạt động của Ngân hàng là 99 năm kể từ ngày 6 tháng 8 năm 1993.<br><br>Các hoạt động chính của Ngân hàng bao gồm huy động và nhận tiền gửi ngắn, trung và dài hạn từ tổ chức và cá nhân; cung cấp tín dụng ngắn, trung và dài hạn trên tính chất và khả năng cung ứng nguồn vốn của Ngân hàng; thực hiện các nghiệp vụ thanh toán và ngân quỹ và các dịch vụ ngân hàng khác được NHNN cho phép; thực hiện đầu tư vào công ty con, công ty liên kết, công ty liên doanh, và các công ty khác; đầu tư trái phiếu và kinh doanh ngoại tệ theo quy định của pháp luật.<br><br><strong>Vốn điều lệ</strong><br>Vốn điều lệ của Ngân hàng tại ngày 31 tháng 12 năm 2025 là 70.862.404.140.000 đồng (ngày 31 tháng 12 năm 2024: 70.648.517.390.000 đồng).<br><br><strong>Mạng lưới hoạt động</strong><br>Hội sở chính của Ngân hàng đặt tại số 6 Quang Trung, phường Cửa Nam, Hà Nội. Tại ngày 31 tháng 12 năm 2025, Ngân hàng có một (1) Hội sở chính, hai (2) văn phòng đại diện, ba trăm lẻ hai (302) chi nhánh, phòng giao dịch trên cả nước và năm (5) công ty con, một (1) công ty liên kết.",
+          "is_relevant": false,
+          "content_snippet": "### Thuyết minh báo cáo tài chính hợp nhất<br>tại ngày 31 tháng 12 năm 2025 và cho năm tài chính kết thúc cùng ngày<br><br>### 1. THÔNG TIN CHUNG<br><br>Ngân hàng Thương mại Cổ phần Kỹ thương Việt Nam"
+        },
+        {
+          "rank": 11,
+          "chunk_id": 282,
+          "score": 0.8068,
+          "semantic_score": 0.723,
+          "lexical_score": 22.74,
+          "logical_page": [
+            159
+          ],
+          "pdf_page": 80,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản",
+          "is_relevant": false,
+          "content_snippet": "### Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản\n\n<table><thead><tr><th>STT</th><th>Số Nghị quyết</th><th>Ngày ban hành</th><th>Nội dung chính</th></tr></thead><tbody><tr><td>"
+        },
+        {
+          "rank": 12,
+          "chunk_id": 285,
+          "score": 0.7968,
+          "semantic_score": 0.7235,
+          "lexical_score": 21.87,
+          "logical_page": [
+            162
+          ],
+          "pdf_page": 82,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản",
+          "is_relevant": false,
+          "content_snippet": "### Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản (Tiếp tục)\n\n<table><thead><tr><th>STT</th><th>Số Nghị quyết</th><th>Ngày ban hành</th><th>Nội dung chính</th></tr></thead><tbo"
+        },
+        {
+          "rank": 13,
+          "chunk_id": 286,
+          "score": 0.7804,
+          "semantic_score": 0.7189,
+          "lexical_score": 21.59,
+          "logical_page": [
+            163
+          ],
+          "pdf_page": 82,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản",
+          "is_relevant": false,
+          "content_snippet": "### Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản (Tiếp tục)\n\n<table><thead><tr><th>STT</th><th>Số Nghị quyết</th><th>Ngày ban hành</th><th>Nội dung chính</th></tr></thead><tbo"
+        },
+        {
+          "rank": 14,
+          "chunk_id": 291,
+          "score": 0.7803,
+          "semantic_score": 0.7222,
+          "lexical_score": 20.9,
+          "logical_page": [
+            168
+          ],
+          "pdf_page": 85,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản",
+          "is_relevant": false,
+          "content_snippet": "### Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản (Tiếp tục)\n\n<table><thead><tr><th>STT</th><th>Số Nghị quyết</th><th>Ngày ban hành</th><th>Nội dung chính</th></tr></thead><tbo"
+        },
+        {
+          "rank": 15,
+          "chunk_id": 283,
+          "score": 0.7698,
+          "semantic_score": 0.7219,
+          "lexical_score": 20.17,
+          "logical_page": [
+            160
+          ],
+          "pdf_page": 81,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản",
+          "is_relevant": false,
+          "content_snippet": "### Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản (Tiếp tục)\n\n<table><thead><tr><th>STT</th><th>Số Nghị quyết</th><th>Ngày ban hành</th><th>Nội dung chính</th></tr></thead><tbo"
+        },
+        {
+          "rank": 16,
+          "chunk_id": 290,
+          "score": 0.7643,
+          "semantic_score": 0.7175,
+          "lexical_score": 20.67,
+          "logical_page": [
+            167
+          ],
+          "pdf_page": 84,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản",
+          "is_relevant": false,
+          "content_snippet": "### Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản (Tiếp tục)\n\n<table><thead><tr><th>STT</th><th>Số Nghị quyết</th><th>Ngày ban hành</th><th>Nội dung chính</th></tr></thead><tbo"
+        },
+        {
+          "rank": 17,
+          "chunk_id": 115,
+          "score": 0.7626,
+          "semantic_score": 0.7379,
+          "lexical_score": 16.3,
+          "logical_page": [
+            60
+          ],
+          "pdf_page": 31,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Năm 2025 ghi dấu bước phát triển mạnh mẽ của Techcombank trong củng cố năng lực nội tại và duy trì vị thế dẫn đầu thị trường.",
+          "is_relevant": false,
+          "content_snippet": "### Năm 2025 ghi dấu bước phát triển mạnh mẽ của Techcombank trong củng cố năng lực nội tại và duy trì vị thế dẫn đầu thị trường.\n\n- Ngân hàng giao dịch hàng đầu: ~16% thị phần giao dịch NAPAS (Công t"
+        },
+        {
+          "rank": 18,
+          "chunk_id": 85,
+          "score": 0.7583,
+          "semantic_score": 0.7219,
+          "lexical_score": 19.3,
+          "logical_page": [
+            41
+          ],
+          "pdf_page": 21,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "HOẠT ĐỘNG GẮN KẾT NHÀ ĐẦU TƯ NĂM 2025",
+          "is_relevant": false,
+          "content_snippet": "### HOẠT ĐỘNG GẮN KẾT NHÀ ĐẦU TƯ NĂM 2025\n\nTrong năm 2025, đội ngũ IR Techcombank đã tổ chức thành công **Hội nghị Đầu tư Techcombank 2025 - Việt Nam mới: Tầm nhìn kiến tạo giá trị**, chào đón hơn 700"
+        },
+        {
+          "rank": 19,
+          "chunk_id": 210,
+          "score": 0.7487,
+          "semantic_score": 0.7366,
+          "lexical_score": 15.53,
+          "logical_page": [
+            117
+          ],
+          "pdf_page": 59,
+          "chapter": "CHƯƠNG 04: Hành trình chuyển đổi của Tech",
+          "heading": "Tổng quan",
+          "is_relevant": false,
+          "content_snippet": "### Tổng quan\n\n- **1,5x**: Số lượng khách hàng mới qua các kênh số hóa trong năm 2025 so với 2024\n- **16,6%**: Tăng trưởng số dư CASA (Tiền gửi không kỳ hạn) trong năm 2025 nhờ Techcombank sinh lời tự"
+        },
+        {
+          "rank": 20,
+          "chunk_id": 34,
+          "score": 0.7477,
+          "semantic_score": 0.7267,
+          "lexical_score": 17.49,
+          "logical_page": [
+            20
+          ],
+          "pdf_page": 11,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Phát triển bền vững",
+          "is_relevant": false,
+          "content_snippet": "### Phát triển bền vững\n\nTrong năm 2025, **Techcombank tiếp tục đặt phát triển bền vững ở vị trí trung tâm trong chiến lược và hoạt động kinh doanh**, xuất phát từ niềm tin rằng tăng trưởng bền vững s"
+        }
+      ]
+    },
+    {
+      "id": "sq-02",
+      "question": "Năm 2025, Techcombank được S&P Global Ratings và Fitch Ratings xếp hạng tín nhiệm ở mức nào?",
+      "category": "company_profile",
+      "answerable": true,
+      "gold_printed_pages": [
+        4
+      ],
+      "gold_answer": "S&P Global Ratings nâng xếp hạng lên mức BB với triển vọng Ổn định. Fitch Ratings lần đầu tiên xếp hạng tín nhiệm dài hạn ở mức BB- với triển vọng Tích cực.",
+      "total_relevant_in_corpus": 2,
+      "first_hit_rank": 4,
+      "metrics": {
+        "recall@1": 0.0,
+        "ndcg@1": 0.0,
+        "ap@1": 0.0,
+        "recall@3": 0.0,
+        "ndcg@3": 0.0,
+        "ap@3": 0.0,
+        "recall@5": 1.0,
+        "ndcg@5": 0.2641,
+        "ap@5": 0.125,
+        "recall@10": 1.0,
+        "ndcg@10": 0.2641,
+        "ap@10": 0.125,
+        "recall@20": 1.0,
+        "ndcg@20": 0.2641,
+        "ap@20": 0.125
+      },
+      "retrieved_top_k": [
+        {
+          "rank": 1,
+          "chunk_id": 87,
+          "score": 1.0,
+          "semantic_score": 0.8129,
+          "lexical_score": 62.8,
+          "logical_page": [
+            43
+          ],
+          "pdf_page": 22,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "LỊCH SỰ KIỆN HOẠT ĐỘNG QUAN HỆ NHÀ ĐẦU TƯ 2025",
+          "is_relevant": false,
+          "content_snippet": "### LỊCH SỰ KIỆN HOẠT ĐỘNG QUAN HỆ NHÀ ĐẦU TƯ 2025 (Tiếp tục)\n\nTrong năm 2025, đội ngũ IR cũng đóng vai trò quan trọng trong việc hỗ trợ Techcombank đạt được những kết quả tích cực về xếp hạng tín nhi"
+        },
+        {
+          "rank": 2,
+          "chunk_id": 72,
+          "score": 0.8676,
+          "semantic_score": 0.7622,
+          "lexical_score": 57.78,
+          "logical_page": [
+            35
+          ],
+          "pdf_page": 18,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "2025",
+          "is_relevant": false,
+          "content_snippet": "### 2025\n\n- Đánh dấu năm cuối cùng trong chiến lược chuyển đổi 5 năm của Techcombank - một giai đoạn bước ngoặt chứng kiến Ngân hàng vươn lên từ vị thế ngân hàng tư nhân dẫn đầu thị trường trở thành h"
+        },
+        {
+          "rank": 3,
+          "chunk_id": 463,
+          "score": 0.7213,
+          "semantic_score": 0.7125,
+          "lexical_score": 50.31,
+          "logical_page": [
+            243
+          ],
+          "pdf_page": 122,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Khung Trái phiếu Xanh",
+          "is_relevant": false,
+          "content_snippet": "### Khung Trái phiếu Xanh\n\nVào tháng 12/2024, Techcombank đã trở thành ngân hàng tư nhân đầu tiên tại Việt Nam phát hành Trái phiếu Xanh với trị giá 450 tỷ đồng, theo Khung Trái phiếu Xanh được xây dự"
+        },
+        {
+          "rank": 4,
+          "chunk_id": 0,
+          "score": 0.6947,
+          "semantic_score": 0.6953,
+          "lexical_score": 51.5,
+          "logical_page": [
+            4
+          ],
+          "pdf_page": 3,
+          "chapter": "Chúng tôi là ai",
+          "heading": "Chúng tôi là ai",
+          "is_relevant": true,
+          "content_snippet": "### Chúng tôi là ai\n\nNgân hàng đầu tiên và duy nhất tại Việt Nam giành giải thưởng\n\n**“Ngân hàng tốt nhất Việt Nam”**\n\ntừ các tổ chức quốc tế Global Finance, FinanceAsia và Euromoney trong hai năm liê"
+        },
+        {
+          "rank": 5,
+          "chunk_id": 464,
+          "score": 0.6837,
+          "semantic_score": 0.7321,
+          "lexical_score": 38.33,
+          "logical_page": [
+            243
+          ],
+          "pdf_page": 122,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Khung Trái phiếu Xanh",
+          "is_relevant": false,
+          "content_snippet": "### Khung Trái phiếu Xanh\n\nSau đợt phát hành trái phiếu xanh đầu tiên vào năm 2024, Techcombank là một trong những ngân hàng đầu tiên trong khu vực thực hiện báo cáo sau phát hành trái phiếu xanh, với"
+        },
+        {
+          "rank": 6,
+          "chunk_id": 441,
+          "score": 0.6416,
+          "semantic_score": 0.7305,
+          "lexical_score": 32.19,
+          "logical_page": [
+            232
+          ],
+          "pdf_page": 117,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "DẤU ẤN ESG TRONG NĂM 2025",
+          "is_relevant": false,
+          "content_snippet": "### DẤU ẤN ESG (Môi trường, xã hội và quản trị) TRONG NĂM 2025\n\n**Phát hành thành công trái phiếu xanh trị giá**\n\n500 Tỷ đồng\n\n**Khoản tài trợ từ EIB trị giá**\n\n200 Triệu EUR\n\nTechcombank cũng có vai "
+        },
+        {
+          "rank": 7,
+          "chunk_id": 67,
+          "score": 0.6112,
+          "semantic_score": 0.7046,
+          "lexical_score": 35.48,
+          "logical_page": [
+            35
+          ],
+          "pdf_page": 18,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "2017",
+          "is_relevant": false,
+          "content_snippet": "### 2017\n\n- Ngân hàng đứng đầu về chỉ số tín nhiệm tương đương mức \"trần xếp hạng tín nhiệm quốc gia\" do S&P (Standard & Poor's Global Rating) công bố Tiếp tục tăng trưởng lợi nhuận gấp đôi so với năm"
+        },
+        {
+          "rank": 8,
+          "chunk_id": 453,
+          "score": 0.5814,
+          "semantic_score": 0.7139,
+          "lexical_score": 27.9,
+          "logical_page": [
+            237
+          ],
+          "pdf_page": 119,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "HÀNH TRÌNH PHÁT TRIỂN BỀN VỮNG CỦA TECHCOMBANK",
+          "is_relevant": false,
+          "content_snippet": "### HÀNH TRÌNH PHÁT TRIỂN BỀN VỮNG CỦA TECHCOMBANK (Tiếp tục)\n\nHành trình phát triển bền vững của Techcombank phản ánh cam kết dài hạn của chúng tôi đối với tăng trưởng có trách nhiệm, nền tảng quản t"
+        },
+        {
+          "rank": 9,
+          "chunk_id": 454,
+          "score": 0.5706,
+          "semantic_score": 0.7045,
+          "lexical_score": 29.16,
+          "logical_page": [
+            238
+          ],
+          "pdf_page": 120,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Điểm nhấn và thành tựu năm 2025 về phát triển bền vững",
+          "is_relevant": false,
+          "content_snippet": "### Điểm nhấn và thành tựu năm 2025 về phát triển bền vững\n\n- **KHÁCH HÀNG**: Hỗ trợ và trao quyền cho khách hàng thông qua các giải pháp bền vững và lấy khách hàng làm trọng tâm\n  - ~ 1 triệu thẻ Eco"
+        },
+        {
+          "rank": 10,
+          "chunk_id": 456,
+          "score": 0.5408,
+          "semantic_score": 0.7066,
+          "lexical_score": 23.82,
+          "logical_page": [
+            239
+          ],
+          "pdf_page": 120,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Giải thưởng và ghi nhận năm 2025",
+          "is_relevant": false,
+          "content_snippet": "### Giải thưởng và ghi nhận năm 2025\n\nTrong năm 2025, bên cạnh các ghi nhận về hiệu quả kinh doanh và năng lực vận hành đã được đề cập ở các phần trước, **Techcombank tiếp tục được vinh danh nhờ cam k"
+        },
+        {
+          "rank": 11,
+          "chunk_id": 469,
+          "score": 0.5392,
+          "semantic_score": 0.6816,
+          "lexical_score": 31.34,
+          "logical_page": [
+            245
+          ],
+          "pdf_page": 123,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Khung tiền gửi xanh",
+          "is_relevant": false,
+          "content_snippet": "### Khung tiền gửi xanh\n\n**Techcombank cam kết phân bổ 100% Nguồn vốn huy động từ Tiền gửi xanh để tài trợ và/hoặc tái tài trợ cho các dự án xanh đủ điều kiện**\n\nNhằm đa dạng hóa các giải pháp tài chí"
+        },
+        {
+          "rank": 12,
+          "chunk_id": 413,
+          "score": 0.4711,
+          "semantic_score": 0.6819,
+          "lexical_score": 20.56,
+          "logical_page": [
+            214
+          ],
+          "pdf_page": 108,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Điểm nhấn 2025",
+          "is_relevant": false,
+          "content_snippet": "### Điểm nhấn 2025\n\nNăm 2025 đánh dấu một bước chuyển quan trọng trong quản trị rủi ro tín dụng, với trọng tâm là nâng cao hiệu quả và chất lượng thông qua chuẩn hóa quy trình và số hóa toàn diện. Hệ "
+        },
+        {
+          "rank": 13,
+          "chunk_id": 133,
+          "score": 0.4637,
+          "semantic_score": 0.7097,
+          "lexical_score": 10.74,
+          "logical_page": [
+            71
+          ],
+          "pdf_page": 36,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Điểm nhấn 2025",
+          "is_relevant": false,
+          "content_snippet": "### Điểm nhấn 2025\n\nNăm 2025, kinh tế toàn cầu đối mặt với nhiều biến động: tốc độ tăng trưởng chậm lại do lạm phát kéo dài ở một số khu vực và chính sách tiền tệ thắt chặt; chuỗi cung ứng tiếp tục đi"
+        },
+        {
+          "rank": 14,
+          "chunk_id": 288,
+          "score": 0.4587,
+          "semantic_score": 0.698,
+          "lexical_score": 13.59,
+          "logical_page": [
+            165
+          ],
+          "pdf_page": 83,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản",
+          "is_relevant": false,
+          "content_snippet": "### Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản (Tiếp tục)\n\n<table><thead><tr><th>STT</th><th>Số Nghị quyết</th><th>Ngày ban hành</th><th>Nội dung chính</th></tr></thead><tbo"
+        },
+        {
+          "rank": 15,
+          "chunk_id": 97,
+          "score": 0.4538,
+          "semantic_score": 0.6733,
+          "lexical_score": 20.53,
+          "logical_page": [
+            50
+          ],
+          "pdf_page": 26,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Kết quả hoạt động",
+          "is_relevant": false,
+          "content_snippet": "### Kết quả hoạt động\n\n**THU NHẬP LÃI THUẦN (NII)**\n\nĐạt 38,2 Nghìn tỷ đồng (tăng 7,5% N/N). Năm 2025, thu nhập lãi thuần (NII) tăng 7,5% so với cùng kỳ, đạt 38,2 nghìn tỷ đồng, được thúc đẩy bởi tăng"
+        },
+        {
+          "rank": 16,
+          "chunk_id": 25,
+          "score": 0.4517,
+          "semantic_score": 0.6898,
+          "lexical_score": 15.06,
+          "logical_page": [
+            15
+          ],
+          "pdf_page": 8,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025.",
+          "is_relevant": false,
+          "content_snippet": "### Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025."
+        },
+        {
+          "rank": 17,
+          "chunk_id": 24,
+          "score": 0.4509,
+          "semantic_score": 0.6875,
+          "lexical_score": 15.67,
+          "logical_page": [
+            15
+          ],
+          "pdf_page": 8,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025.",
+          "is_relevant": false,
+          "content_snippet": "### Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025."
+        },
+        {
+          "rank": 18,
+          "chunk_id": 19,
+          "score": 0.4493,
+          "semantic_score": 0.6933,
+          "lexical_score": 13.57,
+          "logical_page": [
+            11
+          ],
+          "pdf_page": 6,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Thông điệp của Chủ tịch Hội đồng quản trị",
+          "is_relevant": false,
+          "content_snippet": "### Thông điệp của Chủ tịch Hội đồng quản trị (Tiếp tục)\n\nNăm 2025, Techcombank chào đón thêm 2,7 triệu khách hàng mới, nâng tổng số khách hàng phục vụ lên hơn 18 triệu khách hàng cá nhân, hộ kinh doa"
+        },
+        {
+          "rank": 19,
+          "chunk_id": 285,
+          "score": 0.4438,
+          "semantic_score": 0.6946,
+          "lexical_score": 12.33,
+          "logical_page": [
+            162
+          ],
+          "pdf_page": 82,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản",
+          "is_relevant": false,
+          "content_snippet": "### Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản (Tiếp tục)\n\n<table><thead><tr><th>STT</th><th>Số Nghị quyết</th><th>Ngày ban hành</th><th>Nội dung chính</th></tr></thead><tbo"
+        },
+        {
+          "rank": 20,
+          "chunk_id": 282,
+          "score": 0.4438,
+          "semantic_score": 0.6929,
+          "lexical_score": 12.84,
+          "logical_page": [
+            159
+          ],
+          "pdf_page": 80,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản",
+          "is_relevant": false,
+          "content_snippet": "### Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản\n\n<table><thead><tr><th>STT</th><th>Số Nghị quyết</th><th>Ngày ban hành</th><th>Nội dung chính</th></tr></thead><tbody><tr><td>"
+        }
+      ]
+    },
+    {
+      "id": "sq-03",
+      "question": "Tổng tài sản của Techcombank tại ngày 31/12/2025 là bao nhiêu?",
+      "category": "key_figures",
+      "answerable": true,
+      "gold_printed_pages": [
+        5
+      ],
+      "gold_answer": "1.192 nghìn tỷ đồng, tăng 21,8% so với năm trước.",
+      "total_relevant_in_corpus": 12,
+      "first_hit_rank": null,
+      "metrics": {
+        "recall@1": 0.0,
+        "ndcg@1": 0.0,
+        "ap@1": 0.0,
+        "recall@3": 0.0,
+        "ndcg@3": 0.0,
+        "ap@3": 0.0,
+        "recall@5": 0.0,
+        "ndcg@5": 0.0,
+        "ap@5": 0.0,
+        "recall@10": 0.0,
+        "ndcg@10": 0.0,
+        "ap@10": 0.0,
+        "recall@20": 0.0,
+        "ndcg@20": 0.0,
+        "ap@20": 0.0
+      },
+      "retrieved_top_k": [
+        {
+          "rank": 1,
+          "chunk_id": 142,
+          "score": 0.8832,
+          "semantic_score": 0.7603,
+          "lexical_score": 15.38,
+          "logical_page": [
+            77
+          ],
+          "pdf_page": 39,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Điểm nhấn 2025",
+          "is_relevant": false,
+          "content_snippet": "### Điểm nhấn 2025\n\n- 2.041 Tỷ đồng: Lợi nhuận trước thuế quý 4/2025, tăng gần 120% so với cùng kỳ năm trước\n- 7.109 Tỷ đồng: Lợi nhuận trước thuế năm 2025, hoàn thành 123% kế hoạch cả năm\n- 80.632 Tỷ"
+        },
+        {
+          "rank": 2,
+          "chunk_id": 160,
+          "score": 0.8719,
+          "semantic_score": 0.7617,
+          "lexical_score": 14.67,
+          "logical_page": [
+            84
+          ],
+          "pdf_page": 43,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Công Ty Cổ Phần Quản Lý Quỹ Kỹ Thương (Techcom Capital – TCC) > Điểm nhấn 2025",
+          "is_relevant": false,
+          "content_snippet": "### Công Ty Cổ Phần Quản Lý Quỹ Kỹ Thương (Techcom Capital – TCC)\n\n### Điểm nhấn 2025\n\n- **Tổng tài sản đạt**: 1.181 Tỷ đồng\n- **11/12/2025 Nhà đầu tư**: 50.000\n- **Tổng doanh thu**: 326 Tỷ đồng (tăng"
+        },
+        {
+          "rank": 3,
+          "chunk_id": 47,
+          "score": 0.8663,
+          "semantic_score": 0.764,
+          "lexical_score": 14.12,
+          "logical_page": [
+            27
+          ],
+          "pdf_page": 14,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "CƠ CẤU VÀ TỶ LỆ SỞ HỮU CỦA TECHCOMBANK TẠI CÁC CÔNG TY CON (31/12/2025)",
+          "is_relevant": false,
+          "content_snippet": "### CƠ CẤU VÀ TỶ LỆ SỞ HỮU CỦA TECHCOMBANK TẠI CÁC CÔNG TY CON (31/12/2025) (Tiếp tục)\n\nĐịnh hướng bởi tầm nhìn “Chuyển đổi ngành tài chính, Nâng tầm giá trị sống”, Techcombank xây dựng và nuôi dưỡng "
+        },
+        {
+          "rank": 4,
+          "chunk_id": 46,
+          "score": 0.8218,
+          "semantic_score": 0.7409,
+          "lexical_score": 14.93,
+          "logical_page": [
+            27
+          ],
+          "pdf_page": 14,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "CƠ CẤU VÀ TỶ LỆ SỞ HỮU CỦA TECHCOMBANK TẠI CÁC CÔNG TY CON (31/12/2025)",
+          "is_relevant": false,
+          "content_snippet": "### CƠ CẤU VÀ TỶ LỆ SỞ HỮU CỦA TECHCOMBANK TẠI CÁC CÔNG TY CON (31/12/2025) (Tiếp tục)\n\n**Techcombank mang sứ mệnh tiên phong** dẫn dắt quá trình chuyển đổi số của ngành tài chính – ngân hàng Việt Nam"
+        },
+        {
+          "rank": 5,
+          "chunk_id": 101,
+          "score": 0.8124,
+          "semantic_score": 0.7584,
+          "lexical_score": 12.33,
+          "logical_page": [
+            52
+          ],
+          "pdf_page": 27,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "QUẢN TRỊ HIỆU QUẢ CHI PHÍ",
+          "is_relevant": false,
+          "content_snippet": "### QUẢN TRỊ HIỆU QUẢ CHI PHÍ\n\n**Chi phí tiếp thị và khuyến mãi**\nChi phí tiếp thị năm 2025 giảm nhẹ 8% N/N, nhờ chính sách phân bổ ngân sách vào các hoạt động có tác động lớn nhất. Chi phí thu hút kh"
+        },
+        {
+          "rank": 6,
+          "chunk_id": 78,
+          "score": 0.7996,
+          "semantic_score": 0.7369,
+          "lexical_score": 14.4,
+          "logical_page": [
+            38
+          ],
+          "pdf_page": 20,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "DIỄN BIẾN CỔ PHIẾU TCB TRONG NĂM 2025",
+          "is_relevant": false,
+          "content_snippet": "### DIỄN BIẾN CỔ PHIẾU TCB TRONG NĂM 2025\n\n*(Biểu đồ đường thể hiện biến động giá cổ phiếu TCB, Bank Index, VN30, VN Index và khối lượng giao dịch từ 2.1.25 đến 31.12.25)*\n\n<table><thead><tr><th>Tăng "
+        },
+        {
+          "rank": 7,
+          "chunk_id": 23,
+          "score": 0.7786,
+          "semantic_score": 0.7565,
+          "lexical_score": 11.0,
+          "logical_page": [
+            14
+          ],
+          "pdf_page": 8,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025.",
+          "is_relevant": false,
+          "content_snippet": "### Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025."
+        },
+        {
+          "rank": 8,
+          "chunk_id": 375,
+          "score": 0.7781,
+          "semantic_score": 0.7151,
+          "lexical_score": 16.11,
+          "logical_page": [
+            198
+          ],
+          "pdf_page": 100,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Các giao dịch, thù lao và các khoản lợi ích của HĐQT, Ban Kiểm soát & Người Điều hành > SỐ LƯỢNG VÀ TỶ LỆ SỞ HỮU CỔ PHIẾU TECHCOMBANK CỦA CÁC CỔ ĐÔNG LÀ NGƯỜI NỘI BỘ TẠI NGÀY 31/12/2025",
+          "is_relevant": false,
+          "content_snippet": "### Các giao dịch, thù lao và các khoản lợi ích của HĐQT, Ban Kiểm soát & Người Điều hành\n\n### SỐ LƯỢNG VÀ TỶ LỆ SỞ HỮU CỔ PHIẾU TECHCOMBANK CỦA CÁC CỔ ĐÔNG LÀ NGƯỜI NỘI BỘ TẠI NGÀY 31/12/2025\n\n(*) Số"
+        },
+        {
+          "rank": 9,
+          "chunk_id": 164,
+          "score": 0.7726,
+          "semantic_score": 0.7042,
+          "lexical_score": 17.22,
+          "logical_page": [
+            86
+          ],
+          "pdf_page": 44,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "#1",
+          "is_relevant": false,
+          "content_snippet": "### #1\n\nhiệu quả đầu tư trên Fundmart năm 2025\n\n**Quỹ Đầu tư Bất Động Sản (TCREIT)**\nLoại quỹ: Quỹ đóng niêm yết, thành lập ở Việt Nam\n\n**Tổng tài sản quản lý:** 65 tỷ đồng tại ngày 31/12/2025.\n\n**Chi"
+        },
+        {
+          "rank": 10,
+          "chunk_id": 73,
+          "score": 0.7723,
+          "semantic_score": 0.7238,
+          "lexical_score": 14.76,
+          "logical_page": [
+            36
+          ],
+          "pdf_page": 19,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "Cơ cấu cổ đông, thay đổi vốn đầu tư của chủ sở hữu",
+          "is_relevant": false,
+          "content_snippet": "### Cơ cấu cổ đông, thay đổi vốn đầu tư của chủ sở hữu\n\n(tại ngày 31/12/2025)\n\n**CỔ PHẦN**\nTổng số cổ phần phổ thông đang lưu hành của Techcombank tại ngày 31 tháng 12 năm 2025 là 7.086.240.414 cổ phầ"
+        },
+        {
+          "rank": 11,
+          "chunk_id": 28,
+          "score": 0.7645,
+          "semantic_score": 0.7445,
+          "lexical_score": 11.84,
+          "logical_page": [
+            17
+          ],
+          "pdf_page": 9,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Hệ sinh thái tài chính toàn diện",
+          "is_relevant": false,
+          "content_snippet": "### Hệ sinh thái tài chính toàn diện\n\nTrong năm 2025, Techcombank tiếp tục đẩy mạnh chiến lược xây dựng hệ sinh thái toàn diện, gồm các công ty thành viên và đối tác chiến lược nhằm cung cấp danh mục "
+        },
+        {
+          "rank": 12,
+          "chunk_id": 163,
+          "score": 0.7589,
+          "semantic_score": 0.7089,
+          "lexical_score": 16.0,
+          "logical_page": [
+            86
+          ],
+          "pdf_page": 44,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "TOP 5",
+          "is_relevant": false,
+          "content_snippet": "### TOP 5 (Tiếp tục)\n\n**Quỹ Đầu tư cổ phiếu các Doanh nghiệp vừa và nhỏ Techcom (TCSME)**\nLoại quỹ: Quỹ mở, thành lập ở Việt Nam\n\n**Tổng tài sản quản lý:** 87 tỷ đồng tại ngày 31/12/2025.\n\n**Chiến lượ"
+        },
+        {
+          "rank": 13,
+          "chunk_id": 615,
+          "score": 0.7587,
+          "semantic_score": 0.7015,
+          "lexical_score": 16.9,
+          "logical_page": [
+            303
+          ],
+          "pdf_page": 152,
+          "chapter": "CHƯƠNG 06: Báo cáo tài chính hợp nhất kiểm toán năm 2025",
+          "heading": "Thuyết minh báo cáo tài chính hợp nhất<br>tại ngày 31 tháng 12 năm 2025 và cho năm tài chính kết thúc cùng ngày<br><br>### 1. THÔNG TIN CHUNG<br><br>Ngân hàng Thương mại Cổ phần Kỹ thương Việt Nam (sau đây gọi tắt là \"Ngân hàng\") là một ngân hàng thương mại cổ phần được thành lập và đăng ký tại nước Cộng hòa Xã hội Chủ nghĩa Việt Nam.<br><br><strong>Thành lập và hoạt động</strong><br>Ngân hàng hoạt động theo Giấy phép thành lập và hoạt động Ngân hàng số 0038/GP-NHNN do Ngân hàng Nhà nước Việt Nam (\"NHNN\") cấp ngày 6 tháng 3 năm 2018 (cấp đổi lại cho Giấy phép hoạt động số 0040/NH-GP cấp ngày 6 tháng 8 năm 1993) và các Quyết định sửa đổi, bổ sung Giấy phép thành lập và hoạt động Ngân hàng từng thời kỳ. Thời gian hoạt động của Ngân hàng là 99 năm kể từ ngày 6 tháng 8 năm 1993.<br><br>Các hoạt động chính của Ngân hàng bao gồm huy động và nhận tiền gửi ngắn, trung và dài hạn từ tổ chức và cá nhân; cung cấp tín dụng ngắn, trung và dài hạn trên tính chất và khả năng cung ứng nguồn vốn của Ngân hàng; thực hiện các nghiệp vụ thanh toán và ngân quỹ và các dịch vụ ngân hàng khác được NHNN cho phép; thực hiện đầu tư vào công ty con, công ty liên kết, công ty liên doanh, và các công ty khác; đầu tư trái phiếu và kinh doanh ngoại tệ theo quy định của pháp luật.<br><br><strong>Vốn điều lệ</strong><br>Vốn điều lệ của Ngân hàng tại ngày 31 tháng 12 năm 2025 là 70.862.404.140.000 đồng (ngày 31 tháng 12 năm 2024: 70.648.517.390.000 đồng).<br><br><strong>Mạng lưới hoạt động</strong><br>Hội sở chính của Ngân hàng đặt tại số 6 Quang Trung, phường Cửa Nam, Hà Nội. Tại ngày 31 tháng 12 năm 2025, Ngân hàng có một (1) Hội sở chính, hai (2) văn phòng đại diện, ba trăm lẻ hai (302) chi nhánh, phòng giao dịch trên cả nước và năm (5) công ty con, một (1) công ty liên kết.",
+          "is_relevant": false,
+          "content_snippet": "### Thuyết minh báo cáo tài chính hợp nhất<br>tại ngày 31 tháng 12 năm 2025 và cho năm tài chính kết thúc cùng ngày<br><br>### 1. THÔNG TIN CHUNG<br><br>Ngân hàng Thương mại Cổ phần Kỹ thương Việt Nam"
+        },
+        {
+          "rank": 14,
+          "chunk_id": 113,
+          "score": 0.7562,
+          "semantic_score": 0.7783,
+          "lexical_score": 7.25,
+          "logical_page": [
+            59
+          ],
+          "pdf_page": 30,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Điểm nhấn 2025",
+          "is_relevant": false,
+          "content_snippet": "### Điểm nhấn 2025\n\nNăm 2025 đánh dấu một cột mốc bản lề khi Techcombank hoàn thành giai đoạn chiến lược 2020–2025 và xây dựng nền tảng vững chắc cho hành trình 2026–2030, gắn liền với các chương trìn"
+        },
+        {
+          "rank": 15,
+          "chunk_id": 210,
+          "score": 0.7546,
+          "semantic_score": 0.7377,
+          "lexical_score": 12.22,
+          "logical_page": [
+            117
+          ],
+          "pdf_page": 59,
+          "chapter": "CHƯƠNG 04: Hành trình chuyển đổi của Tech",
+          "heading": "Tổng quan",
+          "is_relevant": false,
+          "content_snippet": "### Tổng quan\n\n- **1,5x**: Số lượng khách hàng mới qua các kênh số hóa trong năm 2025 so với 2024\n- **16,6%**: Tăng trưởng số dư CASA (Tiền gửi không kỳ hạn) trong năm 2025 nhờ Techcombank sinh lời tự"
+        },
+        {
+          "rank": 16,
+          "chunk_id": 161,
+          "score": 0.7546,
+          "semantic_score": 0.7037,
+          "lexical_score": 16.43,
+          "logical_page": [
+            85
+          ],
+          "pdf_page": 43,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "CÁC QUỸ ĐẦU TƯ TECHCOM CAPITAL ĐANG QUẢN LÝ",
+          "is_relevant": false,
+          "content_snippet": "### CÁC QUỸ ĐẦU TƯ TECHCOM CAPITAL ĐANG QUẢN LÝ\n\n**Quỹ Đầu Tư Trái Phiếu Techcom (TCBF)**\n- **Loại quỹ**: Quỹ mở, thành lập ở Việt Nam\n- **Tổng tài sản quản lý**: Khoảng 10.000 tỷ đồng tại ngày 31/12/"
+        },
+        {
+          "rank": 17,
+          "chunk_id": 825,
+          "score": 0.7503,
+          "semantic_score": 0.7059,
+          "lexical_score": 15.96,
+          "logical_page": [
+            381
+          ],
+          "pdf_page": 191,
+          "chapter": "CHƯƠNG 06: Báo cáo tài chính hợp nhất kiểm toán năm 2025",
+          "heading": "46. TÀI SẢN TÀI CHÍNH VÀ NỢ PHẢI TRẢ TÀI CHÍNH",
+          "is_relevant": false,
+          "content_snippet": "### 46. TÀI SẢN TÀI CHÍNH VÀ NỢ PHẢI TRẢ TÀI CHÍNH\n\nBảng sau trình bày giá trị ghi sổ và giá trị hợp lý của các tài sản tài chính và công nợ tài chính của Ngân hàng và các công ty con tại ngày 31/12/2"
+        },
+        {
+          "rank": 18,
+          "chunk_id": 45,
+          "score": 0.7502,
+          "semantic_score": 0.7337,
+          "lexical_score": 12.51,
+          "logical_page": [
+            26
+          ],
+          "pdf_page": 14,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "CƠ CẤU VÀ TỶ LỆ SỞ HỮU CỦA TECHCOMBANK TẠI CÁC CÔNG TY CON (31/12/2025)",
+          "is_relevant": false,
+          "content_snippet": "### CƠ CẤU VÀ TỶ LỆ SỞ HỮU CỦA TECHCOMBANK TẠI CÁC CÔNG TY CON (31/12/2025)\n\n- TechcomSecurities (79,8%)\n- Techcombank AMC (100%)\n- Techcom Capital (88,99%)\n- Techcom General Insurance (68%)\n- Techcom"
+        },
+        {
+          "rank": 19,
+          "chunk_id": 24,
+          "score": 0.7463,
+          "semantic_score": 0.7493,
+          "lexical_score": 10.39,
+          "logical_page": [
+            15
+          ],
+          "pdf_page": 8,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025.",
+          "is_relevant": false,
+          "content_snippet": "### Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025."
+        },
+        {
+          "rank": 20,
+          "chunk_id": 292,
+          "score": 0.7448,
+          "semantic_score": 0.7203,
+          "lexical_score": 13.92,
+          "logical_page": [
+            169
+          ],
+          "pdf_page": 85,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản",
+          "is_relevant": false,
+          "content_snippet": "### Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản (Tiếp tục)\n\n<table><thead><tr><th>STT</th><th>Số Nghị quyết</th><th>Ngày ban hành</th><th>Nội dung chính</th></tr></thead><tbo"
+        }
+      ]
+    },
+    {
+      "id": "sq-04",
+      "question": "Tỷ lệ CASA của Techcombank năm 2025 là bao nhiêu?",
+      "category": "key_figures",
+      "answerable": true,
+      "gold_printed_pages": [
+        5
+      ],
+      "gold_answer": "40,4%, dẫn đầu ngành.",
+      "total_relevant_in_corpus": 12,
+      "first_hit_rank": 7,
+      "metrics": {
+        "recall@1": 0.0,
+        "ndcg@1": 0.0,
+        "ap@1": 0.0,
+        "recall@3": 0.0,
+        "ndcg@3": 0.0,
+        "ap@3": 0.0,
+        "recall@5": 0.0,
+        "ndcg@5": 0.0,
+        "ap@5": 0.0,
+        "recall@10": 1.0,
+        "ndcg@10": 0.0734,
+        "ap@10": 0.0143,
+        "recall@20": 1.0,
+        "ndcg@20": 0.0655,
+        "ap@20": 0.0119
+      },
+      "retrieved_top_k": [
+        {
+          "rank": 1,
+          "chunk_id": 102,
+          "score": 1.0,
+          "semantic_score": 0.7915,
+          "lexical_score": 19.64,
+          "logical_page": [
+            53
+          ],
+          "pdf_page": 27,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "NGUỒN VỐN",
+          "is_relevant": false,
+          "content_snippet": "### NGUỒN VỐN\n\nTechcombank đã tăng trưởng **số dư tổng tiền gửi của khách hàng lên 776,5 nghìn tỷ đồng, tăng 23,0% N/N**, trong khi duy trì chi phí vốn trong nhóm thấp nhất ngành ngân hàng Việt Nam.\n\n"
+        },
+        {
+          "rank": 2,
+          "chunk_id": 95,
+          "score": 0.9048,
+          "semantic_score": 0.7716,
+          "lexical_score": 17.31,
+          "logical_page": [
+            49
+          ],
+          "pdf_page": 25,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "ĐIỂM NHẤN TÀI CHÍNH",
+          "is_relevant": false,
+          "content_snippet": "### ĐIỂM NHẤN TÀI CHÍNH (Tiếp tục)\n\nVề mặt hoạt động, năm 2025 ghi nhận việc Ngân hàng tiếp tục củng cố vị thế dẫn đầu thị trường qua việc tiếp tục phát huy các thế mạnh truyền thống.\n\n- #1 về tỷ lệ C"
+        },
+        {
+          "rank": 3,
+          "chunk_id": 26,
+          "score": 0.8538,
+          "semantic_score": 0.7716,
+          "lexical_score": 14.8,
+          "logical_page": [
+            16
+          ],
+          "pdf_page": 9,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Kiến tạo giá trị vượt trội cho khách hàng",
+          "is_relevant": false,
+          "content_snippet": "### Kiến tạo giá trị vượt trội cho khách hàng\n\n**Techcombank chào đón 2,7 Triệu khách hàng mới trong năm 2025**\n\n**Chỉ số Nhận biết đầu tiên 23% Xếp thứ hai toàn ngành**\n\nTrong năm 2025, Techcombank c"
+        },
+        {
+          "rank": 4,
+          "chunk_id": 210,
+          "score": 0.8435,
+          "semantic_score": 0.7862,
+          "lexical_score": 12.58,
+          "logical_page": [
+            117
+          ],
+          "pdf_page": 59,
+          "chapter": "CHƯƠNG 04: Hành trình chuyển đổi của Tech",
+          "heading": "Tổng quan",
+          "is_relevant": false,
+          "content_snippet": "### Tổng quan\n\n- **1,5x**: Số lượng khách hàng mới qua các kênh số hóa trong năm 2025 so với 2024\n- **16,6%**: Tăng trưởng số dư CASA (Tiền gửi không kỳ hạn) trong năm 2025 nhờ Techcombank sinh lời tự"
+        },
+        {
+          "rank": 5,
+          "chunk_id": 215,
+          "score": 0.8384,
+          "semantic_score": 0.7752,
+          "lexical_score": 13.62,
+          "logical_page": [
+            120
+          ],
+          "pdf_page": 61,
+          "chapter": "CHƯƠNG 04: Hành trình chuyển đổi của Tech",
+          "heading": "Ngân hàng Gia đình và Bạn bè",
+          "is_relevant": false,
+          "content_snippet": "### Ngân hàng Gia đình và Bạn bè\n\nNgân hàng cộng đồng là trụ cột khác biệt của Techcombank trong năm 2025 thông qua việc mở rộng dịch vụ ngân hàng Gia đình và Bạn bè. Ngân hàng Gia đình được nâng cấp "
+        },
+        {
+          "rank": 6,
+          "chunk_id": 94,
+          "score": 0.7417,
+          "semantic_score": 0.7349,
+          "lexical_score": 13.59,
+          "logical_page": [
+            48
+          ],
+          "pdf_page": 25,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "ĐIỂM NHẤN TÀI CHÍNH",
+          "is_relevant": false,
+          "content_snippet": "### ĐIỂM NHẤN TÀI CHÍNH\n\n- **Lợi nhuận trước thuế (LNTT)**: 32,5 Nghìn tỷ đồng (▲ 18,2% N/N). Vượt mục tiêu đề ra trong Đại hội đồng cổ đông 31,5 nghìn tỷ đồng.\n- **Tổng thu nhập hoạt động (TOI)**: 53"
+        },
+        {
+          "rank": 7,
+          "chunk_id": 9,
+          "score": 0.7369,
+          "semantic_score": 0.7208,
+          "lexical_score": 15.02,
+          "logical_page": [
+            5
+          ],
+          "pdf_page": 3,
+          "chapter": "Chúng tôi là ai",
+          "heading": "Tỷ lệ CASA",
+          "is_relevant": true,
+          "content_snippet": "### Tỷ lệ CASA (Tiền gửi không kỳ hạn)\n\n**40,4%**\nDẫn đầu ngành"
+        },
+        {
+          "rank": 8,
+          "chunk_id": 113,
+          "score": 0.7287,
+          "semantic_score": 0.7609,
+          "lexical_score": 9.91,
+          "logical_page": [
+            59
+          ],
+          "pdf_page": 30,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Điểm nhấn 2025",
+          "is_relevant": false,
+          "content_snippet": "### Điểm nhấn 2025\n\nNăm 2025 đánh dấu một cột mốc bản lề khi Techcombank hoàn thành giai đoạn chiến lược 2020–2025 và xây dựng nền tảng vững chắc cho hành trình 2026–2030, gắn liền với các chương trìn"
+        },
+        {
+          "rank": 9,
+          "chunk_id": 37,
+          "score": 0.7197,
+          "semantic_score": 0.7703,
+          "lexical_score": 8.36,
+          "logical_page": [
+            22
+          ],
+          "pdf_page": 12,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "ĐỊNH HƯỚNG HOẠT ĐỘNG",
+          "is_relevant": false,
+          "content_snippet": "### ĐỊNH HƯỚNG HOẠT ĐỘNG\n\nTrong năm 2026, chúng tôi sẽ tập trung thực thi có kỷ luật và triển khai ba ưu tiên chiến lược:\n\n1. Thúc đẩy tăng trưởng CASA (Tiền gửi không kỳ hạn) thông qua đẩy nhanh thu "
+        },
+        {
+          "rank": 10,
+          "chunk_id": 32,
+          "score": 0.717,
+          "semantic_score": 0.7502,
+          "lexical_score": 10.58,
+          "logical_page": [
+            19
+          ],
+          "pdf_page": 10,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "SỐ HÓA",
+          "is_relevant": false,
+          "content_snippet": "### SỐ HÓA\n\nNgày nay, ngân hàng số là tiêu chuẩn của một ngân hàng hiện đại và Techcombank sở hữu một trong những nền tảng ngân hàng số tiên tiến nhất trong khu vực, phục vụ toàn diện cả khách hàng cá"
+        },
+        {
+          "rank": 11,
+          "chunk_id": 46,
+          "score": 0.7071,
+          "semantic_score": 0.7269,
+          "lexical_score": 12.83,
+          "logical_page": [
+            27
+          ],
+          "pdf_page": 14,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "CƠ CẤU VÀ TỶ LỆ SỞ HỮU CỦA TECHCOMBANK TẠI CÁC CÔNG TY CON (31/12/2025)",
+          "is_relevant": false,
+          "content_snippet": "### CƠ CẤU VÀ TỶ LỆ SỞ HỮU CỦA TECHCOMBANK TẠI CÁC CÔNG TY CON (31/12/2025) (Tiếp tục)\n\n**Techcombank mang sứ mệnh tiên phong** dẫn dắt quá trình chuyển đổi số của ngành tài chính – ngân hàng Việt Nam"
+        },
+        {
+          "rank": 12,
+          "chunk_id": 24,
+          "score": 0.6916,
+          "semantic_score": 0.7247,
+          "lexical_score": 12.33,
+          "logical_page": [
+            15
+          ],
+          "pdf_page": 8,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025.",
+          "is_relevant": false,
+          "content_snippet": "### Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025."
+        },
+        {
+          "rank": 13,
+          "chunk_id": 47,
+          "score": 0.6881,
+          "semantic_score": 0.7439,
+          "lexical_score": 9.9,
+          "logical_page": [
+            27
+          ],
+          "pdf_page": 14,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "CƠ CẤU VÀ TỶ LỆ SỞ HỮU CỦA TECHCOMBANK TẠI CÁC CÔNG TY CON (31/12/2025)",
+          "is_relevant": false,
+          "content_snippet": "### CƠ CẤU VÀ TỶ LỆ SỞ HỮU CỦA TECHCOMBANK TẠI CÁC CÔNG TY CON (31/12/2025) (Tiếp tục)\n\nĐịnh hướng bởi tầm nhìn “Chuyển đổi ngành tài chính, Nâng tầm giá trị sống”, Techcombank xây dựng và nuôi dưỡng "
+        },
+        {
+          "rank": 14,
+          "chunk_id": 100,
+          "score": 0.6816,
+          "semantic_score": 0.7177,
+          "lexical_score": 12.66,
+          "logical_page": [
+            52
+          ],
+          "pdf_page": 27,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "QUẢN TRỊ HIỆU QUẢ CHI PHÍ",
+          "is_relevant": false,
+          "content_snippet": "### QUẢN TRỊ HIỆU QUẢ CHI PHÍ\n\n| Chi phí hoạt động | Tỷ lệ chi phí/thu nhập |\n| :--- | :--- |\n| 16,4 Nghìn Tỷ đồng | 30,8% |\n| ▲ 6,9% N/N | ▼ 1,9% so với 32,7% trong năm 2024 |\n\n**Chi phí số hóa và dữ"
+        },
+        {
+          "rank": 15,
+          "chunk_id": 25,
+          "score": 0.6805,
+          "semantic_score": 0.7324,
+          "lexical_score": 10.88,
+          "logical_page": [
+            15
+          ],
+          "pdf_page": 8,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025.",
+          "is_relevant": false,
+          "content_snippet": "### Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025."
+        },
+        {
+          "rank": 16,
+          "chunk_id": 142,
+          "score": 0.6722,
+          "semantic_score": 0.7156,
+          "lexical_score": 12.44,
+          "logical_page": [
+            77
+          ],
+          "pdf_page": 39,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Điểm nhấn 2025",
+          "is_relevant": false,
+          "content_snippet": "### Điểm nhấn 2025\n\n- 2.041 Tỷ đồng: Lợi nhuận trước thuế quý 4/2025, tăng gần 120% so với cùng kỳ năm trước\n- 7.109 Tỷ đồng: Lợi nhuận trước thuế năm 2025, hoàn thành 123% kế hoạch cả năm\n- 80.632 Tỷ"
+        },
+        {
+          "rank": 17,
+          "chunk_id": 45,
+          "score": 0.6688,
+          "semantic_score": 0.7241,
+          "lexical_score": 11.28,
+          "logical_page": [
+            26
+          ],
+          "pdf_page": 14,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "CƠ CẤU VÀ TỶ LỆ SỞ HỮU CỦA TECHCOMBANK TẠI CÁC CÔNG TY CON (31/12/2025)",
+          "is_relevant": false,
+          "content_snippet": "### CƠ CẤU VÀ TỶ LỆ SỞ HỮU CỦA TECHCOMBANK TẠI CÁC CÔNG TY CON (31/12/2025)\n\n- TechcomSecurities (79,8%)\n- Techcombank AMC (100%)\n- Techcom Capital (88,99%)\n- Techcom General Insurance (68%)\n- Techcom"
+        },
+        {
+          "rank": 18,
+          "chunk_id": 66,
+          "score": 0.6638,
+          "semantic_score": 0.7359,
+          "lexical_score": 9.66,
+          "logical_page": [
+            35
+          ],
+          "pdf_page": 18,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "2022",
+          "is_relevant": false,
+          "content_snippet": "### 2022 (Tiếp tục)\n\nVới Techcombank, thành công không chỉ là đích đến cuối cùng mà còn được đo lường qua cả một hành trình chuyển đổi, giúp chúng tôi đạt được những cột mốc to lớn. Tiếp nối những thà"
+        },
+        {
+          "rank": 19,
+          "chunk_id": 18,
+          "score": 0.6622,
+          "semantic_score": 0.7301,
+          "lexical_score": 10.25,
+          "logical_page": [
+            11
+          ],
+          "pdf_page": 6,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Thông điệp của Chủ tịch Hội đồng quản trị",
+          "is_relevant": false,
+          "content_snippet": "### Thông điệp của Chủ tịch Hội đồng quản trị (Tiếp tục)\n\nVới một hệ sinh thái toàn diện, Techcombank đang khai thác ngày càng hiệu quả sức mạnh cộng hưởng của các sản phẩm dịch vụ tích hợp, mang đến "
+        },
+        {
+          "rank": 20,
+          "chunk_id": 114,
+          "score": 0.6622,
+          "semantic_score": 0.7385,
+          "lexical_score": 9.27,
+          "logical_page": [
+            60
+          ],
+          "pdf_page": 31,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Năm 2025 ghi dấu bước phát triển mạnh mẽ của Techcombank trong củng cố năng lực nội tại và duy trì vị thế dẫn đầu thị trường.",
+          "is_relevant": false,
+          "content_snippet": "### Năm 2025 ghi dấu bước phát triển mạnh mẽ của Techcombank trong củng cố năng lực nội tại và duy trì vị thế dẫn đầu thị trường.\n\n- **146%**: Tỷ lệ chuyển đổi từ khách hàng tiềm năng sang giao dịch t"
+        }
+      ]
+    },
+    {
+      "id": "sq-05",
+      "question": "Tỷ lệ nợ xấu của Techcombank năm 2025 là bao nhiêu?",
+      "category": "key_figures",
+      "answerable": true,
+      "gold_printed_pages": [
+        5
+      ],
+      "gold_answer": "1,13%, thuộc nhóm chất lượng tài sản tốt nhất thị trường.",
+      "total_relevant_in_corpus": 12,
+      "first_hit_rank": 5,
+      "metrics": {
+        "recall@1": 0.0,
+        "ndcg@1": 0.0,
+        "ap@1": 0.0,
+        "recall@3": 0.0,
+        "ndcg@3": 0.0,
+        "ap@3": 0.0,
+        "recall@5": 1.0,
+        "ndcg@5": 0.1312,
+        "ap@5": 0.04,
+        "recall@10": 1.0,
+        "ndcg@10": 0.0851,
+        "ap@10": 0.02,
+        "recall@20": 1.0,
+        "ndcg@20": 0.076,
+        "ap@20": 0.0167
+      },
+      "retrieved_top_k": [
+        {
+          "rank": 1,
+          "chunk_id": 108,
+          "score": 1.0,
+          "semantic_score": 0.7836,
+          "lexical_score": 29.46,
+          "logical_page": [
+            55
+          ],
+          "pdf_page": 28,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "CHẤT LƯỢNG TÀI SẢN VÀ QUẢN LÝ NỢ XẤU",
+          "is_relevant": false,
+          "content_snippet": "### CHẤT LƯỢNG TÀI SẢN VÀ QUẢN LÝ NỢ XẤU\n\nNgân hàng đã chứng kiến tỷ lệ nợ xấu tăng trong hai quý đầu năm. Tuy nhiên, xu hướng này đã đảo chiều tích cực với mức giảm đáng khích lệ trong quý 3 và quý 4"
+        },
+        {
+          "rank": 2,
+          "chunk_id": 24,
+          "score": 0.8227,
+          "semantic_score": 0.765,
+          "lexical_score": 20.05,
+          "logical_page": [
+            15
+          ],
+          "pdf_page": 8,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025.",
+          "is_relevant": false,
+          "content_snippet": "### Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025."
+        },
+        {
+          "rank": 3,
+          "chunk_id": 113,
+          "score": 0.7327,
+          "semantic_score": 0.7726,
+          "lexical_score": 11.92,
+          "logical_page": [
+            59
+          ],
+          "pdf_page": 30,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Điểm nhấn 2025",
+          "is_relevant": false,
+          "content_snippet": "### Điểm nhấn 2025\n\nNăm 2025 đánh dấu một cột mốc bản lề khi Techcombank hoàn thành giai đoạn chiến lược 2020–2025 và xây dựng nền tảng vững chắc cho hành trình 2026–2030, gắn liền với các chương trìn"
+        },
+        {
+          "rank": 4,
+          "chunk_id": 25,
+          "score": 0.6983,
+          "semantic_score": 0.7564,
+          "lexical_score": 12.57,
+          "logical_page": [
+            15
+          ],
+          "pdf_page": 8,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025.",
+          "is_relevant": false,
+          "content_snippet": "### Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025."
+        },
+        {
+          "rank": 5,
+          "chunk_id": 10,
+          "score": 0.6948,
+          "semantic_score": 0.7157,
+          "lexical_score": 20.27,
+          "logical_page": [
+            5
+          ],
+          "pdf_page": 3,
+          "chapter": "Chúng tôi là ai",
+          "heading": "Tỷ lệ nợ xấu",
+          "is_relevant": true,
+          "content_snippet": "### Tỷ lệ nợ xấu\n\n**1,13%**\nChất lượng tài sản thuộc nhóm tốt nhất thị trường"
+        },
+        {
+          "rank": 6,
+          "chunk_id": 23,
+          "score": 0.6761,
+          "semantic_score": 0.7471,
+          "lexical_score": 12.76,
+          "logical_page": [
+            14
+          ],
+          "pdf_page": 8,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025.",
+          "is_relevant": false,
+          "content_snippet": "### Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025."
+        },
+        {
+          "rank": 7,
+          "chunk_id": 167,
+          "score": 0.6719,
+          "semantic_score": 0.7444,
+          "lexical_score": 12.98,
+          "logical_page": [
+            89
+          ],
+          "pdf_page": 45,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "TỔNG QUAN",
+          "is_relevant": false,
+          "content_snippet": "### TỔNG QUAN\n\nNăm 2025 diễn ra trong bối cảnh nền kinh tế và thị trường tài chính – ngân hàng tiếp tục đối mặt với nhiều thách thức. Hoạt động xử lý nợ và tài sản đảm chịu tác động đáng kể từ sự biến"
+        },
+        {
+          "rank": 8,
+          "chunk_id": 142,
+          "score": 0.642,
+          "semantic_score": 0.7257,
+          "lexical_score": 14.42,
+          "logical_page": [
+            77
+          ],
+          "pdf_page": 39,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Điểm nhấn 2025",
+          "is_relevant": false,
+          "content_snippet": "### Điểm nhấn 2025\n\n- 2.041 Tỷ đồng: Lợi nhuận trước thuế quý 4/2025, tăng gần 120% so với cùng kỳ năm trước\n- 7.109 Tỷ đồng: Lợi nhuận trước thuế năm 2025, hoàn thành 123% kế hoạch cả năm\n- 80.632 Tỷ"
+        },
+        {
+          "rank": 9,
+          "chunk_id": 106,
+          "score": 0.6366,
+          "semantic_score": 0.7388,
+          "lexical_score": 11.46,
+          "logical_page": [
+            55
+          ],
+          "pdf_page": 28,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "QUẢN TRỊ THANH KHOẢN",
+          "is_relevant": false,
+          "content_snippet": "### QUẢN TRỊ THANH KHOẢN\n\nTechcombank đã duy trì nền tảng thanh khoản vững mạnh trong suốt năm 2025, với các chỉ tiêu thanh khoản liên tục cao hơn mức yêu cầu tuân thủ theo quy định của Ngân hàng Nhà "
+        },
+        {
+          "rank": 10,
+          "chunk_id": 289,
+          "score": 0.6363,
+          "semantic_score": 0.7369,
+          "lexical_score": 11.81,
+          "logical_page": [
+            166
+          ],
+          "pdf_page": 84,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản",
+          "is_relevant": false,
+          "content_snippet": "### Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản (Tiếp tục)\n\n<table><thead><tr><th>STT</th><th>Số Nghị quyết</th><th>Ngày ban hành</th><th>Nội dung chính</th></tr></thead><tbo"
+        },
+        {
+          "rank": 11,
+          "chunk_id": 290,
+          "score": 0.6307,
+          "semantic_score": 0.7339,
+          "lexical_score": 11.99,
+          "logical_page": [
+            167
+          ],
+          "pdf_page": 84,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản",
+          "is_relevant": false,
+          "content_snippet": "### Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản (Tiếp tục)\n\n<table><thead><tr><th>STT</th><th>Số Nghị quyết</th><th>Ngày ban hành</th><th>Nội dung chính</th></tr></thead><tbo"
+        },
+        {
+          "rank": 12,
+          "chunk_id": 133,
+          "score": 0.6278,
+          "semantic_score": 0.7533,
+          "lexical_score": 7.99,
+          "logical_page": [
+            71
+          ],
+          "pdf_page": 36,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Điểm nhấn 2025",
+          "is_relevant": false,
+          "content_snippet": "### Điểm nhấn 2025\n\nNăm 2025, kinh tế toàn cầu đối mặt với nhiều biến động: tốc độ tăng trưởng chậm lại do lạm phát kéo dài ở một số khu vực và chính sách tiền tệ thắt chặt; chuỗi cung ứng tiếp tục đi"
+        },
+        {
+          "rank": 13,
+          "chunk_id": 97,
+          "score": 0.623,
+          "semantic_score": 0.7375,
+          "lexical_score": 10.72,
+          "logical_page": [
+            50
+          ],
+          "pdf_page": 26,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Kết quả hoạt động",
+          "is_relevant": false,
+          "content_snippet": "### Kết quả hoạt động\n\n**THU NHẬP LÃI THUẦN (NII)**\n\nĐạt 38,2 Nghìn tỷ đồng (tăng 7,5% N/N). Năm 2025, thu nhập lãi thuần (NII) tăng 7,5% so với cùng kỳ, đạt 38,2 nghìn tỷ đồng, được thúc đẩy bởi tăng"
+        },
+        {
+          "rank": 14,
+          "chunk_id": 94,
+          "score": 0.6196,
+          "semantic_score": 0.7113,
+          "lexical_score": 15.6,
+          "logical_page": [
+            48
+          ],
+          "pdf_page": 25,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "ĐIỂM NHẤN TÀI CHÍNH",
+          "is_relevant": false,
+          "content_snippet": "### ĐIỂM NHẤN TÀI CHÍNH\n\n- **Lợi nhuận trước thuế (LNTT)**: 32,5 Nghìn tỷ đồng (▲ 18,2% N/N). Vượt mục tiêu đề ra trong Đại hội đồng cổ đông 31,5 nghìn tỷ đồng.\n- **Tổng thu nhập hoạt động (TOI)**: 53"
+        },
+        {
+          "rank": 15,
+          "chunk_id": 100,
+          "score": 0.6193,
+          "semantic_score": 0.7262,
+          "lexical_score": 12.66,
+          "logical_page": [
+            52
+          ],
+          "pdf_page": 27,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "QUẢN TRỊ HIỆU QUẢ CHI PHÍ",
+          "is_relevant": false,
+          "content_snippet": "### QUẢN TRỊ HIỆU QUẢ CHI PHÍ\n\n| Chi phí hoạt động | Tỷ lệ chi phí/thu nhập |\n| :--- | :--- |\n| 16,4 Nghìn Tỷ đồng | 30,8% |\n| ▲ 6,9% N/N | ▼ 1,9% so với 32,7% trong năm 2024 |\n\n**Chi phí số hóa và dữ"
+        },
+        {
+          "rank": 16,
+          "chunk_id": 288,
+          "score": 0.619,
+          "semantic_score": 0.7345,
+          "lexical_score": 11.0,
+          "logical_page": [
+            165
+          ],
+          "pdf_page": 83,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản",
+          "is_relevant": false,
+          "content_snippet": "### Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản (Tiếp tục)\n\n<table><thead><tr><th>STT</th><th>Số Nghị quyết</th><th>Ngày ban hành</th><th>Nội dung chính</th></tr></thead><tbo"
+        },
+        {
+          "rank": 17,
+          "chunk_id": 285,
+          "score": 0.6117,
+          "semantic_score": 0.7336,
+          "lexical_score": 10.65,
+          "logical_page": [
+            162
+          ],
+          "pdf_page": 82,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản",
+          "is_relevant": false,
+          "content_snippet": "### Các Nghị quyết HĐQT ban hành trong năm 2025 – Xin ý kiến bằng văn bản (Tiếp tục)\n\n<table><thead><tr><th>STT</th><th>Số Nghị quyết</th><th>Ngày ban hành</th><th>Nội dung chính</th></tr></thead><tbo"
+        },
+        {
+          "rank": 18,
+          "chunk_id": 66,
+          "score": 0.6013,
+          "semantic_score": 0.7348,
+          "lexical_score": 9.66,
+          "logical_page": [
+            35
+          ],
+          "pdf_page": 18,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "2022",
+          "is_relevant": false,
+          "content_snippet": "### 2022 (Tiếp tục)\n\nVới Techcombank, thành công không chỉ là đích đến cuối cùng mà còn được đo lường qua cả một hành trình chuyển đổi, giúp chúng tôi đạt được những cột mốc to lớn. Tiếp nối những thà"
+        },
+        {
+          "rank": 19,
+          "chunk_id": 104,
+          "score": 0.6011,
+          "semantic_score": 0.7179,
+          "lexical_score": 12.94,
+          "logical_page": [
+            54
+          ],
+          "pdf_page": 28,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "ĐA DẠNG HÓA DANH MỤC TÍN DỤNG",
+          "is_relevant": false,
+          "content_snippet": "### ĐA DẠNG HÓA DANH MỤC TÍN DỤNG\n\nDư nợ tín dụng của Ngân hàng mẹ trong năm tăng 18,4% lên 758,3 nghìn tỷ đồng, theo chỉ tiêu tín dụng được NHNN (Ngân hàng Nhà nước Việt Nam) cấp. Dư nợ tín dụng hợp "
+        },
+        {
+          "rank": 20,
+          "chunk_id": 72,
+          "score": 0.601,
+          "semantic_score": 0.747,
+          "lexical_score": 7.24,
+          "logical_page": [
+            35
+          ],
+          "pdf_page": 18,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "2025",
+          "is_relevant": false,
+          "content_snippet": "### 2025\n\n- Đánh dấu năm cuối cùng trong chiến lược chuyển đổi 5 năm của Techcombank - một giai đoạn bước ngoặt chứng kiến Ngân hàng vươn lên từ vị thế ngân hàng tư nhân dẫn đầu thị trường trở thành h"
+        }
+      ]
+    },
+    {
+      "id": "sq-06",
+      "question": "Tổng thu nhập hoạt động năm 2025 của Techcombank là bao nhiêu, và tốc độ tăng trưởng kép giai đoạn 2018–2025 của chỉ tiêu này là bao nhiêu?",
+      "category": "key_figures",
+      "answerable": true,
+      "gold_printed_pages": [
+        5
+      ],
+      "gold_answer": "53,4 nghìn tỷ đồng, với tốc độ tăng trưởng kép giai đoạn 2018–2025 là 16,5%.",
+      "total_relevant_in_corpus": 12,
+      "first_hit_rank": 1,
+      "metrics": {
+        "recall@1": 1.0,
+        "ndcg@1": 1.0,
+        "ap@1": 1.0,
+        "recall@3": 1.0,
+        "ndcg@3": 0.4693,
+        "ap@3": 0.3333,
+        "recall@5": 1.0,
+        "ndcg@5": 0.3392,
+        "ap@5": 0.2,
+        "recall@10": 1.0,
+        "ndcg@10": 0.2201,
+        "ap@10": 0.1,
+        "recall@20": 1.0,
+        "ndcg@20": 0.1964,
+        "ap@20": 0.0833
+      },
+      "retrieved_top_k": [
+        {
+          "rank": 1,
+          "chunk_id": 2,
+          "score": 0.9919,
+          "semantic_score": 0.7705,
+          "lexical_score": 40.12,
+          "logical_page": [
+            5
+          ],
+          "pdf_page": 3,
+          "chapter": "Chúng tôi là ai",
+          "heading": "Điểm nhấn 2025 > Tổng thu nhập hoạt động",
+          "is_relevant": true,
+          "content_snippet": "### Điểm nhấn 2025\n\n### Tổng thu nhập hoạt động\n\n**53,4**\nNghìn tỷ đồng\nTăng trưởng kép 2018–2025: **16,5%**"
+        },
+        {
+          "rank": 2,
+          "chunk_id": 113,
+          "score": 0.9897,
+          "semantic_score": 0.7737,
+          "lexical_score": 39.19,
+          "logical_page": [
+            59
+          ],
+          "pdf_page": 30,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Điểm nhấn 2025",
+          "is_relevant": false,
+          "content_snippet": "### Điểm nhấn 2025\n\nNăm 2025 đánh dấu một cột mốc bản lề khi Techcombank hoàn thành giai đoạn chiến lược 2020–2025 và xây dựng nền tảng vững chắc cho hành trình 2026–2030, gắn liền với các chương trìn"
+        },
+        {
+          "rank": 3,
+          "chunk_id": 97,
+          "score": 0.9395,
+          "semantic_score": 0.7679,
+          "lexical_score": 36.0,
+          "logical_page": [
+            50
+          ],
+          "pdf_page": 26,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Kết quả hoạt động",
+          "is_relevant": false,
+          "content_snippet": "### Kết quả hoạt động\n\n**THU NHẬP LÃI THUẦN (NII)**\n\nĐạt 38,2 Nghìn tỷ đồng (tăng 7,5% N/N). Năm 2025, thu nhập lãi thuần (NII) tăng 7,5% so với cùng kỳ, đạt 38,2 nghìn tỷ đồng, được thúc đẩy bởi tăng"
+        },
+        {
+          "rank": 4,
+          "chunk_id": 24,
+          "score": 0.9028,
+          "semantic_score": 0.7657,
+          "lexical_score": 33.2,
+          "logical_page": [
+            15
+          ],
+          "pdf_page": 8,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025.",
+          "is_relevant": false,
+          "content_snippet": "### Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025."
+        },
+        {
+          "rank": 5,
+          "chunk_id": 36,
+          "score": 0.8534,
+          "semantic_score": 0.7497,
+          "lexical_score": 32.4,
+          "logical_page": [
+            21
+          ],
+          "pdf_page": 11,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Chiến lược 2026 - 2030",
+          "is_relevant": false,
+          "content_snippet": "### Chiến lược 2026 - 2030\n\nViệt Nam đã xác lập mục tiêu rõ ràng là trở thành nền kinh tế thu nhập cao, lấy đổi mới sáng tạo làm động lực vào năm 2045. Để hiện thực hóa tham vọng này, Chính phủ đã ban"
+        },
+        {
+          "rank": 6,
+          "chunk_id": 134,
+          "score": 0.8118,
+          "semantic_score": 0.7202,
+          "lexical_score": 35.42,
+          "logical_page": [
+            72
+          ],
+          "pdf_page": 37,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Đột phá mô hình phục vụ khách hàng FDI – Nâng tầm trải nghiệm, thúc đẩy tăng trưởng",
+          "is_relevant": false,
+          "content_snippet": "### Đột phá mô hình phục vụ khách hàng FDI (Đầu tư trực tiếp nước ngoài) – Nâng tầm trải nghiệm, thúc đẩy tăng trưởng\n\n**Dư nợ cho vay**\n- 19% N/N\n\n**Huy động**\n- 39% N/N\n\n**Tổng thu nhập hoạt động (T"
+        },
+        {
+          "rank": 7,
+          "chunk_id": 100,
+          "score": 0.8041,
+          "semantic_score": 0.724,
+          "lexical_score": 33.84,
+          "logical_page": [
+            52
+          ],
+          "pdf_page": 27,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "QUẢN TRỊ HIỆU QUẢ CHI PHÍ",
+          "is_relevant": false,
+          "content_snippet": "### QUẢN TRỊ HIỆU QUẢ CHI PHÍ\n\n| Chi phí hoạt động | Tỷ lệ chi phí/thu nhập |\n| :--- | :--- |\n| 16,4 Nghìn Tỷ đồng | 30,8% |\n| ▲ 6,9% N/N | ▼ 1,9% so với 32,7% trong năm 2024 |\n\n**Chi phí số hóa và dữ"
+        },
+        {
+          "rank": 8,
+          "chunk_id": 66,
+          "score": 0.8016,
+          "semantic_score": 0.7367,
+          "lexical_score": 30.7,
+          "logical_page": [
+            35
+          ],
+          "pdf_page": 18,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "2022",
+          "is_relevant": false,
+          "content_snippet": "### 2022 (Tiếp tục)\n\nVới Techcombank, thành công không chỉ là đích đến cuối cùng mà còn được đo lường qua cả một hành trình chuyển đổi, giúp chúng tôi đạt được những cột mốc to lớn. Tiếp nối những thà"
+        },
+        {
+          "rank": 9,
+          "chunk_id": 92,
+          "score": 0.7943,
+          "semantic_score": 0.7412,
+          "lexical_score": 29.01,
+          "logical_page": [
+            47
+          ],
+          "pdf_page": 24,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Vươn tới những tầm cao mới trong năm 2025",
+          "is_relevant": false,
+          "content_snippet": "### Vươn tới những tầm cao mới trong năm 2025\n\n**Kinh tế thế giới đã trải qua một năm 2025 đầy biến động**, với nhiều bất ổn về kinh tế và chính trị, cùng với gián đoạn thương mại do Mỹ tăng thuế đối "
+        },
+        {
+          "rank": 10,
+          "chunk_id": 25,
+          "score": 0.7913,
+          "semantic_score": 0.7423,
+          "lexical_score": 28.51,
+          "logical_page": [
+            15
+          ],
+          "pdf_page": 8,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025.",
+          "is_relevant": false,
+          "content_snippet": "### Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025."
+        },
+        {
+          "rank": 11,
+          "chunk_id": 91,
+          "score": 0.7885,
+          "semantic_score": 0.7397,
+          "lexical_score": 28.84,
+          "logical_page": [
+            46
+          ],
+          "pdf_page": 24,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Báo cáo Kết quả kinh doanh",
+          "is_relevant": false,
+          "content_snippet": "### Báo cáo Kết quả kinh doanh\n\n“Năm 2025, Techcombank ghi nhận mức tăng trưởng mạnh ở cả quy mô và lợi nhuận, vượt mục tiêu kinh doanh đề ra cho cả năm.”\n\n**Ông Alexandre Macaire**\nGiám đốc Tài chính"
+        },
+        {
+          "rank": 12,
+          "chunk_id": 98,
+          "score": 0.7849,
+          "semantic_score": 0.743,
+          "lexical_score": 27.78,
+          "logical_page": [
+            50
+          ],
+          "pdf_page": 26,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Kết quả hoạt động",
+          "is_relevant": false,
+          "content_snippet": "### Kết quả hoạt động\n\nĐạt 1.211 tỷ đồng, tăng 36,9% N/N. Kết quả này nhờ vào danh mục sản phẩm ngoại hối hấp dẫn, đặc biệt là các sản phẩm mới được thiết kế phù hợp với nhu cầu khách hàng cá nhân.\n\n*"
+        },
+        {
+          "rank": 13,
+          "chunk_id": 99,
+          "score": 0.7813,
+          "semantic_score": 0.7355,
+          "lexical_score": 29.17,
+          "logical_page": [
+            51
+          ],
+          "pdf_page": 26,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Kết quả hoạt động",
+          "is_relevant": false,
+          "content_snippet": "### Kết quả hoạt động (Tiếp tục)\n\n**THU NHẬP KHÁC**\n\nĐạt 3,8 Nghìn tỷ đồng (tăng 245% N/N).\n\nLãi thuần hoạt động kinh doanh ngoại hối: 1,6 Nghìn tỷ đồng (tăng 77% N/N).\n\nThu nhập khác, bao gồm lãi từ "
+        },
+        {
+          "rank": 14,
+          "chunk_id": 19,
+          "score": 0.7803,
+          "semantic_score": 0.7349,
+          "lexical_score": 29.22,
+          "logical_page": [
+            11
+          ],
+          "pdf_page": 6,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Thông điệp của Chủ tịch Hội đồng quản trị",
+          "is_relevant": false,
+          "content_snippet": "### Thông điệp của Chủ tịch Hội đồng quản trị (Tiếp tục)\n\nNăm 2025, Techcombank chào đón thêm 2,7 triệu khách hàng mới, nâng tổng số khách hàng phục vụ lên hơn 18 triệu khách hàng cá nhân, hộ kinh doa"
+        },
+        {
+          "rank": 15,
+          "chunk_id": 72,
+          "score": 0.7731,
+          "semantic_score": 0.7442,
+          "lexical_score": 26.43,
+          "logical_page": [
+            35
+          ],
+          "pdf_page": 18,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "2025",
+          "is_relevant": false,
+          "content_snippet": "### 2025\n\n- Đánh dấu năm cuối cùng trong chiến lược chuyển đổi 5 năm của Techcombank - một giai đoạn bước ngoặt chứng kiến Ngân hàng vươn lên từ vị thế ngân hàng tư nhân dẫn đầu thị trường trở thành h"
+        },
+        {
+          "rank": 16,
+          "chunk_id": 131,
+          "score": 0.77,
+          "semantic_score": 0.7298,
+          "lexical_score": 29.44,
+          "logical_page": [
+            69
+          ],
+          "pdf_page": 35,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Tổng quan",
+          "is_relevant": false,
+          "content_snippet": "### Tổng quan\n\nNăm 2025 đánh dấu bước chuyển đổi mạnh mẽ của Khối Ngân hàng Doanh nghiệp và Định chế tài chính (CIBG) trong hành trình thực hiện sứ mệnh đồng hành cùng chiến lược phát triển quốc gia. "
+        },
+        {
+          "rank": 17,
+          "chunk_id": 17,
+          "score": 0.7594,
+          "semantic_score": 0.7103,
+          "lexical_score": 32.94,
+          "logical_page": [
+            11
+          ],
+          "pdf_page": 6,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Thông điệp của Chủ tịch Hội đồng quản trị",
+          "is_relevant": false,
+          "content_snippet": "### Thông điệp của Chủ tịch Hội đồng quản trị (Tiếp tục)\n\nKính gửi Quý cổ đông,\n\nNăm 2025, trong bối cảnh nền kinh tế và địa chính trị toàn cầu vẫn tiềm ẩn nhiều bất ổn, kinh tế Việt Nam tiếp tục thể "
+        },
+        {
+          "rank": 18,
+          "chunk_id": 95,
+          "score": 0.7579,
+          "semantic_score": 0.7182,
+          "lexical_score": 31.01,
+          "logical_page": [
+            49
+          ],
+          "pdf_page": 25,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "ĐIỂM NHẤN TÀI CHÍNH",
+          "is_relevant": false,
+          "content_snippet": "### ĐIỂM NHẤN TÀI CHÍNH (Tiếp tục)\n\nVề mặt hoạt động, năm 2025 ghi nhận việc Ngân hàng tiếp tục củng cố vị thế dẫn đầu thị trường qua việc tiếp tục phát huy các thế mạnh truyền thống.\n\n- #1 về tỷ lệ C"
+        },
+        {
+          "rank": 19,
+          "chunk_id": 175,
+          "score": 0.7543,
+          "semantic_score": 0.7074,
+          "lexical_score": 33.16,
+          "logical_page": [
+            94
+          ],
+          "pdf_page": 48,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Điểm nhấn 2025",
+          "is_relevant": false,
+          "content_snippet": "### Điểm nhấn 2025\n\n**XÂY NỀN TẢNG CHO TĂNG TRƯỞNG BỀN VỮNG**\n\n**Năm 2025 đánh dấu giai đoạn khởi đầu hoạt động của Techcom Life**, không chỉ ghi nhận những kết quả kinh doanh tích cực và hiệu quả vận"
+        },
+        {
+          "rank": 20,
+          "chunk_id": 26,
+          "score": 0.7449,
+          "semantic_score": 0.7289,
+          "lexical_score": 27.38,
+          "logical_page": [
+            16
+          ],
+          "pdf_page": 9,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Kiến tạo giá trị vượt trội cho khách hàng",
+          "is_relevant": false,
+          "content_snippet": "### Kiến tạo giá trị vượt trội cho khách hàng\n\n**Techcombank chào đón 2,7 Triệu khách hàng mới trong năm 2025**\n\n**Chỉ số Nhận biết đầu tiên 23% Xếp thứ hai toàn ngành**\n\nTrong năm 2025, Techcombank c"
+        }
+      ]
+    },
+    {
+      "id": "sq-07",
+      "question": "Dư nợ vay của Khối Ngân hàng Bán lẻ năm 2025 là bao nhiêu và tăng bao nhiêu phần trăm so với năm trước?",
+      "category": "segment_performance",
+      "answerable": true,
+      "gold_printed_pages": [
+        59
+      ],
+      "gold_answer": "328,1 nghìn tỷ đồng, tăng 26,9% so với năm trước.",
+      "total_relevant_in_corpus": 1,
+      "first_hit_rank": 1,
+      "metrics": {
+        "recall@1": 1.0,
+        "ndcg@1": 1.0,
+        "ap@1": 1.0,
+        "recall@3": 1.0,
+        "ndcg@3": 1.0,
+        "ap@3": 1.0,
+        "recall@5": 1.0,
+        "ndcg@5": 1.0,
+        "ap@5": 1.0,
+        "recall@10": 1.0,
+        "ndcg@10": 1.0,
+        "ap@10": 1.0,
+        "recall@20": 1.0,
+        "ndcg@20": 1.0,
+        "ap@20": 1.0
+      },
+      "retrieved_top_k": [
+        {
+          "rank": 1,
+          "chunk_id": 113,
+          "score": 0.9305,
+          "semantic_score": 0.779,
+          "lexical_score": 33.52,
+          "logical_page": [
+            59
+          ],
+          "pdf_page": 30,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Điểm nhấn 2025",
+          "is_relevant": true,
+          "content_snippet": "### Điểm nhấn 2025\n\nNăm 2025 đánh dấu một cột mốc bản lề khi Techcombank hoàn thành giai đoạn chiến lược 2020–2025 và xây dựng nền tảng vững chắc cho hành trình 2026–2030, gắn liền với các chương trìn"
+        },
+        {
+          "rank": 2,
+          "chunk_id": 104,
+          "score": 0.8902,
+          "semantic_score": 0.7294,
+          "lexical_score": 40.36,
+          "logical_page": [
+            54
+          ],
+          "pdf_page": 28,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "ĐA DẠNG HÓA DANH MỤC TÍN DỤNG",
+          "is_relevant": false,
+          "content_snippet": "### ĐA DẠNG HÓA DANH MỤC TÍN DỤNG\n\nDư nợ tín dụng của Ngân hàng mẹ trong năm tăng 18,4% lên 758,3 nghìn tỷ đồng, theo chỉ tiêu tín dụng được NHNN (Ngân hàng Nhà nước Việt Nam) cấp. Dư nợ tín dụng hợp "
+        },
+        {
+          "rank": 3,
+          "chunk_id": 148,
+          "score": 0.8751,
+          "semantic_score": 0.726,
+          "lexical_score": 39.62,
+          "logical_page": [
+            79
+          ],
+          "pdf_page": 40,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Mảng cho vay ký quỹ và ứng trước tiền bán",
+          "is_relevant": false,
+          "content_snippet": "### Mảng cho vay ký quỹ và ứng trước tiền bán\n\nTổng thu nhập lãi của mảng cho vay ký quỹ và ứng trước tiền bán năm 2025\n3.664 Tỷ đồng\n▲ 43% so với năm 2024\n\nQuý 4/2025, thu nhập từ lãi các khoản cho v"
+        },
+        {
+          "rank": 4,
+          "chunk_id": 25,
+          "score": 0.8563,
+          "semantic_score": 0.7298,
+          "lexical_score": 36.93,
+          "logical_page": [
+            15
+          ],
+          "pdf_page": 8,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025.",
+          "is_relevant": false,
+          "content_snippet": "### Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025."
+        },
+        {
+          "rank": 5,
+          "chunk_id": 120,
+          "score": 0.7842,
+          "semantic_score": 0.7154,
+          "lexical_score": 32.99,
+          "logical_page": [
+            63
+          ],
+          "pdf_page": 32,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Tín chấp thông minh - Phê duyệt tự động",
+          "is_relevant": false,
+          "content_snippet": "### Tín chấp thông minh - Phê duyệt tự động\n\n- **Số lượng khách hàng sử dụng sản phẩm**: 303.446 Khách hàng\n- **Dư nợ tín chấp tăng trưởng**: 123% N/N\n\n(1) Dư nợ tín chấp bao gồm số dư thấu chi (Overd"
+        },
+        {
+          "rank": 6,
+          "chunk_id": 105,
+          "score": 0.7813,
+          "semantic_score": 0.7186,
+          "lexical_score": 31.99,
+          "logical_page": [
+            54
+          ],
+          "pdf_page": 28,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "ĐA DẠNG HÓA DANH MỤC TÍN DỤNG",
+          "is_relevant": false,
+          "content_snippet": "### ĐA DẠNG HÓA DANH MỤC TÍN DỤNG\n\nĐối với cho vay khách hàng cá nhân (bao gồm cho vay ký quỹ), chúng tôi cũng đạt đà tăng trưởng vững mạnh 30,8% N/N với dư nợ kỷ lục – 372 nghìn tỷ đồng, đóng góp vào"
+        },
+        {
+          "rank": 7,
+          "chunk_id": 142,
+          "score": 0.7752,
+          "semantic_score": 0.7222,
+          "lexical_score": 30.6,
+          "logical_page": [
+            77
+          ],
+          "pdf_page": 39,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Điểm nhấn 2025",
+          "is_relevant": false,
+          "content_snippet": "### Điểm nhấn 2025\n\n- 2.041 Tỷ đồng: Lợi nhuận trước thuế quý 4/2025, tăng gần 120% so với cùng kỳ năm trước\n- 7.109 Tỷ đồng: Lợi nhuận trước thuế năm 2025, hoàn thành 123% kế hoạch cả năm\n- 80.632 Tỷ"
+        },
+        {
+          "rank": 8,
+          "chunk_id": 114,
+          "score": 0.7671,
+          "semantic_score": 0.7298,
+          "lexical_score": 28.16,
+          "logical_page": [
+            60
+          ],
+          "pdf_page": 31,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Năm 2025 ghi dấu bước phát triển mạnh mẽ của Techcombank trong củng cố năng lực nội tại và duy trì vị thế dẫn đầu thị trường.",
+          "is_relevant": false,
+          "content_snippet": "### Năm 2025 ghi dấu bước phát triển mạnh mẽ của Techcombank trong củng cố năng lực nội tại và duy trì vị thế dẫn đầu thị trường.\n\n- **146%**: Tỷ lệ chuyển đổi từ khách hàng tiềm năng sang giao dịch t"
+        },
+        {
+          "rank": 9,
+          "chunk_id": 115,
+          "score": 0.7582,
+          "semantic_score": 0.7291,
+          "lexical_score": 27.41,
+          "logical_page": [
+            60
+          ],
+          "pdf_page": 31,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Năm 2025 ghi dấu bước phát triển mạnh mẽ của Techcombank trong củng cố năng lực nội tại và duy trì vị thế dẫn đầu thị trường.",
+          "is_relevant": false,
+          "content_snippet": "### Năm 2025 ghi dấu bước phát triển mạnh mẽ của Techcombank trong củng cố năng lực nội tại và duy trì vị thế dẫn đầu thị trường.\n\n- Ngân hàng giao dịch hàng đầu: ~16% thị phần giao dịch NAPAS (Công t"
+        },
+        {
+          "rank": 10,
+          "chunk_id": 102,
+          "score": 0.7565,
+          "semantic_score": 0.6926,
+          "lexical_score": 35.23,
+          "logical_page": [
+            53
+          ],
+          "pdf_page": 27,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "NGUỒN VỐN",
+          "is_relevant": false,
+          "content_snippet": "### NGUỒN VỐN\n\nTechcombank đã tăng trưởng **số dư tổng tiền gửi của khách hàng lên 776,5 nghìn tỷ đồng, tăng 23,0% N/N**, trong khi duy trì chi phí vốn trong nhóm thấp nhất ngành ngân hàng Việt Nam.\n\n"
+        },
+        {
+          "rank": 11,
+          "chunk_id": 112,
+          "score": 0.7562,
+          "semantic_score": 0.7148,
+          "lexical_score": 30.34,
+          "logical_page": [
+            58
+          ],
+          "pdf_page": 30,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Khối Ngân hàng Bán lẻ (RBG)",
+          "is_relevant": false,
+          "content_snippet": "### Khối Ngân hàng Bán lẻ (RBG)\n\n\"Năm 2025 đã tạo dựng nền tảng vững chắc để Techcombank bước vào giai đoạn tăng trưởng mới 2026–2030.\"\n\n**Ông Nguyễn Anh Tuấn**\nGiám đốc Khối Ngân hàng Bán lẻ\n\nBước sa"
+        },
+        {
+          "rank": 12,
+          "chunk_id": 133,
+          "score": 0.7529,
+          "semantic_score": 0.7244,
+          "lexical_score": 27.92,
+          "logical_page": [
+            71
+          ],
+          "pdf_page": 36,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Điểm nhấn 2025",
+          "is_relevant": false,
+          "content_snippet": "### Điểm nhấn 2025\n\nNăm 2025, kinh tế toàn cầu đối mặt với nhiều biến động: tốc độ tăng trưởng chậm lại do lạm phát kéo dài ở một số khu vực và chính sách tiền tệ thắt chặt; chuỗi cung ứng tiếp tục đi"
+        },
+        {
+          "rank": 13,
+          "chunk_id": 716,
+          "score": 0.7353,
+          "semantic_score": 0.7367,
+          "lexical_score": 23.52,
+          "logical_page": [
+            334
+          ],
+          "pdf_page": 168,
+          "chapter": "CHƯƠNG 06: Báo cáo tài chính hợp nhất kiểm toán năm 2025",
+          "heading": "9.4. Phân tích dư nợ theo đối tượng khách hàng, loại hình doanh nghiệp",
+          "is_relevant": false,
+          "content_snippet": "### 9.4. Phân tích dư nợ theo đối tượng khách hàng, loại hình doanh nghiệp\n\n<table><thead><tr><th></th><th>31/12/2025 - Triệu đồng</th><th>31/12/2025 - %</th><th>31/12/2024 - Triệu đồng</th><th>31/12/"
+        },
+        {
+          "rank": 14,
+          "chunk_id": 715,
+          "score": 0.7342,
+          "semantic_score": 0.7435,
+          "lexical_score": 21.91,
+          "logical_page": [
+            333
+          ],
+          "pdf_page": 167,
+          "chapter": "CHƯƠNG 06: Báo cáo tài chính hợp nhất kiểm toán năm 2025",
+          "heading": "9.3. Phân tích dư nợ theo ngành nghề kinh doanh",
+          "is_relevant": false,
+          "content_snippet": "### 9.3. Phân tích dư nợ theo ngành nghề kinh doanh\n\n<table><thead><tr><th></th><th>31/12/2025 - Triệu đồng</th><th>31/12/2025 - %</th><th>31/12/2024 - Triệu đồng</th><th>31/12/2024 - %</th></tr></the"
+        },
+        {
+          "rank": 15,
+          "chunk_id": 97,
+          "score": 0.7336,
+          "semantic_score": 0.6998,
+          "lexical_score": 31.39,
+          "logical_page": [
+            50
+          ],
+          "pdf_page": 26,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Kết quả hoạt động",
+          "is_relevant": false,
+          "content_snippet": "### Kết quả hoạt động\n\n**THU NHẬP LÃI THUẦN (NII)**\n\nĐạt 38,2 Nghìn tỷ đồng (tăng 7,5% N/N). Năm 2025, thu nhập lãi thuần (NII) tăng 7,5% so với cùng kỳ, đạt 38,2 nghìn tỷ đồng, được thúc đẩy bởi tăng"
+        },
+        {
+          "rank": 16,
+          "chunk_id": 23,
+          "score": 0.7267,
+          "semantic_score": 0.6954,
+          "lexical_score": 31.68,
+          "logical_page": [
+            14
+          ],
+          "pdf_page": 8,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025.",
+          "is_relevant": false,
+          "content_snippet": "### Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025."
+        },
+        {
+          "rank": 17,
+          "chunk_id": 95,
+          "score": 0.7241,
+          "semantic_score": 0.6847,
+          "lexical_score": 33.76,
+          "logical_page": [
+            49
+          ],
+          "pdf_page": 25,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "ĐIỂM NHẤN TÀI CHÍNH",
+          "is_relevant": false,
+          "content_snippet": "### ĐIỂM NHẤN TÀI CHÍNH (Tiếp tục)\n\nVề mặt hoạt động, năm 2025 ghi nhận việc Ngân hàng tiếp tục củng cố vị thế dẫn đầu thị trường qua việc tiếp tục phát huy các thế mạnh truyền thống.\n\n- #1 về tỷ lệ C"
+        },
+        {
+          "rank": 18,
+          "chunk_id": 143,
+          "score": 0.7234,
+          "semantic_score": 0.6841,
+          "lexical_score": 33.8,
+          "logical_page": [
+            78
+          ],
+          "pdf_page": 40,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "HIỆU QUẢ HOẠT ĐỘNG",
+          "is_relevant": false,
+          "content_snippet": "### HIỆU QUẢ HOẠT ĐỘNG\n\n**Tỷ suất sinh lời của vốn chủ sở hữu (ROE)**\n16,7%\n\n**Tỷ suất sinh lời của tổng tài sản (ROA)**\n8,4%\n\nLợi nhuận trước thuế quý 4/2025 của TCBS (Công ty Cổ phần Chứng khoán Kỹ "
+        },
+        {
+          "rank": 19,
+          "chunk_id": 641,
+          "score": 0.7134,
+          "semantic_score": 0.6763,
+          "lexical_score": 34.52,
+          "logical_page": [
+            312
+          ],
+          "pdf_page": 157,
+          "chapter": "CHƯƠNG 06: Báo cáo tài chính hợp nhất kiểm toán năm 2025",
+          "heading": "4.6. Phân loại nợ và trích lập dự phòng rủi ro tín dụng",
+          "is_relevant": false,
+          "content_snippet": "### 4.6. Phân loại nợ và trích lập dự phòng rủi ro tín dụng (Tiếp tục)\n\nNgân hàng trích lập dự phòng chung đối với khách hàng có số dư nợ được cơ cấu lại thời hạn trả nợ và giữ nguyên nhóm nợ theo Thô"
+        },
+        {
+          "rank": 20,
+          "chunk_id": 108,
+          "score": 0.7046,
+          "semantic_score": 0.6927,
+          "lexical_score": 30.08,
+          "logical_page": [
+            55
+          ],
+          "pdf_page": 28,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "CHẤT LƯỢNG TÀI SẢN VÀ QUẢN LÝ NỢ XẤU",
+          "is_relevant": false,
+          "content_snippet": "### CHẤT LƯỢNG TÀI SẢN VÀ QUẢN LÝ NỢ XẤU\n\nNgân hàng đã chứng kiến tỷ lệ nợ xấu tăng trong hai quý đầu năm. Tuy nhiên, xu hướng này đã đảo chiều tích cực với mức giảm đáng khích lệ trong quý 3 và quý 4"
+        }
+      ]
+    },
+    {
+      "id": "sq-08",
+      "question": "Theo danh mục thuật ngữ viết tắt của báo cáo, RBG là viết tắt của khối nào?",
+      "category": "terminology",
+      "answerable": true,
+      "gold_printed_pages": [
+        387
+      ],
+      "gold_answer": "Khối Ngân hàng Bán lẻ.",
+      "total_relevant_in_corpus": 1,
+      "first_hit_rank": 2,
+      "metrics": {
+        "recall@1": 0.0,
+        "ndcg@1": 0.0,
+        "ap@1": 0.0,
+        "recall@3": 1.0,
+        "ndcg@3": 0.6309,
+        "ap@3": 0.5,
+        "recall@5": 1.0,
+        "ndcg@5": 0.6309,
+        "ap@5": 0.5,
+        "recall@10": 1.0,
+        "ndcg@10": 0.6309,
+        "ap@10": 0.5,
+        "recall@20": 1.0,
+        "ndcg@20": 0.6309,
+        "ap@20": 0.5
+      },
+      "retrieved_top_k": [
+        {
+          "rank": 1,
+          "chunk_id": 834,
+          "score": 0.7943,
+          "semantic_score": 0.6782,
+          "lexical_score": 41.29,
+          "logical_page": [
+            386
+          ],
+          "pdf_page": 194,
+          "chapter": "Danh mục thuật ngữ viết tắt",
+          "heading": "Danh mục thuật ngữ viết tắt",
+          "is_relevant": false,
+          "content_snippet": "### Danh mục thuật ngữ viết tắt\n\n<table><thead><tr><th>Thuật ngữ</th><th>Định nghĩa</th><th>Thuật ngữ</th><th>Định nghĩa</th><th>Thuật ngữ</th><th>Định nghĩa</th></tr></thead><tbody><tr><td>AEM</td><t"
+        },
+        {
+          "rank": 2,
+          "chunk_id": 835,
+          "score": 0.7305,
+          "semantic_score": 0.6737,
+          "lexical_score": 36.43,
+          "logical_page": [
+            387
+          ],
+          "pdf_page": 194,
+          "chapter": "Danh mục thuật ngữ viết tắt",
+          "heading": "Danh mục thuật ngữ viết tắt",
+          "is_relevant": true,
+          "content_snippet": "### Danh mục thuật ngữ viết tắt (Tiếp tục)\n\n<table><thead><tr><th>Thuật ngữ</th><th>Định nghĩa</th><th>Thuật ngữ</th><th>Định nghĩa</th><th>Thuật ngữ</th><th>Định nghĩa</th></tr></thead><tbody><tr><td"
+        },
+        {
+          "rank": 3,
+          "chunk_id": 112,
+          "score": 0.7186,
+          "semantic_score": 0.7465,
+          "lexical_score": 14.19,
+          "logical_page": [
+            58
+          ],
+          "pdf_page": 30,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Khối Ngân hàng Bán lẻ (RBG)",
+          "is_relevant": false,
+          "content_snippet": "### Khối Ngân hàng Bán lẻ (RBG)\n\n\"Năm 2025 đã tạo dựng nền tảng vững chắc để Techcombank bước vào giai đoạn tăng trưởng mới 2026–2030.\"\n\n**Ông Nguyễn Anh Tuấn**\nGiám đốc Khối Ngân hàng Bán lẻ\n\nBước sa"
+        },
+        {
+          "rank": 4,
+          "chunk_id": 115,
+          "score": 0.5079,
+          "semantic_score": 0.6798,
+          "lexical_score": 13.24,
+          "logical_page": [
+            60
+          ],
+          "pdf_page": 31,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Năm 2025 ghi dấu bước phát triển mạnh mẽ của Techcombank trong củng cố năng lực nội tại và duy trì vị thế dẫn đầu thị trường.",
+          "is_relevant": false,
+          "content_snippet": "### Năm 2025 ghi dấu bước phát triển mạnh mẽ của Techcombank trong củng cố năng lực nội tại và duy trì vị thế dẫn đầu thị trường.\n\n- Ngân hàng giao dịch hàng đầu: ~16% thị phần giao dịch NAPAS (Công t"
+        },
+        {
+          "rank": 5,
+          "chunk_id": 127,
+          "score": 0.5026,
+          "semantic_score": 0.6819,
+          "lexical_score": 12.1,
+          "logical_page": [
+            67
+          ],
+          "pdf_page": 34,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Trọng tâm năm 2026",
+          "is_relevant": false,
+          "content_snippet": "### Trọng tâm năm 2026 (Tiếp tục)\n\nVới định hướng này, Ngân hàng tập trung:\n\n1. **Gia tăng chất lượng và chiều sâu quan hệ với các nhóm khách hàng có giá trị cao** gồm Khách hàng có giá trị tài sản lớ"
+        },
+        {
+          "rank": 6,
+          "chunk_id": 129,
+          "score": 0.5012,
+          "semantic_score": 0.6763,
+          "lexical_score": 13.62,
+          "logical_page": [
+            67
+          ],
+          "pdf_page": 34,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Trọng tâm năm 2026",
+          "is_relevant": false,
+          "content_snippet": "### Trọng tâm năm 2026 (Tiếp tục)\n\nAI (Trí tuệ nhân tạo) được tích hợp vào các nền tảng quản lý quan hệ nhằm nâng cao hiệu quả đội ngũ tư vấn nhờ đưa ra khuyến nghị dựa vào khả năng phân tích hành vi,"
+        },
+        {
+          "rank": 7,
+          "chunk_id": 41,
+          "score": 0.4894,
+          "semantic_score": 0.6166,
+          "lexical_score": 29.76,
+          "logical_page": [
+            26
+          ],
+          "pdf_page": 14,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "TÊN GIAO DỊCH",
+          "is_relevant": false,
+          "content_snippet": "### TÊN GIAO DỊCH\n\n<table>\n<tr><td>Tên tiếng Việt</td><td>NGÂN HÀNG THƯƠNG MẠI CỔ PHẦN KỸ THƯƠNG VIỆT NAM</td></tr>\n<tr><td>Tên tiếng Anh</td><td>VIETNAM TECHNOLOGICAL AND COMMERCIAL JOINT-STOCK BANK<"
+        },
+        {
+          "rank": 8,
+          "chunk_id": 113,
+          "score": 0.4706,
+          "semantic_score": 0.6732,
+          "lexical_score": 11.56,
+          "logical_page": [
+            59
+          ],
+          "pdf_page": 30,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Điểm nhấn 2025",
+          "is_relevant": false,
+          "content_snippet": "### Điểm nhấn 2025\n\nNăm 2025 đánh dấu một cột mốc bản lề khi Techcombank hoàn thành giai đoạn chiến lược 2020–2025 và xây dựng nền tảng vững chắc cho hành trình 2026–2030, gắn liền với các chương trìn"
+        },
+        {
+          "rank": 9,
+          "chunk_id": 117,
+          "score": 0.4609,
+          "semantic_score": 0.6658,
+          "lexical_score": 12.75,
+          "logical_page": [
+            61
+          ],
+          "pdf_page": 31,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Hiện đại hóa mạng lưới",
+          "is_relevant": false,
+          "content_snippet": "### Hiện đại hóa mạng lưới\n\nTrong năm, Ngân hàng đã khai trương 19 chi nhánh mới tại các tỉnh và nâng cấp mặt ngoài của khoảng 75 chi nhánh trên toàn quốc. Những nỗ lực này giúp cải thiện đáng kể khả "
+        },
+        {
+          "rank": 10,
+          "chunk_id": 126,
+          "score": 0.457,
+          "semantic_score": 0.6686,
+          "lexical_score": 11.58,
+          "logical_page": [
+            66
+          ],
+          "pdf_page": 34,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Trọng tâm năm 2026",
+          "is_relevant": false,
+          "content_snippet": "### Trọng tâm năm 2026\n\nGiai đoạn 2026–2030 mở ra một bối cảnh phát triển mới cho Việt Nam khi nền kinh tế bước vào chu kỳ tăng trưởng cao hơn, được thúc đẩy bởi đầu tư công quy mô lớn, dòng vốn FDI ("
+        },
+        {
+          "rank": 11,
+          "chunk_id": 124,
+          "score": 0.4429,
+          "semantic_score": 0.6551,
+          "lexical_score": 14.14,
+          "logical_page": [
+            64
+          ],
+          "pdf_page": 33,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Triển khai thành công giải pháp đầu tư và Techcombank Private Lounge: Đặc quyền dẫn đầu phân khúc Private & Priority, đề cao trải nghiệm cùng người thân",
+          "is_relevant": false,
+          "content_snippet": "### Triển khai thành công giải pháp đầu tư và Techcombank Private Lounge: Đặc quyền dẫn đầu phân khúc Private & Priority, đề cao trải nghiệm cùng người thân\n\nChương trình Private Rewards tiếp tục củng"
+        },
+        {
+          "rank": 12,
+          "chunk_id": 627,
+          "score": 0.4419,
+          "semantic_score": 0.6178,
+          "lexical_score": 24.86,
+          "logical_page": [
+            307
+          ],
+          "pdf_page": 154,
+          "chapter": "CHƯƠNG 06: Báo cáo tài chính hợp nhất kiểm toán năm 2025",
+          "heading": "4. TÓM TẮT CÁC CHÍNH SÁCH KẾ TOÁN CHỦ YẾU > 4.1. Các thay đổi trong các chính sách kế toán",
+          "is_relevant": false,
+          "content_snippet": "### 4. TÓM TẮT CÁC CHÍNH SÁCH KẾ TOÁN CHỦ YẾU\n\n### 4.1. Các thay đổi trong các chính sách kế toán\n\n<table><thead><tr><th>Tỷ lệ phần trăm của lợi nhuận sau thuế</th><th>Mức tối đa</th></tr></thead><tbo"
+        },
+        {
+          "rank": 13,
+          "chunk_id": 121,
+          "score": 0.4347,
+          "semantic_score": 0.6554,
+          "lexical_score": 13.26,
+          "logical_page": [
+            63
+          ],
+          "pdf_page": 32,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Tín chấp thông minh - Phê duyệt tự động",
+          "is_relevant": false,
+          "content_snippet": "### Tín chấp thông minh - Phê duyệt tự động\n\nNhững sáng kiến này tạo nền tảng vững chắc cho việc ra mắt hai sản phẩm tín chấp nổi bật: thấu chi - Overdraft và ShopCash, đáp ứng đồng thời nhu cầu chi t"
+        },
+        {
+          "rank": 14,
+          "chunk_id": 119,
+          "score": 0.4335,
+          "semantic_score": 0.6597,
+          "lexical_score": 11.9,
+          "logical_page": [
+            62
+          ],
+          "pdf_page": 32,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Sinh lời tự động 2.0 - Giải pháp tiên phong định nghĩa tiêu chuẩn mới cho tối ưu nguồn tiền nhàn rỗi trên thị trường",
+          "is_relevant": false,
+          "content_snippet": "### Sinh lời tự động 2.0 - Giải pháp tiên phong định nghĩa tiêu chuẩn mới cho tối ưu nguồn tiền nhàn rỗi trên thị trường\n\nSinh lời Tự động 2.0 không chỉ tạo dấu ấn về tăng trưởng người dùng và gia tăn"
+        },
+        {
+          "rank": 15,
+          "chunk_id": 130,
+          "score": 0.4322,
+          "semantic_score": 0.6687,
+          "lexical_score": 9.16,
+          "logical_page": [
+            68
+          ],
+          "pdf_page": 35,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Khối Ngân hàng Doanh nghiệp và Định chế Tài chính (CIBG)",
+          "is_relevant": false,
+          "content_snippet": "### Khối Ngân hàng Doanh nghiệp và Định chế Tài chính (CIBG)\n\n\"Năm 2025 mở ra một cột mốc phát triển mới cho CIBG (Khối Ngân hàng doanh nghiệp và Định chế tài chính), đánh dấu bước chuyển mình mạnh mẽ"
+        },
+        {
+          "rank": 16,
+          "chunk_id": 615,
+          "score": 0.4313,
+          "semantic_score": 0.6389,
+          "lexical_score": 17.71,
+          "logical_page": [
+            303
+          ],
+          "pdf_page": 152,
+          "chapter": "CHƯƠNG 06: Báo cáo tài chính hợp nhất kiểm toán năm 2025",
+          "heading": "Thuyết minh báo cáo tài chính hợp nhất<br>tại ngày 31 tháng 12 năm 2025 và cho năm tài chính kết thúc cùng ngày<br><br>### 1. THÔNG TIN CHUNG<br><br>Ngân hàng Thương mại Cổ phần Kỹ thương Việt Nam (sau đây gọi tắt là \"Ngân hàng\") là một ngân hàng thương mại cổ phần được thành lập và đăng ký tại nước Cộng hòa Xã hội Chủ nghĩa Việt Nam.<br><br><strong>Thành lập và hoạt động</strong><br>Ngân hàng hoạt động theo Giấy phép thành lập và hoạt động Ngân hàng số 0038/GP-NHNN do Ngân hàng Nhà nước Việt Nam (\"NHNN\") cấp ngày 6 tháng 3 năm 2018 (cấp đổi lại cho Giấy phép hoạt động số 0040/NH-GP cấp ngày 6 tháng 8 năm 1993) và các Quyết định sửa đổi, bổ sung Giấy phép thành lập và hoạt động Ngân hàng từng thời kỳ. Thời gian hoạt động của Ngân hàng là 99 năm kể từ ngày 6 tháng 8 năm 1993.<br><br>Các hoạt động chính của Ngân hàng bao gồm huy động và nhận tiền gửi ngắn, trung và dài hạn từ tổ chức và cá nhân; cung cấp tín dụng ngắn, trung và dài hạn trên tính chất và khả năng cung ứng nguồn vốn của Ngân hàng; thực hiện các nghiệp vụ thanh toán và ngân quỹ và các dịch vụ ngân hàng khác được NHNN cho phép; thực hiện đầu tư vào công ty con, công ty liên kết, công ty liên doanh, và các công ty khác; đầu tư trái phiếu và kinh doanh ngoại tệ theo quy định của pháp luật.<br><br><strong>Vốn điều lệ</strong><br>Vốn điều lệ của Ngân hàng tại ngày 31 tháng 12 năm 2025 là 70.862.404.140.000 đồng (ngày 31 tháng 12 năm 2024: 70.648.517.390.000 đồng).<br><br><strong>Mạng lưới hoạt động</strong><br>Hội sở chính của Ngân hàng đặt tại số 6 Quang Trung, phường Cửa Nam, Hà Nội. Tại ngày 31 tháng 12 năm 2025, Ngân hàng có một (1) Hội sở chính, hai (2) văn phòng đại diện, ba trăm lẻ hai (302) chi nhánh, phòng giao dịch trên cả nước và năm (5) công ty con, một (1) công ty liên kết.",
+          "is_relevant": false,
+          "content_snippet": "### Thuyết minh báo cáo tài chính hợp nhất<br>tại ngày 31 tháng 12 năm 2025 và cho năm tài chính kết thúc cùng ngày<br><br>### 1. THÔNG TIN CHUNG<br><br>Ngân hàng Thương mại Cổ phần Kỹ thương Việt Nam"
+        },
+        {
+          "rank": 17,
+          "chunk_id": 114,
+          "score": 0.4257,
+          "semantic_score": 0.6659,
+          "lexical_score": 9.33,
+          "logical_page": [
+            60
+          ],
+          "pdf_page": 31,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Năm 2025 ghi dấu bước phát triển mạnh mẽ của Techcombank trong củng cố năng lực nội tại và duy trì vị thế dẫn đầu thị trường.",
+          "is_relevant": false,
+          "content_snippet": "### Năm 2025 ghi dấu bước phát triển mạnh mẽ của Techcombank trong củng cố năng lực nội tại và duy trì vị thế dẫn đầu thị trường.\n\n- **146%**: Tỷ lệ chuyển đổi từ khách hàng tiềm năng sang giao dịch t"
+        },
+        {
+          "rank": 18,
+          "chunk_id": 625,
+          "score": 0.417,
+          "semantic_score": 0.6096,
+          "lexical_score": 24.85,
+          "logical_page": [
+            307
+          ],
+          "pdf_page": 154,
+          "chapter": "CHƯƠNG 06: Báo cáo tài chính hợp nhất kiểm toán năm 2025",
+          "heading": "4. TÓM TẮT CÁC CHÍNH SÁCH KẾ TOÁN CHỦ YẾU > 4.1. Các thay đổi trong các chính sách kế toán",
+          "is_relevant": false,
+          "content_snippet": "### 4. TÓM TẮT CÁC CHÍNH SÁCH KẾ TOÁN CHỦ YẾU\n\n### 4.1. Các thay đổi trong các chính sách kế toán\n\n<table><thead><tr><th>Tỷ lệ phần trăm của lợi nhuận sau thuế</th><th>Mức tối đa</th></tr></thead><tbo"
+        },
+        {
+          "rank": 19,
+          "chunk_id": 123,
+          "score": 0.4143,
+          "semantic_score": 0.6501,
+          "lexical_score": 12.84,
+          "logical_page": [
+            64
+          ],
+          "pdf_page": 33,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Triển khai thành công giải pháp đầu tư và Techcombank Private Lounge: Đặc quyền dẫn đầu phân khúc Private & Priority, đề cao trải nghiệm cùng người thân",
+          "is_relevant": false,
+          "content_snippet": "### Triển khai thành công giải pháp đầu tư và Techcombank Private Lounge: Đặc quyền dẫn đầu phân khúc Private & Priority, đề cao trải nghiệm cùng người thân\n\n**Techcombank Private Lounge đã phục vụ**\n"
+        },
+        {
+          "rank": 20,
+          "chunk_id": 591,
+          "score": 0.4114,
+          "semantic_score": 0.6575,
+          "lexical_score": 10.42,
+          "logical_page": [
+            292
+          ],
+          "pdf_page": 147,
+          "chapter": "CHƯƠNG 06: Báo cáo tài chính hợp nhất kiểm toán năm 2025",
+          "heading": "BAN KIỂM SOÁT",
+          "is_relevant": false,
+          "content_snippet": "### BAN KIỂM SOÁT\n\nCác thành viên Ban Kiểm soát của Ngân hàng cho năm tài chính kết thúc ngày 31 tháng 12 năm 2025 và cho đến thời điểm báo cáo tài chính hợp nhất như sau:\n\n<table><thead><tr><th>Họ và"
+        }
+      ]
+    },
+    {
+      "id": "sq-09",
+      "question": "Theo danh mục thuật ngữ viết tắt của báo cáo, CASA là viết tắt của thuật ngữ gì?",
+      "category": "terminology",
+      "answerable": true,
+      "gold_printed_pages": [
+        386
+      ],
+      "gold_answer": "Tiền gửi không kỳ hạn.",
+      "total_relevant_in_corpus": 1,
+      "first_hit_rank": 1,
+      "metrics": {
+        "recall@1": 1.0,
+        "ndcg@1": 1.0,
+        "ap@1": 1.0,
+        "recall@3": 1.0,
+        "ndcg@3": 1.0,
+        "ap@3": 1.0,
+        "recall@5": 1.0,
+        "ndcg@5": 1.0,
+        "ap@5": 1.0,
+        "recall@10": 1.0,
+        "ndcg@10": 1.0,
+        "ap@10": 1.0,
+        "recall@20": 1.0,
+        "ndcg@20": 1.0,
+        "ap@20": 1.0
+      },
+      "retrieved_top_k": [
+        {
+          "rank": 1,
+          "chunk_id": 834,
+          "score": 0.9678,
+          "semantic_score": 0.6959,
+          "lexical_score": 52.06,
+          "logical_page": [
+            386
+          ],
+          "pdf_page": 194,
+          "chapter": "Danh mục thuật ngữ viết tắt",
+          "heading": "Danh mục thuật ngữ viết tắt",
+          "is_relevant": true,
+          "content_snippet": "### Danh mục thuật ngữ viết tắt\n\n<table><thead><tr><th>Thuật ngữ</th><th>Định nghĩa</th><th>Thuật ngữ</th><th>Định nghĩa</th><th>Thuật ngữ</th><th>Định nghĩa</th></tr></thead><tbody><tr><td>AEM</td><t"
+        },
+        {
+          "rank": 2,
+          "chunk_id": 835,
+          "score": 0.8722,
+          "semantic_score": 0.684,
+          "lexical_score": 45.25,
+          "logical_page": [
+            387
+          ],
+          "pdf_page": 194,
+          "chapter": "Danh mục thuật ngữ viết tắt",
+          "heading": "Danh mục thuật ngữ viết tắt",
+          "is_relevant": false,
+          "content_snippet": "### Danh mục thuật ngữ viết tắt (Tiếp tục)\n\n<table><thead><tr><th>Thuật ngữ</th><th>Định nghĩa</th><th>Thuật ngữ</th><th>Định nghĩa</th><th>Thuật ngữ</th><th>Định nghĩa</th></tr></thead><tbody><tr><td"
+        },
+        {
+          "rank": 3,
+          "chunk_id": 9,
+          "score": 0.6697,
+          "semantic_score": 0.7054,
+          "lexical_score": 11.36,
+          "logical_page": [
+            5
+          ],
+          "pdf_page": 3,
+          "chapter": "Chúng tôi là ai",
+          "heading": "Tỷ lệ CASA",
+          "is_relevant": false,
+          "content_snippet": "### Tỷ lệ CASA (Tiền gửi không kỳ hạn)\n\n**40,4%**\nDẫn đầu ngành"
+        },
+        {
+          "rank": 4,
+          "chunk_id": 94,
+          "score": 0.6123,
+          "semantic_score": 0.6811,
+          "lexical_score": 14.43,
+          "logical_page": [
+            48
+          ],
+          "pdf_page": 25,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "ĐIỂM NHẤN TÀI CHÍNH",
+          "is_relevant": false,
+          "content_snippet": "### ĐIỂM NHẤN TÀI CHÍNH\n\n- **Lợi nhuận trước thuế (LNTT)**: 32,5 Nghìn tỷ đồng (▲ 18,2% N/N). Vượt mục tiêu đề ra trong Đại hội đồng cổ đông 31,5 nghìn tỷ đồng.\n- **Tổng thu nhập hoạt động (TOI)**: 53"
+        },
+        {
+          "rank": 5,
+          "chunk_id": 95,
+          "score": 0.5825,
+          "semantic_score": 0.6695,
+          "lexical_score": 15.61,
+          "logical_page": [
+            49
+          ],
+          "pdf_page": 25,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "ĐIỂM NHẤN TÀI CHÍNH",
+          "is_relevant": false,
+          "content_snippet": "### ĐIỂM NHẤN TÀI CHÍNH (Tiếp tục)\n\nVề mặt hoạt động, năm 2025 ghi nhận việc Ngân hàng tiếp tục củng cố vị thế dẫn đầu thị trường qua việc tiếp tục phát huy các thế mạnh truyền thống.\n\n- #1 về tỷ lệ C"
+        },
+        {
+          "rank": 6,
+          "chunk_id": 102,
+          "score": 0.5618,
+          "semantic_score": 0.6631,
+          "lexical_score": 15.74,
+          "logical_page": [
+            53
+          ],
+          "pdf_page": 27,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "NGUỒN VỐN",
+          "is_relevant": false,
+          "content_snippet": "### NGUỒN VỐN\n\nTechcombank đã tăng trưởng **số dư tổng tiền gửi của khách hàng lên 776,5 nghìn tỷ đồng, tăng 23,0% N/N**, trong khi duy trì chi phí vốn trong nhóm thấp nhất ngành ngân hàng Việt Nam.\n\n"
+        },
+        {
+          "rank": 7,
+          "chunk_id": 37,
+          "score": 0.5265,
+          "semantic_score": 0.6448,
+          "lexical_score": 19.02,
+          "logical_page": [
+            22
+          ],
+          "pdf_page": 12,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "ĐỊNH HƯỚNG HOẠT ĐỘNG",
+          "is_relevant": false,
+          "content_snippet": "### ĐỊNH HƯỚNG HOẠT ĐỘNG\n\nTrong năm 2026, chúng tôi sẽ tập trung thực thi có kỷ luật và triển khai ba ưu tiên chiến lược:\n\n1. Thúc đẩy tăng trưởng CASA (Tiền gửi không kỳ hạn) thông qua đẩy nhanh thu "
+        },
+        {
+          "rank": 8,
+          "chunk_id": 119,
+          "score": 0.5108,
+          "semantic_score": 0.6592,
+          "lexical_score": 11.07,
+          "logical_page": [
+            62
+          ],
+          "pdf_page": 32,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Sinh lời tự động 2.0 - Giải pháp tiên phong định nghĩa tiêu chuẩn mới cho tối ưu nguồn tiền nhàn rỗi trên thị trường",
+          "is_relevant": false,
+          "content_snippet": "### Sinh lời tự động 2.0 - Giải pháp tiên phong định nghĩa tiêu chuẩn mới cho tối ưu nguồn tiền nhàn rỗi trên thị trường\n\nSinh lời Tự động 2.0 không chỉ tạo dấu ấn về tăng trưởng người dùng và gia tăn"
+        },
+        {
+          "rank": 9,
+          "chunk_id": 41,
+          "score": 0.5098,
+          "semantic_score": 0.6142,
+          "lexical_score": 29.76,
+          "logical_page": [
+            26
+          ],
+          "pdf_page": 14,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "TÊN GIAO DỊCH",
+          "is_relevant": false,
+          "content_snippet": "### TÊN GIAO DỊCH\n\n<table>\n<tr><td>Tên tiếng Việt</td><td>NGÂN HÀNG THƯƠNG MẠI CỔ PHẦN KỸ THƯƠNG VIỆT NAM</td></tr>\n<tr><td>Tên tiếng Anh</td><td>VIETNAM TECHNOLOGICAL AND COMMERCIAL JOINT-STOCK BANK<"
+        },
+        {
+          "rank": 10,
+          "chunk_id": 627,
+          "score": 0.5055,
+          "semantic_score": 0.6247,
+          "lexical_score": 24.86,
+          "logical_page": [
+            307
+          ],
+          "pdf_page": 154,
+          "chapter": "CHƯƠNG 06: Báo cáo tài chính hợp nhất kiểm toán năm 2025",
+          "heading": "4. TÓM TẮT CÁC CHÍNH SÁCH KẾ TOÁN CHỦ YẾU > 4.1. Các thay đổi trong các chính sách kế toán",
+          "is_relevant": false,
+          "content_snippet": "### 4. TÓM TẮT CÁC CHÍNH SÁCH KẾ TOÁN CHỦ YẾU\n\n### 4.1. Các thay đổi trong các chính sách kế toán\n\n<table><thead><tr><th>Tỷ lệ phần trăm của lợi nhuận sau thuế</th><th>Mức tối đa</th></tr></thead><tbo"
+        },
+        {
+          "rank": 11,
+          "chunk_id": 625,
+          "score": 0.5013,
+          "semantic_score": 0.6235,
+          "lexical_score": 24.85,
+          "logical_page": [
+            307
+          ],
+          "pdf_page": 154,
+          "chapter": "CHƯƠNG 06: Báo cáo tài chính hợp nhất kiểm toán năm 2025",
+          "heading": "4. TÓM TẮT CÁC CHÍNH SÁCH KẾ TOÁN CHỦ YẾU > 4.1. Các thay đổi trong các chính sách kế toán",
+          "is_relevant": false,
+          "content_snippet": "### 4. TÓM TẮT CÁC CHÍNH SÁCH KẾ TOÁN CHỦ YẾU\n\n### 4.1. Các thay đổi trong các chính sách kế toán\n\n<table><thead><tr><th>Tỷ lệ phần trăm của lợi nhuận sau thuế</th><th>Mức tối đa</th></tr></thead><tbo"
+        },
+        {
+          "rank": 12,
+          "chunk_id": 215,
+          "score": 0.5006,
+          "semantic_score": 0.6507,
+          "lexical_score": 13.38,
+          "logical_page": [
+            120
+          ],
+          "pdf_page": 61,
+          "chapter": "CHƯƠNG 04: Hành trình chuyển đổi của Tech",
+          "heading": "Ngân hàng Gia đình và Bạn bè",
+          "is_relevant": false,
+          "content_snippet": "### Ngân hàng Gia đình và Bạn bè\n\nNgân hàng cộng đồng là trụ cột khác biệt của Techcombank trong năm 2025 thông qua việc mở rộng dịch vụ ngân hàng Gia đình và Bạn bè. Ngân hàng Gia đình được nâng cấp "
+        },
+        {
+          "rank": 13,
+          "chunk_id": 210,
+          "score": 0.4946,
+          "semantic_score": 0.6436,
+          "lexical_score": 15.62,
+          "logical_page": [
+            117
+          ],
+          "pdf_page": 59,
+          "chapter": "CHƯƠNG 04: Hành trình chuyển đổi của Tech",
+          "heading": "Tổng quan",
+          "is_relevant": false,
+          "content_snippet": "### Tổng quan\n\n- **1,5x**: Số lượng khách hàng mới qua các kênh số hóa trong năm 2025 so với 2024\n- **16,6%**: Tăng trưởng số dư CASA (Tiền gửi không kỳ hạn) trong năm 2025 nhờ Techcombank sinh lời tự"
+        },
+        {
+          "rank": 14,
+          "chunk_id": 615,
+          "score": 0.4881,
+          "semantic_score": 0.6366,
+          "lexical_score": 17.71,
+          "logical_page": [
+            303
+          ],
+          "pdf_page": 152,
+          "chapter": "CHƯƠNG 06: Báo cáo tài chính hợp nhất kiểm toán năm 2025",
+          "heading": "Thuyết minh báo cáo tài chính hợp nhất<br>tại ngày 31 tháng 12 năm 2025 và cho năm tài chính kết thúc cùng ngày<br><br>### 1. THÔNG TIN CHUNG<br><br>Ngân hàng Thương mại Cổ phần Kỹ thương Việt Nam (sau đây gọi tắt là \"Ngân hàng\") là một ngân hàng thương mại cổ phần được thành lập và đăng ký tại nước Cộng hòa Xã hội Chủ nghĩa Việt Nam.<br><br><strong>Thành lập và hoạt động</strong><br>Ngân hàng hoạt động theo Giấy phép thành lập và hoạt động Ngân hàng số 0038/GP-NHNN do Ngân hàng Nhà nước Việt Nam (\"NHNN\") cấp ngày 6 tháng 3 năm 2018 (cấp đổi lại cho Giấy phép hoạt động số 0040/NH-GP cấp ngày 6 tháng 8 năm 1993) và các Quyết định sửa đổi, bổ sung Giấy phép thành lập và hoạt động Ngân hàng từng thời kỳ. Thời gian hoạt động của Ngân hàng là 99 năm kể từ ngày 6 tháng 8 năm 1993.<br><br>Các hoạt động chính của Ngân hàng bao gồm huy động và nhận tiền gửi ngắn, trung và dài hạn từ tổ chức và cá nhân; cung cấp tín dụng ngắn, trung và dài hạn trên tính chất và khả năng cung ứng nguồn vốn của Ngân hàng; thực hiện các nghiệp vụ thanh toán và ngân quỹ và các dịch vụ ngân hàng khác được NHNN cho phép; thực hiện đầu tư vào công ty con, công ty liên kết, công ty liên doanh, và các công ty khác; đầu tư trái phiếu và kinh doanh ngoại tệ theo quy định của pháp luật.<br><br><strong>Vốn điều lệ</strong><br>Vốn điều lệ của Ngân hàng tại ngày 31 tháng 12 năm 2025 là 70.862.404.140.000 đồng (ngày 31 tháng 12 năm 2024: 70.648.517.390.000 đồng).<br><br><strong>Mạng lưới hoạt động</strong><br>Hội sở chính của Ngân hàng đặt tại số 6 Quang Trung, phường Cửa Nam, Hà Nội. Tại ngày 31 tháng 12 năm 2025, Ngân hàng có một (1) Hội sở chính, hai (2) văn phòng đại diện, ba trăm lẻ hai (302) chi nhánh, phòng giao dịch trên cả nước và năm (5) công ty con, một (1) công ty liên kết.",
+          "is_relevant": false,
+          "content_snippet": "### Thuyết minh báo cáo tài chính hợp nhất<br>tại ngày 31 tháng 12 năm 2025 và cho năm tài chính kết thúc cùng ngày<br><br>### 1. THÔNG TIN CHUNG<br><br>Ngân hàng Thương mại Cổ phần Kỹ thương Việt Nam"
+        },
+        {
+          "rank": 15,
+          "chunk_id": 71,
+          "score": 0.4829,
+          "semantic_score": 0.6416,
+          "lexical_score": 15.0,
+          "logical_page": [
+            35
+          ],
+          "pdf_page": 18,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "2024",
+          "is_relevant": false,
+          "content_snippet": "### 2024\n\n- Tiên phong trên thị trường với thêm một sản phẩm đột phá đầu tiên được ra mắt – Techcombank Sinh lời tự động – tăng số dư CASA (Tiền gửi không kỳ hạn) lên 231 nghìn tỷ đồng, mức cao nhất t"
+        },
+        {
+          "rank": 16,
+          "chunk_id": 626,
+          "score": 0.4592,
+          "semantic_score": 0.6174,
+          "lexical_score": 22.21,
+          "logical_page": [
+            307
+          ],
+          "pdf_page": 154,
+          "chapter": "CHƯƠNG 06: Báo cáo tài chính hợp nhất kiểm toán năm 2025",
+          "heading": "4. TÓM TẮT CÁC CHÍNH SÁCH KẾ TOÁN CHỦ YẾU > 4.1. Các thay đổi trong các chính sách kế toán",
+          "is_relevant": false,
+          "content_snippet": "### 4. TÓM TẮT CÁC CHÍNH SÁCH KẾ TOÁN CHỦ YẾU\n\n### 4.1. Các thay đổi trong các chính sách kế toán\n\n4. Trích lập các quỹ dự phòng tài chính:"
+        },
+        {
+          "rank": 17,
+          "chunk_id": 26,
+          "score": 0.4536,
+          "semantic_score": 0.6351,
+          "lexical_score": 14.11,
+          "logical_page": [
+            16
+          ],
+          "pdf_page": 9,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Kiến tạo giá trị vượt trội cho khách hàng",
+          "is_relevant": false,
+          "content_snippet": "### Kiến tạo giá trị vượt trội cho khách hàng\n\n**Techcombank chào đón 2,7 Triệu khách hàng mới trong năm 2025**\n\n**Chỉ số Nhận biết đầu tiên 23% Xếp thứ hai toàn ngành**\n\nTrong năm 2025, Techcombank c"
+        },
+        {
+          "rank": 18,
+          "chunk_id": 438,
+          "score": 0.4496,
+          "semantic_score": 0.6377,
+          "lexical_score": 12.53,
+          "logical_page": [
+            230
+          ],
+          "pdf_page": 116,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "BÁO CÁO PHÁT TRIỂN BỀN VỮNG 2025",
+          "is_relevant": false,
+          "content_snippet": "### BÁO CÁO PHÁT TRIỂN BỀN VỮNG 2025"
+        },
+        {
+          "rank": 19,
+          "chunk_id": 628,
+          "score": 0.4472,
+          "semantic_score": 0.6058,
+          "lexical_score": 25.59,
+          "logical_page": [
+            307
+          ],
+          "pdf_page": 154,
+          "chapter": "CHƯƠNG 06: Báo cáo tài chính hợp nhất kiểm toán năm 2025",
+          "heading": "4. TÓM TẮT CÁC CHÍNH SÁCH KẾ TOÁN CHỦ YẾU > 4.1. Các thay đổi trong các chính sách kế toán",
+          "is_relevant": false,
+          "content_snippet": "### 4. TÓM TẮT CÁC CHÍNH SÁCH KẾ TOÁN CHỦ YẾU\n\n### 4.1. Các thay đổi trong các chính sách kế toán\n\n5. Việc phân chia phần lợi nhuận còn lại do tổ chức tín dụng, chi nhánh ngân hàng nước ngoài tự quyết"
+        },
+        {
+          "rank": 20,
+          "chunk_id": 624,
+          "score": 0.4469,
+          "semantic_score": 0.6123,
+          "lexical_score": 22.83,
+          "logical_page": [
+            307
+          ],
+          "pdf_page": 154,
+          "chapter": "CHƯƠNG 06: Báo cáo tài chính hợp nhất kiểm toán năm 2025",
+          "heading": "4. TÓM TẮT CÁC CHÍNH SÁCH KẾ TOÁN CHỦ YẾU > 4.1. Các thay đổi trong các chính sách kế toán",
+          "is_relevant": false,
+          "content_snippet": "### 4. TÓM TẮT CÁC CHÍNH SÁCH KẾ TOÁN CHỦ YẾU\n\n### 4.1. Các thay đổi trong các chính sách kế toán\n\nCác chính sách kế toán của Ngân hàng sử dụng để lập báo cáo tài chính hợp nhất được áp dụng nhất quán"
+        }
+      ]
+    },
+    {
+      "id": "sq-10",
+      "question": "Techcombank dự báo lợi nhuận trước thuế năm 2027 là bao nhiêu?",
+      "category": "unanswerable",
+      "answerable": false,
+      "gold_printed_pages": [],
+      "gold_answer": "Không có trong báo cáo. Báo cáo thường niên 2025 không đưa ra dự báo lợi nhuận cho năm 2027; hệ thống cần từ chối trả lời thay vì suy đoán.",
+      "total_relevant_in_corpus": 0,
+      "first_hit_rank": null,
+      "metrics": {},
+      "retrieved_top_k": [
+        {
+          "rank": 1,
+          "chunk_id": 66,
+          "score": 0.8487,
+          "semantic_score": 0.7648,
+          "lexical_score": 14.54,
+          "logical_page": [
+            35
+          ],
+          "pdf_page": 18,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "2022",
+          "is_relevant": false,
+          "content_snippet": "### 2022 (Tiếp tục)\n\nVới Techcombank, thành công không chỉ là đích đến cuối cùng mà còn được đo lường qua cả một hành trình chuyển đổi, giúp chúng tôi đạt được những cột mốc to lớn. Tiếp nối những thà"
+        },
+        {
+          "rank": 2,
+          "chunk_id": 507,
+          "score": 0.8436,
+          "semantic_score": 0.7631,
+          "lexical_score": 14.49,
+          "logical_page": [
+            257
+          ],
+          "pdf_page": 129,
+          "chapter": "CHƯƠNG 05: Nền tảng vững vàng của Tech",
+          "heading": "Xã hội",
+          "is_relevant": false,
+          "content_snippet": "### Xã hội (Tiếp tục)\n\n**Lợi nhuận trước thuế**\n\nKhả năng sinh lời được cải thiện theo thời gian, nhờ kiểm soát chi phí hiệu quả, thu nhập cốt lõi bền vững và khả năng nâng cao hiệu quả vận hành.\n\n<ta"
+        },
+        {
+          "rank": 3,
+          "chunk_id": 3,
+          "score": 0.8022,
+          "semantic_score": 0.7251,
+          "lexical_score": 17.92,
+          "logical_page": [
+            5
+          ],
+          "pdf_page": 3,
+          "chapter": "Chúng tôi là ai",
+          "heading": "Lợi nhuận trước thuế",
+          "is_relevant": false,
+          "content_snippet": "### Lợi nhuận trước thuế\n\n**32,5**\nNghìn tỷ đồng\nTăng trưởng kép 2018–2025: **17,3%**"
+        },
+        {
+          "rank": 4,
+          "chunk_id": 142,
+          "score": 0.801,
+          "semantic_score": 0.7323,
+          "lexical_score": 16.74,
+          "logical_page": [
+            77
+          ],
+          "pdf_page": 39,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Điểm nhấn 2025",
+          "is_relevant": false,
+          "content_snippet": "### Điểm nhấn 2025\n\n- 2.041 Tỷ đồng: Lợi nhuận trước thuế quý 4/2025, tăng gần 120% so với cùng kỳ năm trước\n- 7.109 Tỷ đồng: Lợi nhuận trước thuế năm 2025, hoàn thành 123% kế hoạch cả năm\n- 80.632 Tỷ"
+        },
+        {
+          "rank": 5,
+          "chunk_id": 24,
+          "score": 0.7937,
+          "semantic_score": 0.7501,
+          "lexical_score": 13.58,
+          "logical_page": [
+            15
+          ],
+          "pdf_page": 8,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025.",
+          "is_relevant": false,
+          "content_snippet": "### Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025."
+        },
+        {
+          "rank": 6,
+          "chunk_id": 23,
+          "score": 0.7638,
+          "semantic_score": 0.732,
+          "lexical_score": 14.61,
+          "logical_page": [
+            14
+          ],
+          "pdf_page": 8,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025.",
+          "is_relevant": false,
+          "content_snippet": "### Dựa trên nền tảng vĩ mô thuận lợi, cùng với thành quả chuyển đổi suốt 5 năm qua và kỷ luật thực thi nhất quán, Techcombank tiếp tục ghi nhận kết quả tài chính - kinh doanh ấn tượng trong năm 2025."
+        },
+        {
+          "rank": 7,
+          "chunk_id": 18,
+          "score": 0.7537,
+          "semantic_score": 0.7595,
+          "lexical_score": 9.8,
+          "logical_page": [
+            11
+          ],
+          "pdf_page": 6,
+          "chapter": "CHƯƠNG 01: Tầm nhìn của Tech",
+          "heading": "Thông điệp của Chủ tịch Hội đồng quản trị",
+          "is_relevant": false,
+          "content_snippet": "### Thông điệp của Chủ tịch Hội đồng quản trị (Tiếp tục)\n\nVới một hệ sinh thái toàn diện, Techcombank đang khai thác ngày càng hiệu quả sức mạnh cộng hưởng của các sản phẩm dịch vụ tích hợp, mang đến "
+        },
+        {
+          "rank": 8,
+          "chunk_id": 4,
+          "score": 0.7306,
+          "semantic_score": 0.7215,
+          "lexical_score": 14.28,
+          "logical_page": [
+            5
+          ],
+          "pdf_page": 3,
+          "chapter": "Chúng tôi là ai",
+          "heading": "Lợi nhuận sau thuế",
+          "is_relevant": false,
+          "content_snippet": "### Lợi nhuận sau thuế\n\n**26,0**\nNghìn tỷ đồng\nTăng trưởng kép 2018–2025: **17,3%**"
+        },
+        {
+          "rank": 9,
+          "chunk_id": 608,
+          "score": 0.7278,
+          "semantic_score": 0.7098,
+          "lexical_score": 15.92,
+          "logical_page": [
+            300
+          ],
+          "pdf_page": 151,
+          "chapter": "CHƯƠNG 06: Báo cáo tài chính hợp nhất kiểm toán năm 2025",
+          "heading": "Báo cáo kết quả hoạt động hợp nhất",
+          "is_relevant": false,
+          "content_snippet": "### Báo cáo kết quả hoạt động hợp nhất\n\n<table><thead><tr><th></th><th>Thuyết minh</th><th>2025 (Triệu đồng)</th><th>2024 (Triệu đồng)</th></tr></thead><tbody><tr><td>Thu nhập lãi và các khoản thu nhậ"
+        },
+        {
+          "rank": 10,
+          "chunk_id": 97,
+          "score": 0.7233,
+          "semantic_score": 0.727,
+          "lexical_score": 13.01,
+          "logical_page": [
+            50
+          ],
+          "pdf_page": 26,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Kết quả hoạt động",
+          "is_relevant": false,
+          "content_snippet": "### Kết quả hoạt động\n\n**THU NHẬP LÃI THUẦN (NII)**\n\nĐạt 38,2 Nghìn tỷ đồng (tăng 7,5% N/N). Năm 2025, thu nhập lãi thuần (NII) tăng 7,5% so với cùng kỳ, đạt 38,2 nghìn tỷ đồng, được thúc đẩy bởi tăng"
+        },
+        {
+          "rank": 11,
+          "chunk_id": 91,
+          "score": 0.7126,
+          "semantic_score": 0.7406,
+          "lexical_score": 10.29,
+          "logical_page": [
+            46
+          ],
+          "pdf_page": 24,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Báo cáo Kết quả kinh doanh",
+          "is_relevant": false,
+          "content_snippet": "### Báo cáo Kết quả kinh doanh\n\n“Năm 2025, Techcombank ghi nhận mức tăng trưởng mạnh ở cả quy mô và lợi nhuận, vượt mục tiêu kinh doanh đề ra cho cả năm.”\n\n**Ông Alexandre Macaire**\nGiám đốc Tài chính"
+        },
+        {
+          "rank": 12,
+          "chunk_id": 64,
+          "score": 0.7047,
+          "semantic_score": 0.7122,
+          "lexical_score": 14.19,
+          "logical_page": [
+            34
+          ],
+          "pdf_page": 18,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "2021",
+          "is_relevant": false,
+          "content_snippet": "### 2021\n\n- Thực thi chiến lược 2021-2025 \"Chuyển đổi ngành tài chính, nâng tầm giá trị sống\", với trọng tâm mạnh mẽ vào chuyển đổi số và dữ liệu\n- Xây dựng hạ tầng điện toán đám mây và trở thành một "
+        },
+        {
+          "rank": 13,
+          "chunk_id": 755,
+          "score": 0.6924,
+          "semantic_score": 0.6855,
+          "lexical_score": 17.58,
+          "logical_page": [
+            350
+          ],
+          "pdf_page": 176,
+          "chapter": "CHƯƠNG 06: Báo cáo tài chính hợp nhất kiểm toán năm 2025",
+          "heading": "22.1. Thuế thu nhập doanh nghiệp hiện hành",
+          "is_relevant": false,
+          "content_snippet": "### 22.1. Thuế thu nhập doanh nghiệp hiện hành\n\n<table><thead><tr><th></th><th>2025 (Triệu đồng)</th><th>2024 (Triệu đồng)</th></tr></thead><tbody><tr><td>Tổng lợi nhuận trước thuế</td><td>32.538.066<"
+        },
+        {
+          "rank": 14,
+          "chunk_id": 143,
+          "score": 0.6883,
+          "semantic_score": 0.7094,
+          "lexical_score": 13.67,
+          "logical_page": [
+            78
+          ],
+          "pdf_page": 40,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "HIỆU QUẢ HOẠT ĐỘNG",
+          "is_relevant": false,
+          "content_snippet": "### HIỆU QUẢ HOẠT ĐỘNG\n\n**Tỷ suất sinh lời của vốn chủ sở hữu (ROE)**\n16,7%\n\n**Tỷ suất sinh lời của tổng tài sản (ROA)**\n8,4%\n\nLợi nhuận trước thuế quý 4/2025 của TCBS (Công ty Cổ phần Chứng khoán Kỹ "
+        },
+        {
+          "rank": 15,
+          "chunk_id": 831,
+          "score": 0.6755,
+          "semantic_score": 0.6712,
+          "lexical_score": 18.78,
+          "logical_page": [
+            383
+          ],
+          "pdf_page": 192,
+          "chapter": "CHƯƠNG 06: Báo cáo tài chính hợp nhất kiểm toán năm 2025",
+          "heading": "48. THUYẾT MINH VỀ BIẾN ĐỘNG LỢI NHUẬN",
+          "is_relevant": false,
+          "content_snippet": "### 48. THUYẾT MINH VỀ BIẾN ĐỘNG LỢI NHUẬN\n\nLợi nhuận sau thuế của Ngân hàng lũy kế cho năm tài chính kết thúc ngày 31 tháng 12 năm 2025 tăng 4.194.368 triệu đồng tương đương tăng 19,28% so với năm tà"
+        },
+        {
+          "rank": 16,
+          "chunk_id": 160,
+          "score": 0.6695,
+          "semantic_score": 0.7072,
+          "lexical_score": 12.9,
+          "logical_page": [
+            84
+          ],
+          "pdf_page": 43,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Công Ty Cổ Phần Quản Lý Quỹ Kỹ Thương (Techcom Capital – TCC) > Điểm nhấn 2025",
+          "is_relevant": false,
+          "content_snippet": "### Công Ty Cổ Phần Quản Lý Quỹ Kỹ Thương (Techcom Capital – TCC)\n\n### Điểm nhấn 2025\n\n- **Tổng tài sản đạt**: 1.181 Tỷ đồng\n- **11/12/2025 Nhà đầu tư**: 50.000\n- **Tổng doanh thu**: 326 Tỷ đồng (tăng"
+        },
+        {
+          "rank": 17,
+          "chunk_id": 94,
+          "score": 0.663,
+          "semantic_score": 0.717,
+          "lexical_score": 11.02,
+          "logical_page": [
+            48
+          ],
+          "pdf_page": 25,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "ĐIỂM NHẤN TÀI CHÍNH",
+          "is_relevant": false,
+          "content_snippet": "### ĐIỂM NHẤN TÀI CHÍNH\n\n- **Lợi nhuận trước thuế (LNTT)**: 32,5 Nghìn tỷ đồng (▲ 18,2% N/N). Vượt mục tiêu đề ra trong Đại hội đồng cổ đông 31,5 nghìn tỷ đồng.\n- **Tổng thu nhập hoạt động (TOI)**: 53"
+        },
+        {
+          "rank": 18,
+          "chunk_id": 149,
+          "score": 0.6589,
+          "semantic_score": 0.7153,
+          "lexical_score": 11.04,
+          "logical_page": [
+            79
+          ],
+          "pdf_page": 40,
+          "chapter": "CHƯƠNG 03: Thành tựu của Tech",
+          "heading": "Biểu đồ Dư nợ cho vay và ứng trước tiền bán / Lợi nhuận thuần",
+          "is_relevant": false,
+          "content_snippet": "### Biểu đồ Dư nợ cho vay và ứng trước tiền bán / Lợi nhuận thuần\n\n- 4Q24: 25.911\n- 1Q25: 30.472\n- 2Q25: 33.806\n- 3Q25: 41.713\n- 4Q25: 43.860"
+        },
+        {
+          "rank": 19,
+          "chunk_id": 682,
+          "score": 0.6392,
+          "semantic_score": 0.6399,
+          "lexical_score": 21.47,
+          "logical_page": [
+            323
+          ],
+          "pdf_page": 162,
+          "chapter": "CHƯƠNG 06: Báo cáo tài chính hợp nhất kiểm toán năm 2025",
+          "heading": "4.21. Thuế",
+          "is_relevant": false,
+          "content_snippet": "### 4.21. Thuế\n\nThuế thu nhập doanh nghiệp trên số lãi hoặc lỗ trong năm bao gồm thuế thu nhập hiện hành và thuế thu nhập hoãn lại. Thuế thu nhập doanh nghiệp được ghi nhận trong báo cáo kết quả hoạt "
+        },
+        {
+          "rank": 20,
+          "chunk_id": 62,
+          "score": 0.6353,
+          "semantic_score": 0.7043,
+          "lexical_score": 11.35,
+          "logical_page": [
+            34
+          ],
+          "pdf_page": 18,
+          "chapter": "CHƯƠNG 02: Câu chuyện của Tech",
+          "heading": "2016",
+          "is_relevant": false,
+          "content_snippet": "### 2016\n\n- Bước vào giai đoạn bứt phá với sự ra mắt và triển khai chiến lược 2016-2020 để trở thành ngân hàng dẫn dắt đời sống tài chính của người dân Việt Nam và là ngân hàng số 1 Việt Nam\n- Lợi nhu"
+        }
+      ]
+    }
+  ]
+}

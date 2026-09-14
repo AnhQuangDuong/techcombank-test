@@ -1,0 +1,82 @@
+[
+  {
+    "id": "sq-01",
+    "category": "company_profile",
+    "question": "Tính đến năm 2025, Techcombank có bao nhiêu chi nhánh và phòng giao dịch, và hiện diện tại bao nhiêu tỉnh thành?",
+    "gold_answer": "302 chi nhánh và phòng giao dịch, tại 29 trên 34 tỉnh thành trên toàn quốc.",
+    "gold_printed_pages": [4],
+    "answerable": true
+  },
+  {
+    "id": "sq-02",
+    "category": "company_profile",
+    "question": "Năm 2025, Techcombank được S&P Global Ratings và Fitch Ratings xếp hạng tín nhiệm ở mức nào?",
+    "gold_answer": "S&P Global Ratings nâng xếp hạng lên mức BB với triển vọng Ổn định. Fitch Ratings lần đầu tiên xếp hạng tín nhiệm dài hạn ở mức BB- với triển vọng Tích cực.",
+    "gold_printed_pages": [4],
+    "answerable": true
+  },
+  {
+    "id": "sq-03",
+    "category": "key_figures",
+    "question": "Tổng tài sản của Techcombank tại ngày 31/12/2025 là bao nhiêu?",
+    "gold_answer": "1.192 nghìn tỷ đồng, tăng 21,8% so với năm trước.",
+    "gold_printed_pages": [5],
+    "answerable": true
+  },
+  {
+    "id": "sq-04",
+    "category": "key_figures",
+    "question": "Tỷ lệ CASA của Techcombank năm 2025 là bao nhiêu?",
+    "gold_answer": "40,4%, dẫn đầu ngành.",
+    "gold_printed_pages": [5],
+    "answerable": true
+  },
+  {
+    "id": "sq-05",
+    "category": "key_figures",
+    "question": "Tỷ lệ nợ xấu của Techcombank năm 2025 là bao nhiêu?",
+    "gold_answer": "1,13%, thuộc nhóm chất lượng tài sản tốt nhất thị trường.",
+    "gold_printed_pages": [5],
+    "answerable": true
+  },
+  {
+    "id": "sq-06",
+    "category": "key_figures",
+    "question": "Tổng thu nhập hoạt động năm 2025 của Techcombank là bao nhiêu, và tốc độ tăng trưởng kép giai đoạn 2018–2025 của chỉ tiêu này là bao nhiêu?",
+    "gold_answer": "53,4 nghìn tỷ đồng, với tốc độ tăng trưởng kép giai đoạn 2018–2025 là 16,5%.",
+    "gold_printed_pages": [5],
+    "answerable": true
+  },
+  {
+    "id": "sq-07",
+    "category": "segment_performance",
+    "question": "Dư nợ vay của Khối Ngân hàng Bán lẻ năm 2025 là bao nhiêu và tăng bao nhiêu phần trăm so với năm trước?",
+    "gold_answer": "328,1 nghìn tỷ đồng, tăng 26,9% so với năm trước.",
+    "gold_printed_pages": [59],
+    "answerable": true
+  },
+  {
+    "id": "sq-08",
+    "category": "terminology",
+    "question": "Theo danh mục thuật ngữ viết tắt của báo cáo, RBG là viết tắt của khối nào?",
+    "gold_answer": "Khối Ngân hàng Bán lẻ.",
+    "gold_printed_pages": [387],
+    "answerable": true
+  },
+  {
+    "id": "sq-09",
+    "category": "terminology",
+    "question": "Theo danh mục thuật ngữ viết tắt của báo cáo, CASA là viết tắt của thuật ngữ gì?",
+    "gold_answer": "Tiền gửi không kỳ hạn.",
+    "gold_printed_pages": [386],
+    "answerable": true
+  },
+  {
+    "id": "sq-10",
+    "category": "unanswerable",
+    "question": "Techcombank dự báo lợi nhuận trước thuế năm 2027 là bao nhiêu?",
+    "gold_answer": "Không có trong báo cáo. Báo cáo thường niên 2025 không đưa ra dự báo lợi nhuận cho năm 2027; hệ thống cần từ chối trả lời thay vì suy đoán.",
+    "gold_printed_pages": [],
+    "answerable": false
+  }
+]
