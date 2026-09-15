@@ -17,7 +17,7 @@ import logging
 import os
 import sys
 import time
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Tuple
 
 from dotenv import load_dotenv
 from google import genai
@@ -25,10 +25,7 @@ from google.genai import types
 
 from search_qdrant import HybridSearchEngine, SearchResult
 
-logging.basicConfig(
-    level=logging.WARNING,
-    format="%(asctime)s [%(levelname)s] %(message)s"
-)
+logging.basicConfig(level=logging.WARNING, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)
 
 
@@ -93,12 +90,7 @@ Nhiệm vụ:
 - CHỈ TRẢ VỀ DUY NHẤT CÂU TRUY VẤN ĐƯỢC VIẾT LẠI, không thêm lời giải thích nào khác."""
 
 
-def rephrase_query_if_needed(
-    client: genai.Client,
-    model: str,
-    history: List[Dict[str, str]],
-    query: str
-) -> str:
+def rephrase_query_if_needed(client: genai.Client, model: str, history: List[Dict[str, str]], query: str) -> str:
     """
     Nếu chưa có lịch sử chat (lượt 1), trả về câu hỏi gốc.
     Nếu đã có lịch sử chat (lượt 2+), gọi Gemini LLM để viết lại câu hỏi thành standalone query.
@@ -113,13 +105,12 @@ def rephrase_query_if_needed(
             model=model,
             contents=[prompt],
             config=types.GenerateContentConfig(
-                temperature=0.0,
-                automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True)
-            )
+                temperature=0.0, automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True)
+            ),
         )
         rephrased = response.text.strip()
         # Loại bỏ dấu ngoặc kép thừa nếu có
-        rephrased = rephrased.strip('"\'')
+        rephrased = rephrased.strip("\"'")
         return rephrased if rephrased else cleaned_query
     except Exception as e:
         logger.warning(f"Lỗi khi rephrase query: {e}. Sử dụng query gốc.")
@@ -142,18 +133,14 @@ CÁC NGUYÊN TẮC BẮT BUỘC:
 2. QUY TẮC TỪ CHỐI KHI THIẾU THÔNG TIN: Nếu các đoạn tài liệu được cung cấp KHÔNG CHỨA THÔNG TIN hoặc KHÔNG ĐỦ CƠ SỞ để trả lời câu hỏi, bạn BẮT BUỘC phải trả lời chính xác câu sau:
    "Tôi không đủ thông tin để trả lời câu hỏi này."
    (Không tự tiện suy diễn hoặc cố gắng trả lời một phần khi không chắc chắn).
-3. QUY TẮC TRÍCH DẪN NGUỒN TRANG [tr x, y]: 
+3. QUY TẮC TRÍCH DẪN NGUỒN TRANG [tr x, y]:
    - Sau mỗi ý khẳng định, nhận định hoặc số liệu cụ thể lấy từ tài liệu, bạn BẮT BUỘC phải ghi rõ số trang tương ứng ngay cạnh ý đó theo định dạng [tr x] hoặc [tr x, y].
    - Ví dụ: "Tỷ lệ CASA năm 2025 của Techcombank đạt 40,4% [tr 5, 53], tiếp tục dẫn đầu toàn ngành ngân hàng [tr 5]."
 4. VĂN PHONG: Khách quan, trung thực, gãy gọn, chuẩn xác theo thuật ngữ và số liệu tài chính."""
 
 
 def generate_answer_with_rag(
-    client: genai.Client,
-    model: str,
-    context: str,
-    history: List[Dict[str, str]],
-    user_query: str
+    client: genai.Client, model: str, context: str, history: List[Dict[str, str]], user_query: str
 ) -> str:
     """
     Tạo câu trả lời RAG dựa trên context được retrieve và lịch sử hội thoại.
@@ -165,12 +152,7 @@ def generate_answer_with_rag(
     for turn in history[-6:]:  # Giữ tối đa 6 lượt chat gần nhất
         role = turn.get("role", "user")
         text = turn.get("text", "")
-        contents.append(
-            types.Content(
-                role=role,
-                parts=[types.Part.from_text(text=text)]
-            )
-        )
+        contents.append(types.Content(role=role, parts=[types.Part.from_text(text=text)]))
 
     # Lượt hiện tại đính kèm ngữ cảnh tài liệu vừa retrieve
     current_prompt = f"""[NGỮ CẢNH TÀI LIỆU ĐƯỢC CUNG CẤP]:
@@ -181,12 +163,7 @@ def generate_answer_with_rag(
 
 Hãy trả lời câu hỏi trên dựa trên [NGỮ CẢNH TÀI LIỆU ĐƯỢC CUNG CẤP] theo đúng các quy tắc bắt buộc (đính kèm trích dẫn [tr x, y] hoặc từ chối nếu không đủ thông tin):"""
 
-    contents.append(
-        types.Content(
-            role="user",
-            parts=[types.Part.from_text(text=current_prompt)]
-        )
-    )
+    contents.append(types.Content(role="user", parts=[types.Part.from_text(text=current_prompt)]))
 
     try:
         response = client.models.generate_content(
@@ -195,8 +172,8 @@ Hãy trả lời câu hỏi trên dựa trên [NGỮ CẢNH TÀI LIỆU ĐƯỢC
             config=types.GenerateContentConfig(
                 system_instruction=system_prompt,
                 temperature=0.1,
-                automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True)
-            )
+                automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
+            ),
         )
         return response.text.strip()
     except Exception as e:
@@ -214,7 +191,7 @@ class ChatbotSession:
         index_file: str = "output_indexs.json",
         qdrant_path: str = "./qdrant_storage",
         collection_name: str = "techcombank_chunks",
-        top_k: int = 7
+        top_k: int = 7,
     ):
         self.api_key, self.llm_model, self.embedding_model = get_chatbot_config()
         self.client = genai.Client(api_key=self.api_key)
@@ -223,9 +200,7 @@ class ChatbotSession:
 
         # Khởi tạo engine tìm kiếm lai
         self.engine = HybridSearchEngine(
-            index_file=index_file,
-            qdrant_path=qdrant_path,
-            collection_name=collection_name
+            index_file=index_file, qdrant_path=qdrant_path, collection_name=collection_name
         )
 
     def reset(self):
@@ -242,9 +217,7 @@ class ChatbotSession:
         5. Cập nhật lịch sử hội thoại.
         """
         # 1. Rephrase query nếu cần
-        search_query = rephrase_query_if_needed(
-            self.client, self.llm_model, self.history, user_query
-        )
+        search_query = rephrase_query_if_needed(self.client, self.llm_model, self.history, user_query)
 
         # 2. Retrieve tài liệu liên quan
         retrieved_chunks = self.engine.search(query=search_query, top_k=self.top_k)
@@ -254,11 +227,7 @@ class ChatbotSession:
 
         # 4. Sinh câu trả lời
         answer = generate_answer_with_rag(
-            client=self.client,
-            model=self.llm_model,
-            context=context_str,
-            history=self.history,
-            user_query=user_query
+            client=self.client, model=self.llm_model, context=context_str, history=self.history, user_query=user_query
         )
 
         # 5. Lưu vào lịch sử hội thoại
@@ -273,47 +242,28 @@ def run_cli():
         description="Interactive Chatbot with Conversational RAG for Techcombank Annual Report."
     )
     parser.add_argument(
-        "--index-file",
-        default="output_indexs.json",
-        help="Đường dẫn file index (mặc định: output_indexs.json)"
+        "--index-file", default="output_indexs.json", help="Đường dẫn file index (mặc định: output_indexs.json)"
     )
     parser.add_argument(
-        "--qdrant-path",
-        default="./qdrant_storage",
-        help="Thư mục Qdrant Local (mặc định: ./qdrant_storage)"
+        "--qdrant-path", default="./qdrant_storage", help="Thư mục Qdrant Local (mặc định: ./qdrant_storage)"
+    )
+    parser.add_argument("--top-k", type=int, default=7, help="Số lượng chunks retrieve (mặc định: 7)")
+    parser.add_argument(
+        "--query", type=str, default=None, help="Câu hỏi chạy một lần (nếu không truyền sẽ mở chế độ chat tương tác)"
     )
     parser.add_argument(
-        "--top-k",
-        type=int,
-        default=7,
-        help="Số lượng chunks retrieve (mặc định: 7)"
-    )
-    parser.add_argument(
-        "--query",
-        type=str,
-        default=None,
-        help="Câu hỏi chạy một lần (nếu không truyền sẽ mở chế độ chat tương tác)"
-    )
-    parser.add_argument(
-        "--batch",
-        type=str,
-        default=None,
-        help="Đường dẫn file JSON câu hỏi chạy batch (ví dụ: sample_questions.json)"
+        "--batch", type=str, default=None, help="Đường dẫn file JSON câu hỏi chạy batch (ví dụ: sample_questions.json)"
     )
     parser.add_argument(
         "--delay",
         type=float,
         default=4.0,
-        help="Khoảng nghỉ (giây) giữa các câu hỏi trong batch để tránh rate limit (mặc định: 4.0s)"
+        help="Khoảng nghỉ (giây) giữa các câu hỏi trong batch để tránh rate limit (mặc định: 4.0s)",
     )
 
     args = parser.parse_args()
 
-    session = ChatbotSession(
-        index_file=args.index_file,
-        qdrant_path=args.qdrant_path,
-        top_k=args.top_k
-    )
+    session = ChatbotSession(index_file=args.index_file, qdrant_path=args.qdrant_path, top_k=args.top_k)
 
     if args.batch:
         with open(args.batch, "r", encoding="utf-8") as f:

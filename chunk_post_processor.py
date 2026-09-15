@@ -16,14 +16,11 @@ import argparse
 import json
 import logging
 import re
-from pathlib import Path
 from typing import Dict, List, Optional, Tuple
+
 from bs4 import BeautifulSoup
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)
 
 
@@ -45,7 +42,9 @@ def find_abbreviation_logical_pages(toc_path: str) -> List[int]:
 
     if not target_pages:
         # Fallback nếu cấu trúc key khác
-        logger.warning("Không tìm thấy chương 'Danh mục thuật ngữ viết tắt' theo key. Sử dụng trang mặc định [386, 387].")
+        logger.warning(
+            "Không tìm thấy chương 'Danh mục thuật ngữ viết tắt' theo key. Sử dụng trang mặc định [386, 387]."
+        )
         target_pages = [386, 387]
 
     return sorted(list(set(target_pages)))
@@ -80,7 +79,7 @@ def parse_term_entry(raw_term: str, raw_defn: str) -> List[Tuple[str, str]]:
 def extract_abbreviations_from_gemini(
     toc_path: str = "toc.json",
     gemini_path: str = "output_gemini.json",
-    save_dict_path: Optional[str] = "abbreviations.json"
+    save_dict_path: Optional[str] = "abbreviations.json",
 ) -> Dict[str, str]:
     """
     Trích xuất từ điển viết tắt từ output_gemini.json dựa trên các trang chỉ định trong toc.json.
@@ -141,9 +140,7 @@ def build_pattern(term: str) -> re.Pattern:
 
 
 def expand_abbreviations_in_text(
-    text: str,
-    abbr_dict: Dict[str, str],
-    compiled_patterns: Optional[List[Tuple[str, str, re.Pattern]]] = None
+    text: str, abbr_dict: Dict[str, str], compiled_patterns: Optional[List[Tuple[str, str, re.Pattern]]] = None
 ) -> str:
     """
     Thay thế từ viết tắt trong văn bản bằng: Term (Meaning).
@@ -152,10 +149,7 @@ def expand_abbreviations_in_text(
     if compiled_patterns is None:
         # Sắp xếp các từ theo độ dài giảm dần để ưu tiên từ dài trước
         sorted_terms = sorted(abbr_dict.items(), key=lambda x: -len(x[0]))
-        compiled_patterns = [
-            (term, defn, build_pattern(term))
-            for term, defn in sorted_terms
-        ]
+        compiled_patterns = [(term, defn, build_pattern(term)) for term, defn in sorted_terms]
 
     result = text
     for term, defn, pattern in compiled_patterns:
@@ -170,7 +164,7 @@ def expand_abbreviations_in_text(
 def process_chunks(
     input_chunks_path: str = "output_chunks.json",
     output_chunks_path: str = "pp_output_chunks.json",
-    abbr_dict: Optional[Dict[str, str]] = None
+    abbr_dict: Optional[Dict[str, str]] = None,
 ) -> int:
     """
     Duyệt qua tất cả các chunk trong file input, làm giàu content và ghi sang file output.
@@ -180,10 +174,7 @@ def process_chunks(
 
     # Pre-compile patterns theo thứ tự độ dài giảm dần
     sorted_terms = sorted(abbr_dict.items(), key=lambda x: -len(x[0]))
-    compiled_patterns = [
-        (term, defn, build_pattern(term))
-        for term, defn in sorted_terms
-    ]
+    compiled_patterns = [(term, defn, build_pattern(term)) for term, defn in sorted_terms]
 
     with open(input_chunks_path, "r", encoding="utf-8") as f:
         chunks = json.load(f)
@@ -204,9 +195,7 @@ def process_chunks(
 
         original_content = chunk.get("content", "")
         enriched_content = expand_abbreviations_in_text(
-            original_content,
-            abbr_dict,
-            compiled_patterns=compiled_patterns
+            original_content, abbr_dict, compiled_patterns=compiled_patterns
         )
 
         if enriched_content != original_content:
@@ -219,9 +208,7 @@ def process_chunks(
     with open(output_chunks_path, "w", encoding="utf-8") as f:
         json.dump(processed_chunks, f, ensure_ascii=False, indent=2)
 
-    logger.info(
-        f"Hoàn thành xử lý: {modified_count}/{total_chunks} chunks đã được bổ sung giải nghĩa thuật ngữ."
-    )
+    logger.info(f"Hoàn thành xử lý: {modified_count}/{total_chunks} chunks đã được bổ sung giải nghĩa thuật ngữ.")
     logger.info(f"File kết quả được lưu tại: {output_chunks_path}")
 
     return modified_count
@@ -231,47 +218,35 @@ def main():
     parser = argparse.ArgumentParser(
         description="Post-process chunks by expanding abbreviations with their definitions."
     )
-    parser.add_argument(
-        "--toc",
-        default="toc.json",
-        help="Đường dẫn file toc.json (mặc định: toc.json)"
-    )
+    parser.add_argument("--toc", default="toc.json", help="Đường dẫn file toc.json (mặc định: toc.json)")
     parser.add_argument(
         "--gemini",
         default="output_gemini.json",
-        help="Đường dẫn file output_gemini.json (mặc định: output_gemini.json)"
+        help="Đường dẫn file output_gemini.json (mặc định: output_gemini.json)",
     )
     parser.add_argument(
-        "--input",
-        default="output_chunks.json",
-        help="Đường dẫn file chunks gốc (mặc định: output_chunks.json)"
+        "--input", default="output_chunks.json", help="Đường dẫn file chunks gốc (mặc định: output_chunks.json)"
     )
     parser.add_argument(
         "--output",
         default="pp_output_chunks.json",
-        help="Đường dẫn file chunks kết quả (mặc định: pp_output_chunks.json)"
+        help="Đường dẫn file chunks kết quả (mặc định: pp_output_chunks.json)",
     )
     parser.add_argument(
         "--abbreviations",
         default="abbreviations.json",
-        help="Đường dẫn lưu file từ điển viết tắt (mặc định: abbreviations.json)"
+        help="Đường dẫn lưu file từ điển viết tắt (mặc định: abbreviations.json)",
     )
 
     args = parser.parse_args()
 
     # 1. Trích xuất từ điển
     abbr_dict = extract_abbreviations_from_gemini(
-        toc_path=args.toc,
-        gemini_path=args.gemini,
-        save_dict_path=args.abbreviations
+        toc_path=args.toc, gemini_path=args.gemini, save_dict_path=args.abbreviations
     )
 
     # 2. Xử lý chunks
-    process_chunks(
-        input_chunks_path=args.input,
-        output_chunks_path=args.output,
-        abbr_dict=abbr_dict
-    )
+    process_chunks(input_chunks_path=args.input, output_chunks_path=args.output, abbr_dict=abbr_dict)
 
 
 if __name__ == "__main__":

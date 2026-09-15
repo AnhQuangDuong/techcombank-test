@@ -20,14 +20,14 @@ Sau đó ánh xạ (map) nội dung vào đúng các trang logic:
 """
 
 import argparse
-from collections import Counter
-from datetime import datetime
 import json
 import os
-from pathlib import Path
 import re
 import sys
 import time
+from collections import Counter
+from datetime import datetime
+from pathlib import Path
 from typing import List, Literal, Optional
 
 from bs4 import BeautifulSoup
@@ -36,9 +36,7 @@ try:
     import pymupdf
 except ImportError:
     print(
-        "Lỗi: Thư viện 'pymupdf' chưa được cài đặt.\n"
-        "Chạy trực tiếp qua uv:\n"
-        f"    uv run {sys.argv[0]}",
+        f"Lỗi: Thư viện 'pymupdf' chưa được cài đặt.\nChạy trực tiếp qua uv:\n    uv run {sys.argv[0]}",
         file=sys.stderr,
     )
     sys.exit(1)
@@ -55,9 +53,7 @@ try:
     from google.genai.errors import APIError
 except ImportError:
     print(
-        "Lỗi: Thư viện 'google-genai' chưa được cài đặt.\n"
-        "Chạy trực tiếp qua uv:\n"
-        f"    uv run {sys.argv[0]}",
+        f"Lỗi: Thư viện 'google-genai' chưa được cài đặt.\nChạy trực tiếp qua uv:\n    uv run {sys.argv[0]}",
         file=sys.stderr,
     )
     sys.exit(1)
@@ -66,13 +62,11 @@ except ImportError:
 try:
     from prompts import (
         SYSTEM_PROMPT,
-        USER_PROMPT,
         TABLE_INSTRUCTION_PROMPT,
         TOC_SYSTEM_PROMPT,
         TOC_USER_PROMPT,
+        USER_PROMPT,
         TOCExtractionOutput,
-        TOCChapter,
-        TOCSubSection,
     )
 except ImportError:
     print(
@@ -97,8 +91,7 @@ class ContentBlock(BaseModel):
 
 class PageParseOutput(BaseModel):
     blocks: List[ContentBlock] = Field(
-        default_factory=list,
-        description="Danh sách các khối nội dung được trích xuất từ trang"
+        default_factory=list, description="Danh sách các khối nội dung được trích xuất từ trang"
     )
 
 
@@ -184,7 +177,7 @@ def build_parsing_plan(
     for idx in range(min(len(doc), end_idx)):
         page = doc[idx]
         pdf_page_num = idx + 1
-        w, h = page.rect.width, page.rect.height
+        w, _ = page.rect.width, page.rect.height
         mid_x = w / 2
 
         if idx == 0:
@@ -369,7 +362,6 @@ def enhance_table_with_pymupdf_headers(content: str, page: pymupdf.Page) -> str:
         return content
 
 
-
 def render_page_to_png_bytes(page: pymupdf.Page, is_cover: bool = False, dpi: int = 200) -> bytes:
     """
     Render toàn bộ trang PDF thực tế thành dữ liệu ảnh PNG (bytes).
@@ -382,7 +374,7 @@ def render_page_to_png_bytes(page: pymupdf.Page, is_cover: bool = False, dpi: in
             p1=pymupdf.Point(mid_x, 0),
             p2=pymupdf.Point(mid_x, page.rect.height),
             color=(0.75, 0.75, 0.75),  # Xám nhạt
-            width=0.5,                  # Siêu mảnh (~1 pixel ở 200 DPI)
+            width=0.5,  # Siêu mảnh (~1 pixel ở 200 DPI)
         )
     pix = page.get_pixmap(dpi=dpi)
     return pix.tobytes("png")
@@ -511,11 +503,13 @@ def build_toc_ranges(
             if ch_start is not None and int(ch_start) < sec_items[0][1]:
                 sec_items.insert(0, ("Mở đầu chương", int(ch_start)))
 
-            parsed_chapters.append({
-                "chapter_title": ch_title,
-                "chapter_start": int(ch_start) if ch_start is not None else sec_items[0][1],
-                "sections": sec_items,
-            })
+            parsed_chapters.append(
+                {
+                    "chapter_title": ch_title,
+                    "chapter_start": int(ch_start) if ch_start is not None else sec_items[0][1],
+                    "sections": sec_items,
+                }
+            )
 
     result_dict: dict[str, list[tuple[str, tuple[int, int]]]] = {}
 
@@ -566,7 +560,6 @@ def lookup_section_for_page(
 
     # 2. Fallback an toàn nếu trang nằm ngoài phạm vi TOC
     return chapter or "Nội dung", chapter or "Nội dung"
-
 
 
 def sanitize_content_headings(content: str) -> str:
@@ -643,8 +636,6 @@ def parse_toc_page(
     return {}
 
 
-
-
 def map_blocks_to_logical_pages(
     blocks: list[dict],
     plan: dict,
@@ -660,9 +651,7 @@ def map_blocks_to_logical_pages(
     chapter = plan["chapter"]
 
     if plan["is_cover"]:
-        all_content = "\n\n".join(
-            b["content"].strip() for b in blocks if b.get("content", "").strip()
-        )
+        all_content = "\n\n".join(b["content"].strip() for b in blocks if b.get("content", "").strip())
         if not all_content:
             return []
         return [
@@ -704,30 +693,36 @@ def map_blocks_to_logical_pages(
         if right_page is not None:
             pages.append(right_page)
 
-        results.append({
-            "logical_page": pages,
-            "pdf_page": pdf_page,
-            "chapter": chapter,
-            "content": "\n\n".join(all_parts),
-        })
+        results.append(
+            {
+                "logical_page": pages,
+                "pdf_page": pdf_page,
+                "chapter": chapter,
+                "content": "\n\n".join(all_parts),
+            }
+        )
 
     # 2. Phần location = 'left' -> logical_page = [left]
     if left_parts and left_page is not None:
-        results.append({
-            "logical_page": [left_page],
-            "pdf_page": pdf_page,
-            "chapter": chapter,
-            "content": "\n\n".join(left_parts),
-        })
+        results.append(
+            {
+                "logical_page": [left_page],
+                "pdf_page": pdf_page,
+                "chapter": chapter,
+                "content": "\n\n".join(left_parts),
+            }
+        )
 
     # 3. Phần location = 'right' -> logical_page = [right]
     if right_parts and right_page is not None:
-        results.append({
-            "logical_page": [right_page],
-            "pdf_page": pdf_page,
-            "chapter": chapter,
-            "content": "\n\n".join(right_parts),
-        })
+        results.append(
+            {
+                "logical_page": [right_page],
+                "pdf_page": pdf_page,
+                "chapter": chapter,
+                "content": "\n\n".join(right_parts),
+            }
+        )
 
     return results
 
@@ -803,7 +798,9 @@ def extract_pdf_with_gemini(
             # Giữ lại các trang đã xử lý trước start_page
             all_logical_pages_data = [d for d in loaded_data if d.get("pdf_page", 0) < (start_idx + 1)]
             processed_logical_count = len(all_logical_pages_data)
-            print(f"[i] Chế độ Resume: Đã khôi phục {processed_logical_count} trang logic đã lưu từ {json_output_path.name}")
+            print(
+                f"[i] Chế độ Resume: Đã khôi phục {processed_logical_count} trang logic đã lưu từ {json_output_path.name}"
+            )
             if all_logical_pages_data:
                 last_item = all_logical_pages_data[-1]
                 last_written_chapter = last_item.get("chapter")
@@ -811,7 +808,9 @@ def extract_pdf_with_gemini(
                 layout_tracker.set_context(chapter=last_written_chapter, section=last_written_section)
                 if last_item.get("current_headings"):
                     layout_tracker.current_h3 = last_item["current_headings"][-1]
-                print(f"    Ngữ cảnh kế thừa: Chương '{last_written_chapter}' | Ý chính '{last_written_section}' | H3 '{layout_tracker.current_h3}'")
+                print(
+                    f"    Ngữ cảnh kế thừa: Chương '{last_written_chapter}' | Ý chính '{last_written_section}' | H3 '{layout_tracker.current_h3}'"
+                )
         except Exception as e:
             print(f"[!] Cảnh báo không thể nạp file JSON cũ để resume: {e}")
 
@@ -869,7 +868,7 @@ def extract_pdf_with_gemini(
 
             # 2. Xử lý riêng trang mục lục (PDF Trang 2)
             if pdf_page_num == 2:
-                print(f"[+] Đang trích xuất Trang Mục lục (PDF Trang 2)...")
+                print("[+] Đang trích xuất Trang Mục lục (PDF Trang 2)...")
                 t_page = time.time()
                 page = doc[pdf_page_num - 1]
                 img_bytes = render_page_to_png_bytes(page, is_cover=False, dpi=dpi)
@@ -889,7 +888,9 @@ def extract_pdf_with_gemini(
                     )
                     with open(toc_output_path, "w", encoding="utf-8") as tf:
                         json.dump(toc_dict, tf, ensure_ascii=False, indent=2)
-                    print(f"    [✓] Đã bóc tách mục lục thành công ({len(toc_dict)} phần/chương) -> Lưu tại: {toc_output_path.name}")
+                    print(
+                        f"    [✓] Đã bóc tách mục lục thành công ({len(toc_dict)} phần/chương) -> Lưu tại: {toc_output_path.name}"
+                    )
                 except Exception as e:
                     print(f"    [!] Lỗi khi bóc tách mục lục: {e}")
 
@@ -907,20 +908,21 @@ def extract_pdf_with_gemini(
 
             # Xác định Ý chính (section) cho trang hiện tại dựa vào TOC và PyMuPDF
             sample_page = left_page if left_page is not None else right_page
-            current_section, current_chapter = lookup_section_for_page(
-                toc_dict, chapter=chapter, page_num=sample_page
-            )
+            current_section, current_chapter = lookup_section_for_page(toc_dict, chapter=chapter, page_num=sample_page)
             active_chapter = current_chapter if current_chapter and current_chapter != "Nội dung" else chapter
 
             # Bỏ qua các trang mở đầu chương (chỉ chứa bìa chương / danh mục bài viết)
             if current_section == "Mở đầu chương":
-                print(f"[-] Bỏ qua trang mở đầu chương: PDF Trang {pdf_page_num} (Trang logic {left_page} - {right_page} | {active_chapter})")
+                print(
+                    f"[-] Bỏ qua trang mở đầu chương: PDF Trang {pdf_page_num} (Trang logic {left_page} - {right_page} | {active_chapter})"
+                )
                 skipped_count += 1
                 continue
 
-
             page_desc = f"Trang logic {left_page} - {right_page}"
-            print(f"[+] Đang xử lý: PDF Trang {pdf_page_num} ({page_desc} | Chương: {active_chapter} | Ý chính: {current_section})...")
+            print(
+                f"[+] Đang xử lý: PDF Trang {pdf_page_num} ({page_desc} | Chương: {active_chapter} | Ý chính: {current_section})..."
+            )
             t_page = time.time()
 
             page = doc[pdf_page_num - 1]
@@ -963,9 +965,7 @@ def extract_pdf_with_gemini(
                 )
             except Exception as e:
                 print(f"    [!] Lỗi trích xuất PDF Trang {pdf_page_num}: {e}")
-                raw_blocks = [
-                    {"location": "all", "content": f"Lỗi OCR khi gọi Gemini: {e}"}
-                ]
+                raw_blocks = [{"location": "all", "content": f"Lỗi OCR khi gọi Gemini: {e}"}]
 
             # Chuẩn hóa đề mục: ép mọi đề mục # hoặc ## thành ###
             for b in raw_blocks:
@@ -992,7 +992,6 @@ def extract_pdf_with_gemini(
                     section=sec,
                 )
                 lp["current_headings"] = current_h3_list
-
 
                 # Ghi đề mục Chương nếu chuyển sang chương mới
                 if ch != last_written_chapter:
@@ -1022,7 +1021,9 @@ def extract_pdf_with_gemini(
                 json.dump(all_logical_pages_data, jf, ensure_ascii=False, indent=2)
 
             page_elapsed = time.time() - t_page
-            print(f"    [✓] Hoàn thành PDF Trang {pdf_page_num} trong {page_elapsed:.1f}s -> Tạo {len(mapped_pages)} trang logic")
+            print(
+                f"    [✓] Hoàn thành PDF Trang {pdf_page_num} trong {page_elapsed:.1f}s -> Tạo {len(mapped_pages)} trang logic"
+            )
 
             if delay_seconds > 0:
                 time.sleep(delay_seconds)
@@ -1031,9 +1032,8 @@ def extract_pdf_with_gemini(
     with open(json_output_path, "w", encoding="utf-8") as jf:
         json.dump(all_logical_pages_data, jf, ensure_ascii=False, indent=2)
 
-
     elapsed = time.time() - start_time
-    print(f"\n=== Hoàn tất quá trình trích xuất! ===")
+    print("\n=== Hoàn tất quá trình trích xuất! ===")
     print(f"- Số trang logic đã tạo: {processed_logical_count}")
     print(f"- Số trang PDF bỏ qua (trống): {skipped_count}")
     print(f"- File kết quả Markdown: {output_path.resolve()}")
@@ -1048,7 +1048,7 @@ def main():
 
     parser = argparse.ArgumentParser(
         description="Đọc toàn bộ trang PDF thực tế, dùng Gemini OCR trích xuất các khối {location, content} "
-                    "và ánh xạ vào trang logic tương ứng."
+        "và ánh xạ vào trang logic tương ứng."
     )
     parser.add_argument(
         "-i",
@@ -1123,4 +1123,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

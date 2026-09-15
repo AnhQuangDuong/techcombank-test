@@ -18,7 +18,6 @@ import os
 import re
 import warnings
 from dataclasses import dataclass
-from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 warnings.filterwarnings("ignore", message=".*Payload indexes have no effect in the local Qdrant.*")
@@ -38,10 +37,7 @@ from qdrant_client.models import (
 )
 from rank_bm25 import BM25Okapi
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)
 
 
@@ -70,7 +66,7 @@ def tokenize_vi_financial(text: str) -> List[str]:
     pattern = re.compile(
         r"[a-zA-Z0-9_àáảãạăắằẳẵặâấầẩẫậèéẻẽẹêếềểễệđìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựỳýỷỹỵ]+"
         r"(?:[,.][a-zA-Z0-9_àáảãạăắằẳẵặâấầẩẫậèéẻẽẹêếềểễệđìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựỳýỷỹỵ%]+)*%?",
-        re.UNICODE
+        re.UNICODE,
     )
     tokens = pattern.findall(text.lower())
     return [t.strip() for t in tokens if t.strip()]
@@ -95,10 +91,7 @@ def normalize_scores(scores: List[float]) -> List[float]:
 
 
 def compute_hybrid_scores(
-    lexical_scores: List[float],
-    semantic_scores: List[float],
-    alpha: float = 0.4,
-    beta: float = 0.6
+    lexical_scores: List[float], semantic_scores: List[float], alpha: float = 0.4, beta: float = 0.6
 ) -> List[float]:
     """
     Tính điểm tổng hợp: Final Score = alpha * Lexical_norm + beta * Semantic_norm.
@@ -106,10 +99,7 @@ def compute_hybrid_scores(
     norm_lex = normalize_scores(lexical_scores)
     norm_sem = normalize_scores(semantic_scores)
 
-    return [
-        (alpha * l) + (beta * s)
-        for l, s in zip(norm_lex, norm_sem)
-    ]
+    return [(alpha * l) + (beta * s) for l, s in zip(norm_lex, norm_sem)]
 
 
 def get_gemini_query_client() -> Tuple[genai.Client, str]:
@@ -134,11 +124,7 @@ def embed_query(client: genai.Client, model: str, query: str) -> List[float]:
     Tạo vector embedding cho câu hỏi tìm kiếm sử dụng task_type='RETRIEVAL_QUERY'.
     """
     response = client.models.embed_content(
-        model=model,
-        contents=[query],
-        config=types.EmbedContentConfig(
-            task_type="RETRIEVAL_QUERY"
-        )
+        model=model, contents=[query], config=types.EmbedContentConfig(task_type="RETRIEVAL_QUERY")
     )
     return response.embeddings[0].values
 
@@ -153,7 +139,7 @@ class HybridSearchEngine:
         index_file: str = "output_indexs.json",
         qdrant_path: str = "./qdrant_storage",
         collection_name: str = "techcombank_chunks",
-        force_reindex: bool = False
+        force_reindex: bool = False,
     ):
         self.index_file = index_file
         self.qdrant_path = qdrant_path
@@ -204,7 +190,7 @@ class HybridSearchEngine:
             logger.info(f"Tạo collection '{self.collection_name}' (dim={self.vector_dim}, Cosine)...")
             self.qdrant.create_collection(
                 collection_name=self.collection_name,
-                vectors_config=VectorParams(size=self.vector_dim, distance=Distance.COSINE)
+                vectors_config=VectorParams(size=self.vector_dim, distance=Distance.COSINE),
             )
 
             # Tạo Payload Index cho các trường metadata phục vụ filter
@@ -215,7 +201,7 @@ class HybridSearchEngine:
                         self.qdrant.create_payload_index(
                             collection_name=self.collection_name,
                             field_name=field,
-                            field_schema=PayloadSchemaType.KEYWORD
+                            field_schema=PayloadSchemaType.KEYWORD,
                         )
                     except Exception:
                         pass
@@ -233,19 +219,10 @@ class HybridSearchEngine:
                     "content": c.get("content", ""),
                     "chunk_id": idx,
                 }
-                points.append(
-                    PointStruct(
-                        id=idx,
-                        vector=c["embedding"],
-                        payload=payload
-                    )
-                )
+                points.append(PointStruct(id=idx, vector=c["embedding"], payload=payload))
 
             for i in range(0, len(points), batch_size):
-                self.qdrant.upsert(
-                    collection_name=self.collection_name,
-                    points=points[i:i + batch_size]
-                )
+                self.qdrant.upsert(collection_name=self.collection_name, points=points[i : i + batch_size])
             logger.info(f"Đã nạp thành công {len(points)} points vào Qdrant Local.")
         else:
             logger.info(f"Collection '{self.collection_name}' đã sẵn sàng ({len(self.chunks)} points).")
@@ -268,7 +245,7 @@ class HybridSearchEngine:
         filters: Optional[Dict[str, str]] = None,
         top_k: int = 10,
         alpha: float = 0.4,
-        beta: float = 0.6
+        beta: float = 0.6,
     ) -> List[SearchResult]:
         """
         Thực hiện tìm kiếm lai (Hybrid Search):
@@ -287,9 +264,7 @@ class HybridSearchEngine:
             conditions = []
             for field, val in filters.items():
                 if val:
-                    conditions.append(
-                        FieldCondition(key=field, match=MatchValue(value=val))
-                    )
+                    conditions.append(FieldCondition(key=field, match=MatchValue(value=val)))
             if conditions:
                 qdrant_filter = Filter(must=conditions)
 
@@ -301,7 +276,7 @@ class HybridSearchEngine:
             query=query_vector,
             query_filter=qdrant_filter,
             limit=limit_candidates,
-            with_payload=True
+            with_payload=True,
         )
 
         candidate_points = query_res.points
@@ -318,17 +293,12 @@ class HybridSearchEngine:
 
         # 5. Tính Hybrid Score
         hybrid_scores = compute_hybrid_scores(
-            lexical_scores=lexical_scores,
-            semantic_scores=semantic_scores,
-            alpha=alpha,
-            beta=beta
+            lexical_scores=lexical_scores, semantic_scores=semantic_scores, alpha=alpha, beta=beta
         )
 
         # 6. Gom kết quả và sắp xếp giảm dần
         results: List[SearchResult] = []
-        for point, final_s, lex_s, sem_s in zip(
-            candidate_points, hybrid_scores, lexical_scores, semantic_scores
-        ):
+        for point, final_s, lex_s, sem_s in zip(candidate_points, hybrid_scores, lexical_scores, semantic_scores):
             payload = point.payload or {}
             results.append(
                 SearchResult(
@@ -341,7 +311,7 @@ class HybridSearchEngine:
                     current_heading=payload.get("current_heading", ""),
                     logical_page=payload.get("logical_page", []),
                     pdf_page=payload.get("pdf_page", 0),
-                    content=payload.get("content", "")
+                    content=payload.get("content", ""),
                 )
             )
 
@@ -357,7 +327,9 @@ def print_search_results(results: List[SearchResult], query: str):
     print("=" * 80)
 
     for rank, res in enumerate(results, start=1):
-        print(f"\n[#{rank}] Score: {res.score:.4f} (Semantic: {res.semantic_score:.4f} | Lexical: {res.lexical_score:.2f})")
+        print(
+            f"\n[#{rank}] Score: {res.score:.4f} (Semantic: {res.semantic_score:.4f} | Lexical: {res.lexical_score:.2f})"
+        )
         print(f"  • Vị trí: Trang logic {res.logical_page} (Trang PDF: {res.pdf_page})")
         print(f"  • Phân cấp: {res.chapter} > {res.section} > {res.current_heading}")
         print("  • Nội dung:")
@@ -412,7 +384,7 @@ def interactive_cli(engine: HybridSearchEngine):
                 continue
 
             if user_input.startswith("filter:"):
-                filter_expr = user_input[len("filter:"):].strip()
+                filter_expr = user_input[len("filter:") :].strip()
                 if "=" in filter_expr:
                     k, v = filter_expr.split("=", 1)
                     k = k.strip()
@@ -424,11 +396,7 @@ def interactive_cli(engine: HybridSearchEngine):
                 continue
 
             # Thực hiện tìm kiếm
-            results = engine.search(
-                query=user_input,
-                filters=active_filters if active_filters else None,
-                top_k=10
-            )
+            results = engine.search(query=user_input, filters=active_filters if active_filters else None, top_k=10)
             print_search_results(results, user_input)
 
         except (KeyboardInterrupt, EOFError):
@@ -439,34 +407,24 @@ def interactive_cli(engine: HybridSearchEngine):
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Hybrid Search on Techcombank Annual Report using Qdrant and BM25."
-    )
+    parser = argparse.ArgumentParser(description="Hybrid Search on Techcombank Annual Report using Qdrant and BM25.")
     parser.add_argument(
         "--index-file",
         default="output_indexs.json",
-        help="Đường dẫn file output_indexs.json (mặc định: output_indexs.json)"
+        help="Đường dẫn file output_indexs.json (mặc định: output_indexs.json)",
     )
     parser.add_argument(
-        "--qdrant-path",
-        default="./qdrant_storage",
-        help="Đường dẫn lưu trữ Qdrant Local (mặc định: ./qdrant_storage)"
+        "--qdrant-path", default="./qdrant_storage", help="Đường dẫn lưu trữ Qdrant Local (mặc định: ./qdrant_storage)"
     )
     parser.add_argument(
-        "--collection",
-        default="techcombank_chunks",
-        help="Tên Qdrant collection (mặc định: techcombank_chunks)"
+        "--collection", default="techcombank_chunks", help="Tên Qdrant collection (mặc định: techcombank_chunks)"
     )
-    parser.add_argument(
-        "--reindex",
-        action="store_true",
-        help="Bắt buộc nạp lại dữ liệu vào Qdrant"
-    )
+    parser.add_argument("--reindex", action="store_true", help="Bắt buộc nạp lại dữ liệu vào Qdrant")
     parser.add_argument(
         "--query",
         type=str,
         default=None,
-        help="Câu hỏi tìm kiếm một lần qua CLI (nếu không truyền sẽ mở interactive mode)"
+        help="Câu hỏi tìm kiếm một lần qua CLI (nếu không truyền sẽ mở interactive mode)",
     )
 
     args = parser.parse_args()
@@ -475,7 +433,7 @@ def main():
         index_file=args.index_file,
         qdrant_path=args.qdrant_path,
         collection_name=args.collection,
-        force_reindex=args.reindex
+        force_reindex=args.reindex,
     )
 
     if args.query:

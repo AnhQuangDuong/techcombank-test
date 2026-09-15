@@ -17,15 +17,11 @@ import argparse
 import json
 import logging
 import math
-import os
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List
 
-from search_qdrant import HybridSearchEngine, SearchResult
+from search_qdrant import HybridSearchEngine
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)
 
 
@@ -44,17 +40,11 @@ def compute_ndcg_at_k(binary_relevance: List[int], k: int, total_relevant: int) 
         return 0.0
 
     # DCG@k = sum( rel_i / log2(i + 1) ) với i tính từ 1 (tức log2(idx + 2))
-    dcg = sum(
-        rel / math.log2(idx + 2)
-        for idx, rel in enumerate(binary_relevance[:k])
-    )
+    dcg = sum(rel / math.log2(idx + 2) for idx, rel in enumerate(binary_relevance[:k]))
 
     # IDCG@k: Xếp tất cả các phần tử liên quan (tối đa min(total_relevant, k)) lên đầu
     ideal_k = min(total_relevant, k)
-    idcg = sum(
-        1.0 / math.log2(idx + 2)
-        for idx in range(ideal_k)
-    )
+    idcg = sum(1.0 / math.log2(idx + 2) for idx in range(ideal_k))
 
     return dcg / idcg if idcg > 0.0 else 0.0
 
@@ -83,7 +73,7 @@ def evaluate_dataset(
     qdrant_path: str = "./qdrant_storage",
     collection_name: str = "techcombank_chunks",
     top_k: int = 20,
-    output_file: str = "eval_results.json"
+    output_file: str = "eval_results.json",
 ) -> Dict[str, Any]:
     """
     Chạy đánh giá toàn bộ tập test và tính các chỉ số Recall@k, nDCG@k, MAP@k.
@@ -91,11 +81,7 @@ def evaluate_dataset(
     with open(questions_file, "r", encoding="utf-8") as f:
         questions: List[Dict[str, Any]] = json.load(f)
 
-    engine = HybridSearchEngine(
-        index_file=index_file,
-        qdrant_path=qdrant_path,
-        collection_name=collection_name
-    )
+    engine = HybridSearchEngine(index_file=index_file, qdrant_path=qdrant_path, collection_name=collection_name)
 
     k_list = [1, 3, 5, 10, 20]
     # Lọc danh sách k không vượt quá top_k yêu cầu
@@ -104,15 +90,9 @@ def evaluate_dataset(
     per_query_results = []
     eval_queries_count = 0
 
-    metric_sums = {
-        f"recall@{k}": 0.0 for k in k_list
-    }
-    metric_sums.update({
-        f"ndcg@{k}": 0.0 for k in k_list
-    })
-    metric_sums.update({
-        f"map@{k}": 0.0 for k in k_list
-    })
+    metric_sums = {f"recall@{k}": 0.0 for k in k_list}
+    metric_sums.update({f"ndcg@{k}": 0.0 for k in k_list})
+    metric_sums.update({f"map@{k}": 0.0 for k in k_list})
 
     print("\n" + "=" * 90)
     print(f"BẮT ĐẦU ĐÁNH GIÁ TRÊN {len(questions)} CÂU HỎI TỪ: {questions_file}")
@@ -129,8 +109,7 @@ def evaluate_dataset(
         total_relevant_in_corpus = 0
         if gold_pages:
             total_relevant_in_corpus = sum(
-                1 for c in engine.chunks
-                if any(p in gold_pages for p in c.get("logical_page", []))
+                1 for c in engine.chunks if any(p in gold_pages for p in c.get("logical_page", []))
             )
 
         # Retrieve Top K chunks
@@ -148,19 +127,21 @@ def evaluate_dataset(
             if is_relevant and first_hit_rank is None:
                 first_hit_rank = rank
 
-            retrieved_info.append({
-                "rank": rank,
-                "chunk_id": res.chunk_id,
-                "score": round(res.score, 4),
-                "semantic_score": round(res.semantic_score, 4),
-                "lexical_score": round(res.lexical_score, 2),
-                "logical_page": res.logical_page,
-                "pdf_page": res.pdf_page,
-                "chapter": res.chapter,
-                "heading": res.current_heading,
-                "is_relevant": bool(is_relevant),
-                "content_snippet": res.content[:200]
-            })
+            retrieved_info.append(
+                {
+                    "rank": rank,
+                    "chunk_id": res.chunk_id,
+                    "score": round(res.score, 4),
+                    "semantic_score": round(res.semantic_score, 4),
+                    "lexical_score": round(res.lexical_score, 2),
+                    "logical_page": res.logical_page,
+                    "pdf_page": res.pdf_page,
+                    "chapter": res.chapter,
+                    "heading": res.current_heading,
+                    "is_relevant": bool(is_relevant),
+                    "content_snippet": res.content[:200],
+                }
+            )
 
         query_metrics = {}
         if answerable and gold_pages:
@@ -180,27 +161,37 @@ def evaluate_dataset(
 
             status_str = f"First Hit: #{first_hit_rank}" if first_hit_rank else "MISS"
             print(f"[{qid}] {q_text[:70]}...")
-            print(f"  • Gold Pages: {gold_pages} | {status_str} | Chunks liên quan trong corpus: {total_relevant_in_corpus}")
-            print(f"  • Recall@1={query_metrics['recall@1']} | Recall@5={query_metrics['recall@5']} | Recall@20={query_metrics['recall@20']}")
-            print(f"  • nDCG@10={query_metrics['ndcg@10']} | nDCG@20={query_metrics['ndcg@20']} | AP@20={query_metrics['ap@20']}")
+            print(
+                f"  • Gold Pages: {gold_pages} | {status_str} | Chunks liên quan trong corpus: {total_relevant_in_corpus}"
+            )
+            print(
+                f"  • Recall@1={query_metrics['recall@1']} | Recall@5={query_metrics['recall@5']} | Recall@20={query_metrics['recall@20']}"
+            )
+            print(
+                f"  • nDCG@10={query_metrics['ndcg@10']} | nDCG@20={query_metrics['ndcg@20']} | AP@20={query_metrics['ap@20']}"
+            )
             print("-" * 90)
         else:
             print(f"[{qid}] (Unanswerable/No gold pages) {q_text[:70]}...")
-            print(f"  • Max retrieved score: {retrieved_chunks[0].score:.4f} (Chunk ID: {retrieved_chunks[0].chunk_id})")
+            print(
+                f"  • Max retrieved score: {retrieved_chunks[0].score:.4f} (Chunk ID: {retrieved_chunks[0].chunk_id})"
+            )
             print("-" * 90)
 
-        per_query_results.append({
-            "id": qid,
-            "question": q_text,
-            "category": item.get("category", ""),
-            "answerable": answerable,
-            "gold_printed_pages": gold_pages,
-            "gold_answer": gold_ans,
-            "total_relevant_in_corpus": total_relevant_in_corpus,
-            "first_hit_rank": first_hit_rank,
-            "metrics": query_metrics,
-            "retrieved_top_k": retrieved_info
-        })
+        per_query_results.append(
+            {
+                "id": qid,
+                "question": q_text,
+                "category": item.get("category", ""),
+                "answerable": answerable,
+                "gold_printed_pages": gold_pages,
+                "gold_answer": gold_ans,
+                "total_relevant_in_corpus": total_relevant_in_corpus,
+                "first_hit_rank": first_hit_rank,
+                "metrics": query_metrics,
+                "retrieved_top_k": retrieved_info,
+            }
+        )
 
     # Tính trung bình các chỉ số trên các câu hỏi answerable
     aggregated_metrics = {}
@@ -231,7 +222,7 @@ def evaluate_dataset(
         "total_questions": len(questions),
         "evaluated_questions": eval_queries_count,
         "aggregated_metrics": aggregated_metrics,
-        "per_query_details": per_query_results
+        "per_query_details": per_query_results,
     }
 
     with open(output_file, "w", encoding="utf-8") as f:
@@ -242,39 +233,24 @@ def evaluate_dataset(
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Evaluate Hybrid Search retrieval on sample_questions.json."
-    )
+    parser = argparse.ArgumentParser(description="Evaluate Hybrid Search retrieval on sample_questions.json.")
     parser.add_argument(
         "--questions",
         default="sample_questions.json",
-        help="File chứa tập câu hỏi kiểm thử (mặc định: sample_questions.json)"
+        help="File chứa tập câu hỏi kiểm thử (mặc định: sample_questions.json)",
     )
     parser.add_argument(
-        "--index-file",
-        default="output_indexs.json",
-        help="File dữ liệu index (mặc định: output_indexs.json)"
+        "--index-file", default="output_indexs.json", help="File dữ liệu index (mặc định: output_indexs.json)"
     )
     parser.add_argument(
-        "--qdrant-path",
-        default="./qdrant_storage",
-        help="Thư mục Qdrant Local (mặc định: ./qdrant_storage)"
+        "--qdrant-path", default="./qdrant_storage", help="Thư mục Qdrant Local (mặc định: ./qdrant_storage)"
     )
     parser.add_argument(
-        "--collection",
-        default="techcombank_chunks",
-        help="Tên collection Qdrant (mặc định: techcombank_chunks)"
+        "--collection", default="techcombank_chunks", help="Tên collection Qdrant (mặc định: techcombank_chunks)"
     )
+    parser.add_argument("--top-k", type=int, default=20, help="Số lượng chunks retrieve cho mỗi câu hỏi (mặc định: 20)")
     parser.add_argument(
-        "--top-k",
-        type=int,
-        default=20,
-        help="Số lượng chunks retrieve cho mỗi câu hỏi (mặc định: 20)"
-    )
-    parser.add_argument(
-        "--output",
-        default="eval_results.json",
-        help="File lưu kết quả đánh giá (mặc định: eval_results.json)"
+        "--output", default="eval_results.json", help="File lưu kết quả đánh giá (mặc định: eval_results.json)"
     )
 
     args = parser.parse_args()
@@ -285,7 +261,7 @@ def main():
         qdrant_path=args.qdrant_path,
         collection_name=args.collection,
         top_k=args.top_k,
-        output_file=args.output
+        output_file=args.output,
     )
 
 

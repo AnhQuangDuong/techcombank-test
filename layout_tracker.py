@@ -30,7 +30,6 @@ class LayoutTracker:
         self.current_h3 = None
         self.last_heading = None
 
-
     def set_context(self, chapter: Optional[str] = None, section: Optional[str] = None) -> None:
         """Cập nhật ngữ cảnh Chương và Ý chính. Reset stack nếu có sự thay đổi."""
         chapter_changed = bool(chapter and self.current_chapter and chapter != self.current_chapter)
@@ -125,12 +124,14 @@ class LayoutTracker:
                 last_lvl, last_txt = self.last_heading if self.last_heading else self.stack[-1]
                 lines.append(f"- Đề mục gần nhất vừa hoàn thành: {'#' * last_lvl} {last_txt}")
 
-            lines.extend([
-                "* HƯỚNG DẪN ĐỀ MỤC BẮT BUỘC:",
-                "  + TUYỆT ĐỐI KHÔNG dùng '#' hoặc '##' (đã dành riêng cho Chương và Ý chính).",
-                "  + Nếu nội dung trang này là phần viết tiếp của tiểu mục trước: tiếp tục trình bày nội dung, không lặp lại đề mục '###'.",
-                "  + Nếu xuất hiện ý nhỏ mới trong trang: bắt buộc dùng '###' (hoặc '####' cho phân cấp sâu hơn).",
-            ])
+            lines.extend(
+                [
+                    "* HƯỚNG DẪN ĐỀ MỤC BẮT BUỘC:",
+                    "  + TUYỆT ĐỐI KHÔNG dùng '#' hoặc '##' (đã dành riêng cho Chương và Ý chính).",
+                    "  + Nếu nội dung trang này là phần viết tiếp của tiểu mục trước: tiếp tục trình bày nội dung, không lặp lại đề mục '###'.",
+                    "  + Nếu xuất hiện ý nhỏ mới trong trang: bắt buộc dùng '###' (hoặc '####' cho phân cấp sâu hơn).",
+                ]
+            )
             return "\n".join(lines)
 
         # Chế độ tự do (khi chưa cấu hình section từ TOC)
@@ -153,7 +154,6 @@ class LayoutTracker:
             "  + Nếu trang hiện tại bắt đầu một chủ đề lớn mới hoặc chương mới, hãy sử dụng đề mục # cô đọng độc lập tương ứng.",
         ]
         return "\n".join(lines)
-
 
     def extract_h3_headings(self, markdown_text: str) -> List[str]:
         """Bóc tách các tiêu đề chỉ ở cấp ### (bỏ qua #### trở đi, bỏ qua table và code block)."""
@@ -203,5 +203,3 @@ class LayoutTracker:
         if self.current_h3:
             return [self.current_h3]
         return [title for lvl, title in self.stack if lvl == 3]
-
-

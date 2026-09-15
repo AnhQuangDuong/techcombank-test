@@ -3,11 +3,13 @@ prompts.py - Định nghĩa Prompt chuẩn cho Gemini OCR trích xuất trang t�
 """
 
 from typing import List, Optional
+
 from pydantic import BaseModel, Field
 
 # ==========================================
 # Cấu hình Pydantic & Prompt cho Trang Mục lục (TOC)
 # ==========================================
+
 
 class TOCSubSection(BaseModel):
     title: str = Field(description="Tên ý quan trọng / mục con")
@@ -15,13 +17,19 @@ class TOCSubSection(BaseModel):
 
 
 class TOCChapter(BaseModel):
-    chapter_title: str = Field(description="Tên chương hoặc tên mục lớn (ví dụ: 'CHƯƠNG 01: ...', 'Chúng tôi là ai', 'Danh mục thuật ngữ viết tắt')")
+    chapter_title: str = Field(
+        description="Tên chương hoặc tên mục lớn (ví dụ: 'CHƯƠNG 01: ...', 'Chúng tôi là ai', 'Danh mục thuật ngữ viết tắt')"
+    )
     start_page: Optional[int] = Field(default=None, description="Số trang bắt đầu của chương nếu có")
-    sections: List[TOCSubSection] = Field(default_factory=list, description="Danh sách các ý chính / mục con trực thuộc chương đó")
+    sections: List[TOCSubSection] = Field(
+        default_factory=list, description="Danh sách các ý chính / mục con trực thuộc chương đó"
+    )
 
 
 class TOCExtractionOutput(BaseModel):
-    chapters: List[TOCChapter] = Field(default_factory=list, description="Danh sách các chương hoặc phần trong mục lục theo đúng thứ tự xuất hiện")
+    chapters: List[TOCChapter] = Field(
+        default_factory=list, description="Danh sách các chương hoặc phần trong mục lục theo đúng thứ tự xuất hiện"
+    )
 
 
 TOC_SYSTEM_PROMPT = """\

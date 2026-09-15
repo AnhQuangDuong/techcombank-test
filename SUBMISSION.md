@@ -6,7 +6,7 @@
   # Prerequisites: Python >= 3.10, uv (hoặc pip)
   git clone <repo-url>
   cd techcombank
-  
+
   # Cài đặt toàn bộ dependencies tự động qua uv
   uv sync
 

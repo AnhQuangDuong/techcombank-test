@@ -16,17 +16,13 @@ import logging
 import os
 import re
 import time
-from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)
 
 
@@ -70,11 +66,7 @@ def prepare_contextual_text(chunk: Dict[str, Any]) -> str:
 
 
 def embed_batch(
-    client: genai.Client,
-    model: str,
-    texts: List[str],
-    max_retries: int = 6,
-    initial_backoff: float = 3.0
+    client: genai.Client, model: str, texts: List[str], max_retries: int = 6, initial_backoff: float = 3.0
 ) -> List[List[float]]:
     """
     Gửi batch text tới Gemini Embedding API với cơ chế Exponential Backoff và Adaptive Split:
@@ -85,11 +77,7 @@ def embed_batch(
     for attempt in range(1, max_retries + 1):
         try:
             response = client.models.embed_content(
-                model=model,
-                contents=texts,
-                config=types.EmbedContentConfig(
-                    task_type="RETRIEVAL_DOCUMENT"
-                )
+                model=model, contents=texts, config=types.EmbedContentConfig(task_type="RETRIEVAL_DOCUMENT")
             )
             embeddings = [emb.values for emb in response.embeddings]
             return embeddings
@@ -102,16 +90,14 @@ def embed_batch(
             # Nếu batch nhiều hơn 10 phần tử và dính lỗi, chia đôi batch để thử
             if len(texts) > 10 and ("429" in err_str or "RESOURCE_EXHAUSTED" in err_str or "quota" in err_str.lower()):
                 mid = len(texts) // 2
-                logger.info(f"Tự động chia nhỏ batch ({len(texts)} chunks -> {mid} và {len(texts)-mid} chunks)...")
+                logger.info(f"Tự động chia nhỏ batch ({len(texts)} chunks -> {mid} và {len(texts) - mid} chunks)...")
                 left_vectors = embed_batch(client, model, texts[:mid], max_retries=max_retries)
                 time.sleep(1.0)
                 right_vectors = embed_batch(client, model, texts[mid:], max_retries=max_retries)
                 return left_vectors + right_vectors
 
             if attempt == max_retries:
-                raise RuntimeError(
-                    f"Đã thử {max_retries} lần nhưng không thể embed batch: {e}"
-                ) from e
+                raise RuntimeError(f"Đã thử {max_retries} lần nhưng không thể embed batch: {e}") from e
 
             # Kiểm tra xem có retryDelay cụ thể từ Google API không
             wait_time = backoff
@@ -136,7 +122,7 @@ def run_indexing(
     output_path: str = "output_indexs.json",
     batch_size: int = 25,
     sleep_delay: float = 2.0,
-    limit: Optional[int] = None
+    limit: Optional[int] = None,
 ) -> int:
     """
     Chạy pipeline indexing:
@@ -166,9 +152,7 @@ def run_indexing(
                 loaded = json.load(f)
                 if isinstance(loaded, list):
                     existing_records = loaded
-                    logger.info(
-                        f"Phát hiện file checkpoint '{output_path}' với {len(existing_records)} bản ghi."
-                    )
+                    logger.info(f"Phát hiện file checkpoint '{output_path}' với {len(existing_records)} bản ghi.")
         except Exception as e:
             logger.warning(f"Không thể đọc file checkpoint cũ: {e}. Bắt đầu mới.")
             existing_records = []
@@ -195,9 +179,7 @@ def run_indexing(
         batch_end = min(batch_start + batch_size, total_chunks)
         current_batch_chunks = chunks[batch_start:batch_end]
 
-        batch_texts = [
-            prepare_contextual_text(c) for c in current_batch_chunks
-        ]
+        batch_texts = [prepare_contextual_text(c) for c in current_batch_chunks]
 
         t0 = time.time()
         batch_vectors = embed_batch(client, model, batch_texts)
@@ -221,43 +203,28 @@ def run_indexing(
             time.sleep(sleep_delay)
 
     logger.info(
-        f"Hoàn thành toàn bộ pipeline indexing! {len(results)}/{total_chunks} "
-        f"chunks đã được lưu vào '{output_path}'."
+        f"Hoàn thành toàn bộ pipeline indexing! {len(results)}/{total_chunks} chunks đã được lưu vào '{output_path}'."
     )
     return len(results)
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Index document chunks using Gemini embedding model."
-    )
+    parser = argparse.ArgumentParser(description="Index document chunks using Gemini embedding model.")
     parser.add_argument(
         "--input",
         default="pp_output_chunks.json",
-        help="Đường dẫn file chunks đầu vào (mặc định: pp_output_chunks.json)"
+        help="Đường dẫn file chunks đầu vào (mặc định: pp_output_chunks.json)",
     )
     parser.add_argument(
-        "--output",
-        default="output_indexs.json",
-        help="Đường dẫn file kết quả (mặc định: output_indexs.json)"
+        "--output", default="output_indexs.json", help="Đường dẫn file kết quả (mặc định: output_indexs.json)"
     )
-    parser.add_argument(
-        "--batch-size",
-        type=int,
-        default=50,
-        help="Kích thước batch gửi tới Gemini API (mặc định: 50)"
-    )
-    parser.add_argument(
-        "--sleep",
-        type=float,
-        default=2.0,
-        help="Khoảng nghỉ (giây) giữa các batch (mặc định: 2.0)"
-    )
+    parser.add_argument("--batch-size", type=int, default=50, help="Kích thước batch gửi tới Gemini API (mặc định: 50)")
+    parser.add_argument("--sleep", type=float, default=2.0, help="Khoảng nghỉ (giây) giữa các batch (mặc định: 2.0)")
     parser.add_argument(
         "--limit",
         type=int,
         default=None,
-        help="Giới hạn số lượng chunk cần embed để tiết kiệm quota (mặc định: None - toàn bộ)"
+        help="Giới hạn số lượng chunk cần embed để tiết kiệm quota (mặc định: None - toàn bộ)",
     )
 
     args = parser.parse_args()
@@ -267,7 +234,7 @@ def main():
         output_path=args.output,
         batch_size=args.batch_size,
         sleep_delay=args.sleep,
-        limit=args.limit
+        limit=args.limit,
     )
 
 

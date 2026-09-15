@@ -1,11 +1,9 @@
 import re
-from typing import List, Tuple, Optional, Dict, Any
+from typing import Any, Dict, List, Optional, Tuple
+
 
 def apply_page_continuation(
-    content: str,
-    current_headings: Optional[List[str]],
-    last_seen_heading: Optional[str],
-    fallback_heading: str
+    content: str, current_headings: Optional[List[str]], last_seen_heading: Optional[str], fallback_heading: str
 ) -> Tuple[str, List[str], str]:
     """
     Checks if content starts with '###'. If not, prepends:
@@ -32,6 +30,7 @@ def apply_page_continuation(
     updated_headings = current_headings if (current_headings and len(current_headings) > 0) else [inherited]
     return prepended_content, updated_headings, inherited
 
+
 def parse_h3_blocks(content: str) -> List[Tuple[str, str]]:
     r"""
     Splits markdown content into a list of (heading_title, body_text).
@@ -43,7 +42,7 @@ def parse_h3_blocks(content: str) -> List[Tuple[str, str]]:
         return [("", normalized.strip())]
 
     blocks: List[Tuple[str, str]] = []
-    
+
     # Text before first heading (if any)
     first_start = matches[0].start()
     if first_start > 0:
@@ -60,9 +59,11 @@ def parse_h3_blocks(content: str) -> List[Tuple[str, str]]:
 
     return blocks
 
+
 def clean_heading_title(title: str) -> str:
     """Removes trailing ' (Tiếp tục)' note for metadata normalization."""
     return re.sub(r"\s*\(Tiếp tục\)\s*$", "", title).strip()
+
 
 def merge_heading_blocks(blocks: List[Tuple[str, str]]) -> List[Dict[str, str]]:
     """
@@ -111,11 +112,7 @@ def merge_heading_blocks(blocks: List[Tuple[str, str]]) -> List[Dict[str, str]]:
             final_heading = clean_h
             final_prefix = raw_h
 
-        merged.append({
-            "current_heading": final_heading,
-            "heading_prefix": final_prefix,
-            "body_text": b_text
-        })
+        merged.append({"current_heading": final_heading, "heading_prefix": final_prefix, "body_text": b_text})
 
         pending_headings = []
         pending_raw = []
@@ -127,13 +124,16 @@ def merge_heading_blocks(blocks: List[Tuple[str, str]]) -> List[Dict[str, str]]:
         merged[-1]["current_heading"] += f" > {extra_h}"
         merged[-1]["heading_prefix"] += "\n\n" + "\n\n".join(pending_raw)
     elif pending_headings and not merged:
-        merged.append({
-            "current_heading": " > ".join(pending_headings),
-            "heading_prefix": "\n\n".join(pending_raw),
-            "body_text": ""
-        })
+        merged.append(
+            {
+                "current_heading": " > ".join(pending_headings),
+                "heading_prefix": "\n\n".join(pending_raw),
+                "body_text": "",
+            }
+        )
 
     return merged
+
 
 def extract_atomic_blocks(text: str) -> List[str]:
     """
@@ -149,6 +149,7 @@ def extract_atomic_blocks(text: str) -> List[str]:
             blocks.append(p_str)
     return blocks
 
+
 def is_valid_sentence_split(prev_line: str, next_line: str) -> bool:
     """
     Checks if splitting between prev_line and next_line respects sentence/list boundaries.
@@ -157,7 +158,7 @@ def is_valid_sentence_split(prev_line: str, next_line: str) -> bool:
     next_s = next_line.strip()
     if not prev_s or not next_s:
         return True
-    
+
     # Previous line ends with terminal punctuation
     if re.search(r"[.:;!?]$", prev_s):
         return True
@@ -165,6 +166,7 @@ def is_valid_sentence_split(prev_line: str, next_line: str) -> bool:
     if re.match(r"^[-*•]|\d+\.", next_s):
         return True
     return False
+
 
 def split_long_paragraph(paragraph: str, max_chars: int) -> List[str]:
     """
@@ -194,6 +196,7 @@ def split_long_paragraph(paragraph: str, max_chars: int) -> List[str]:
         chunks.append("\n".join(current_lines))
 
     return chunks
+
 
 def split_body_text(body_text: str, max_body_chars: int) -> List[str]:
     """
@@ -242,11 +245,9 @@ def split_body_text(body_text: str, max_body_chars: int) -> List[str]:
 
     return result_segments
 
+
 def create_subchunks(
-    heading_prefix: str,
-    current_heading: str,
-    body_text: str,
-    max_chars: int
+    heading_prefix: str, current_heading: str, body_text: str, max_chars: int
 ) -> List[Tuple[str, str]]:
     """
     Constructs subchunks with full heading prefix prepended to each content.
@@ -270,6 +271,7 @@ def create_subchunks(
         subchunks.append((current_heading, full_content))
 
     return subchunks
+
 
 def chunk_document(pages: List[Dict[str, Any]], max_chars: int = 2000) -> List[Dict[str, Any]]:
     """
@@ -295,7 +297,7 @@ def chunk_document(pages: List[Dict[str, Any]], max_chars: int = 2000) -> List[D
             content=content,
             current_headings=curr_headings,
             last_seen_heading=last_seen_heading,
-            fallback_heading=fallback
+            fallback_heading=fallback,
         )
 
         # 2. Parse H3 Blocks
@@ -311,10 +313,7 @@ def chunk_document(pages: List[Dict[str, Any]], max_chars: int = 2000) -> List[D
             body = mb["body_text"]
 
             subchunks = create_subchunks(
-                heading_prefix=prefix,
-                current_heading=heading,
-                body_text=body,
-                max_chars=max_chars
+                heading_prefix=prefix, current_heading=heading, body_text=body, max_chars=max_chars
             )
 
             for sub_heading, sub_content in subchunks:
@@ -324,13 +323,14 @@ def chunk_document(pages: List[Dict[str, Any]], max_chars: int = 2000) -> List[D
                     "chapter": page.get("chapter"),
                     "section": page.get("section"),
                     "current_heading": sub_heading,
-                    "content": sub_content
+                    "content": sub_content,
                 }
                 all_chunks.append(chunk_obj)
                 if sub_heading:
                     last_seen_heading = clean_heading_title(sub_heading.split(" > ")[-1])
 
     return all_chunks
+
 
 def run_chunker_file(input_file: str, output_file: str, max_chars: int = 2000) -> Dict[str, Any]:
     import json
@@ -350,15 +350,13 @@ def run_chunker_file(input_file: str, output_file: str, max_chars: int = 2000) -
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(chunks, f, ensure_ascii=False, indent=2)
 
-    stats = {
-        "input_pages": len(pages),
-        "output_chunks": len(chunks),
-        "output_file": str(output_path)
-    }
+    stats = {"input_pages": len(pages), "output_chunks": len(chunks), "output_file": str(output_path)}
     return stats
+
 
 def main():
     import argparse
+
     parser = argparse.ArgumentParser(description="Chunk documents from JSON by H3 headings.")
     parser.add_argument("--input", default="/home/quanganh/techcombank/output_gemini.json", help="Path to input JSON")
     parser.add_argument("--output", default="/home/quanganh/techcombank/output_chunks.json", help="Path to output JSON")
@@ -370,8 +368,6 @@ def main():
     print(f"Done! Processed {stats['input_pages']} pages -> generated {stats['output_chunks']} chunks.")
     print(f"Saved to: {stats['output_file']}")
 
+
 if __name__ == "__main__":
     main()
-
-
-
