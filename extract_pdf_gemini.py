@@ -20,17 +20,18 @@ Sau đó ánh xạ (map) nội dung vào đúng các trang logic:
 """
 
 import argparse
+import io
 import json
 import os
 import re
 import sys
 import time
-from collections import Counter
 from datetime import datetime
 from pathlib import Path
 from typing import List, Literal, Optional
 
 from bs4 import BeautifulSoup
+from PIL import Image, ImageDraw
 
 try:
     import pymupdf
@@ -129,7 +130,7 @@ def init_gemini_client(api_key: str) -> genai.Client:
     return genai.Client(api_key=api_key)
 
 
-def check_page_has_meaningful_content(page: pymupdf.Page, header_height: float = 65.0) -> bool:
+def check_page_has_meaningful_content(page: pymupdf.Page, header_height: float = 60.0) -> bool:
     """
     Kiểm tra trang có nội dung thực sự hay không, LOẠI TRỪ phần header ở mép trên
     (nơi chứa số trang và tên báo cáo/chương cố định ở góc trái và góc phải).
@@ -143,7 +144,7 @@ def check_page_has_meaningful_content(page: pymupdf.Page, header_height: float =
         return True
 
     # 2. Kiểm tra hình ảnh giao cắt với phần thân trang
-    for img in page.get_image_info(xrefs=True):
+    for img in page.get_image_info():
         img_rect = pymupdf.Rect(img["bbox"])
         if img_rect.intersects(body_rect) and img_rect.height > 20 and img_rect.width > 20:
             return True
@@ -161,6 +162,7 @@ def build_parsing_plan(
     doc: pymupdf.Document,
     start_idx: int = 0,
     end_idx: Optional[int] = None,
+    header_height: float = 60.0,
 ) -> list[dict]:
     """
     Luồng tiền xử lý (Preprocessing) trước khi gọi LLM:
@@ -195,21 +197,21 @@ def build_parsing_plan(
             continue
 
         # Header góc trên bên trái (left logical page number + title doc)
-        top_left = pymupdf.Rect(0, 0, mid_x, 60)
+        top_left = pymupdf.Rect(0, 0, mid_x, header_height)
         tl_text = page.get_text(clip=top_left).strip()
 
         # Header góc trên bên phải (right logical page number + chapter name)
-        top_right = pymupdf.Rect(mid_x, 0, w, 60)
+        top_right = pymupdf.Rect(mid_x, 0, w, header_height)
         tr_text = page.get_text(clip=top_right).strip()
 
         fallback_left = idx * 2
         fallback_right = idx * 2 + 1
 
-        # Trích xuất số trang logic bên trái (bỏ qua số năm 2025)
+        # Trích xuất số trang logic bên trái
         left_num = fallback_left
         for line in tl_text.split("\n"):
             line = line.strip()
-            if line.isdigit() and line != "2025":
+            if line.isdigit():
                 left_num = int(line)
                 break
 
@@ -220,16 +222,14 @@ def build_parsing_plan(
             line = line.strip()
             if line.isdigit():
                 right_num = int(line)
-            else:
-                cleaned = re.sub(r"^[|\-–\s\d]+|[|\-–\s\d]+$", "", line).strip()
-                if cleaned and len(cleaned) > 2 and cleaned.lower() != "báo cáo thường niên":
-                    detected_chapter = cleaned
+            elif len(line) > 2:
+                detected_chapter = line
 
         if detected_chapter:
             current_chapter = detected_chapter
 
         # Kiểm tra trang có nội dung thực sự hay không (loại trừ header)
-        has_content = check_page_has_meaningful_content(page, header_height=65.0)
+        has_content = check_page_has_meaningful_content(page, header_height=header_height)
 
         plan = {
             "pdf_page": pdf_page_num,
@@ -246,116 +246,725 @@ def build_parsing_plan(
     return plans
 
 
-def get_clean_headers_from_pymupdf(page: pymupdf.Page) -> list[list[str]]:
+def locate_table_bbox_from_gemini(
+    page: pymupdf.Page,
+    gem_table_soup,
+    location: str = "all",
+) -> pymupdf.Rect | None:
     """
-    Trích xuất danh sách các tiêu đề cột chuẩn từ bảng hình học của PyMuPDF.
-    CHỈ áp dụng cho các bảng có header đa cấp / merged header (chứa ô None ở dòng 0).
-    Tự động kết hợp nhóm cha và cột con (ví dụ: 'Các quỹ - Quỹ dự phòng...') để đảm bảo
-    mỗi cột đều có tên đầy đủ và số lượng cột khớp 100% với số ô dữ liệu.
+    Xác định Bounding Box chính xác của toàn bộ bảng trên trang PDF dựa trên:
+    - Text dòng đầu (header)
+    - Text các dòng dữ liệu ở giữa (middle data rows) để phân biệt các bảng có header/footer trùng nhau
+    - Text dòng cuối (footer/data row cuối)
+    Gộp tọa độ bằng cách: phần đầu, các dòng giữa và phần cuối phải thẳng hàng (cùng trục X),
+    với y0 < y_mid < y1, dôi ra vừa chạm viền ngoài.
     """
-    try:
-        tabs = page.find_tables()
-        if not tabs.tables:
-            return []
+    w = page.rect.width
+    h = page.rect.height
+    scope = pymupdf.Rect(0, 60.0, w, h)
+    if location == "left":
+        scope = pymupdf.Rect(0, 60.0, w / 2 + 5, h)
+    elif location == "right":
+        scope = pymupdf.Rect(w / 2 - 5, 60.0, w, h)
 
-        headers_list = []
-        for tab in tabs.tables:
-            df = tab.extract()
-            if len(df) < 2:
+    rows = gem_table_soup.find_all("tr")
+    if not rows:
+        return None
+
+    def extract_cells_text(tr):
+        return [c.get_text().strip() for c in tr.find_all(["th", "td"]) if len(c.get_text().strip()) >= 3]
+
+    first_texts = extract_cells_text(rows[0])
+
+    last_texts = []
+    for r in reversed(rows):
+        cells = extract_cells_text(r)
+        if cells:
+            last_texts = cells
+            break
+
+    if not first_texts or not last_texts:
+        return None
+
+    # Lấy thêm vài nội dung ở giữa bảng để phân biệt nếu đầu hoặc cuối bảng trùng nhau
+    mid_rows_texts = []
+    n_rows = len(rows)
+    if n_rows > 2:
+        step_indices = sorted(list(set([n_rows // 4, n_rows // 2, (3 * n_rows) // 4])))
+        for idx in step_indices:
+            if 0 < idx < n_rows - 1:
+                cells = extract_cells_text(rows[idx])
+                if cells:
+                    mid_rows_texts.append(cells)
+
+    def find_matches(texts):
+        matches = []
+        for txt in texts:
+            query = txt if len(txt) <= 40 else txt[:35]
+            res = page.search_for(query, clip=scope)
+            if res:
+                matches.extend(res)
+        return matches
+
+    first_matches = find_matches(first_texts)
+    last_matches = find_matches(last_texts)
+    mid_matches = [find_matches(m_cells) for m_cells in mid_rows_texts]
+    mid_matches = [m for m in mid_matches if m]
+
+    # Tìm nhóm (first_rect, mid_rects, last_rect) thỏa mãn:
+    # 1. Thẳng hàng trục X (cùng cột / chiều rộng bảng)
+    # 2. y0 < y_mid_1 <= y_mid_2 <= ... < y1
+    valid_groups = []
+    for l_rect in last_matches:
+        for f_rect in first_matches:
+            if f_rect.y1 >= l_rect.y0:
                 continue
-            row0 = df[0]
-            # CHỈ xử lý các bảng có ô gộp ở dòng tiêu đề đầu tiên (chứa None)
-            if not any(c is None for c in row0):
+
+            max_h = (n_rows + 5) * 60.0
+            if (l_rect.y1 - f_rect.y0) > max_h:
                 continue
 
-            row1 = df[1]
-
-            parents = []
-            curr = ""
-            for c in row0:
-                if c is None:
-                    parents.append(curr)
-                elif c and c.strip():
-                    curr = c.strip().replace("\n", " ")
-                    parents.append(curr)
+            cur_y = f_rect.y0
+            matched_mids = []
+            valid_chain = True
+            for m_group in mid_matches:
+                cands = [
+                    m
+                    for m in m_group
+                    if m.y0 >= cur_y - 2.0 and m.y1 <= l_rect.y1 + 2.0 and abs(m.x0 - f_rect.x0) < (w / 2)
+                ]
+                if cands:
+                    best_cand = min(cands, key=lambda m: m.y0)
+                    matched_mids.append(best_cand)
+                    cur_y = best_cand.y0
                 else:
-                    curr = ""
-                    parents.append("")
-
-            unified = []
-            for idx in range(tab.col_count):
-                p = parents[idx] if idx < len(parents) else ""
-                c = row1[idx].strip().replace("\n", " ") if idx < len(row1) and row1[idx] else ""
-                if p and c and p != c:
-                    unified.append(f"{p} - {c}")
-                elif c:
-                    unified.append(c)
-                elif p:
-                    unified.append(p)
-                else:
-                    unified.append("")
-            headers_list.append(unified)
-        return headers_list
-    except Exception:
-        return []
-
-
-def enhance_table_with_pymupdf_headers(content: str, page: pymupdf.Page) -> str:
-    """
-    Tự động chuẩn hóa và cân bằng cột cho các bảng HTML trong nội dung:
-    - Xác định số cột thực tế N_cols từ các dòng dữ liệu <td>.
-    - Đối chiếu với các tiêu đề chuẩn từ PyMuPDF có cùng N_cols.
-    - Cập nhật lại <thead> với danh sách cột chuẩn xác 100%, loại bỏ lỗi lệch cột do colspan.
-    """
-    if "<table" not in content:
-        return content
-
-    pymupdf_headers = get_clean_headers_from_pymupdf(page)
-    if not pymupdf_headers:
-        return content
-
-    try:
-        soup = BeautifulSoup(content, "html.parser")
-        tables = soup.find_all("table")
-        if not tables:
-            return content
-
-        for table in tables:
-            tbody = table.find("tbody") or table
-            data_rows = [tr for tr in tbody.find_all("tr") if tr.find_all("td")]
-            if not data_rows:
-                continue
-
-            col_counts = [len(tr.find_all("td")) for tr in data_rows]
-            n_cols = Counter(col_counts).most_common(1)[0][0]
-
-            # Tìm header từ PyMuPDF có đúng n_cols cột
-            matching_header = None
-            for h in pymupdf_headers:
-                if len(h) == n_cols:
-                    matching_header = h
+                    valid_chain = False
                     break
 
-            if matching_header:
-                new_thead = soup.new_tag("thead")
-                new_tr = soup.new_tag("tr")
-                for col_name in matching_header:
-                    th = soup.new_tag("th")
-                    th.string = col_name
-                    new_tr.append(th)
-                new_thead.append(new_tr)
+            if mid_matches and not valid_chain:
+                continue
 
-                # Xóa toàn bộ header cũ (trong <thead> hoặc các <tr> chỉ chứa <th>)
-                old_thead = table.find("thead")
-                if old_thead:
-                    old_thead.decompose()
+            all_pts = [f_rect, l_rect] + matched_mids
+            xs = [r.x0 for r in all_pts] + [r.x1 for r in all_pts]
+            if max(xs) - min(xs) > (w / 2 + 50):
+                continue
 
-                for tr in list(table.find_all("tr")):
-                    if tr.find_all("th") and not tr.find_all("td"):
-                        tr.decompose()
+            score = len(matched_mids) * 1000 - abs(l_rect.y1 - f_rect.y0 - n_rows * 20)
+            valid_groups.append((score, f_rect, matched_mids, l_rect))
 
-                # Chèn new_thead vào đầu bảng
-                table.insert(0, new_thead)
+    if valid_groups:
+        valid_groups.sort(key=lambda x: x[0], reverse=True)
+        _, best_f, best_mids, best_l = valid_groups[0]
+
+        all_rects = [best_f, best_l] + best_mids
+        y0_text = min(r.y0 for r in all_rects)
+        y1_text = max(r.y1 for r in all_rects)
+        x0_text = min(r.x0 for r in all_rects)
+        x1_text = max(r.x1 for r in all_rects)
+
+        # Quét các đường nét vẽ vector để khóa chặt viền bảng sát sao (+- 1.5 pt)
+        box_lines = []
+        for d in page.get_drawings():
+            r = d["rect"]
+            if r.intersects(scope) and (y0_text - 15 <= r.y1 and r.y0 <= y1_text + 15):
+                if abs(r.x0 - x0_text) < (w / 2) or abs(r.x1 - x1_text) < (w / 2):
+                    box_lines.append(r)
+
+        if box_lines:
+            x0 = min(r.x0 for r in box_lines)
+            x1 = max(r.x1 for r in box_lines)
+            y0_cands = [r.y0 for r in box_lines if abs(r.y0 - y0_text) <= 20]
+            y1_cands = [r.y1 for r in box_lines if abs(r.y1 - y1_text) <= 20]
+            y0 = min(y0_cands) - 1.5 if y0_cands else y0_text - 3.0
+            y1 = max(y1_cands) + 1.5 if y1_cands else y1_text + 3.0
+        else:
+            x0 = max(scope.x0, x0_text - 10)
+            x1 = min(scope.x1, x1_text + 10)
+            y0 = y0_text - 3.0
+            y1 = y1_text + 3.0
+
+        return pymupdf.Rect(max(scope.x0, x0), max(scope.y0, y0), min(scope.x1, x1), min(scope.y1, y1))
+
+    # Fallback dự phòng nếu text OCR có khác biệt nhỏ không tìm thấy bằng search_for
+    raw_tabs = [t for t in page.find_tables().tables if scope.intersects(pymupdf.Rect(t.bbox))]
+    if not raw_tabs:
+        return None
+
+    bot_tab = None
+    for t in reversed(raw_tabs):
+        df_text = " ".join(" ".join(str(c).lower() for c in r if c) for r in t.extract())
+        if any(bt.lower() in df_text for bt in last_texts):
+            bot_tab = t
+            break
+
+    if bot_tab is None:
+        return None
+
+    bot_df_text = " ".join(" ".join(str(c).lower() for c in r if c) for r in bot_tab.extract())
+    if any(tt.lower() in bot_df_text for tt in first_texts):
+        top_tab = bot_tab
+    else:
+        top_tab = None
+        cand_tops = [
+            t for t in raw_tabs if t.bbox[3] <= bot_tab.bbox[1] + 35.0 and abs(t.bbox[0] - bot_tab.bbox[0]) <= 5.0
+        ]
+        for t in reversed(cand_tops):
+            df_text = " ".join(" ".join(str(c).lower() for c in r if c) for r in t.extract())
+            if any(tt.lower() in df_text for tt in first_texts):
+                top_tab = t
+                break
+
+    if top_tab is None:
+        top_tab = bot_tab
+
+    x0 = min(top_tab.bbox[0], bot_tab.bbox[0]) - 2.0
+    y0 = top_tab.bbox[1] - 2.0
+    x1 = max(top_tab.bbox[2], bot_tab.bbox[2]) + 2.0
+    y1 = bot_tab.bbox[3] + 2.0
+    return pymupdf.Rect(max(scope.x0, x0), y0, min(scope.x1, x1), y1)
+
+
+def extract_table_from_bbox(page: pymupdf.Page, table_rect: pymupdf.Rect):
+    """Trích xuất bảng PyMuPDF trọn vẹn bên trong table_rect với join_tolerance mở rộng."""
+    try:
+        tabs = page.find_tables(clip=table_rect, snap_tolerance=5, join_tolerance=25).tables
+        if not tabs:
+            return None
+        return max(tabs, key=lambda t: (t.row_count * t.col_count))
+    except Exception:
+        return None
+
+
+def compute_table_topology(tab, header_rows_hint: int | None = None) -> dict:
+    """
+    Trích xuất ma trận (rowspan, colspan) và xác định các ô bị đè (covered).
+    Đồng thời xác định số dòng Header k đảm bảo Topology Span Closure.
+    """
+    R = tab.row_count
+    C = tab.col_count
+
+    spans = {}
+    covered = {}
+
+    for r in range(R):
+        for c in range(C):
+            covered[(r, c)] = False
+
+    for r in range(R):
+        row = tab.rows[r]
+        for c in range(C):
+            cell = row.cells[c]
+            if cell is None or covered[(r, c)]:
+                covered[(r, c)] = True
+                spans[(r, c)] = (0, 0)
+                continue
+
+            x0, y0, x1, y1 = cell
+
+            # 1. Tính colspan
+            colspan = 1
+            for next_c in range(c + 1, C):
+                if tab.rows[r].cells[next_c] is None:
+                    col_in_span = False
+                    for other_r in range(R):
+                        other_cell = tab.rows[other_r].cells[next_c]
+                        if other_cell is not None:
+                            if other_cell[0] >= x0 - 1.5 and other_cell[2] <= x1 + 1.5:
+                                col_in_span = True
+                                break
+                    if col_in_span:
+                        colspan += 1
+                    else:
+                        break
+                else:
+                    break
+
+            # 2. Tính rowspan
+            rowspan = 1
+            for next_r in range(r + 1, R):
+                if tab.rows[next_r].cells[c] is not None:
+                    break
+                row_bottom = tab.rows[next_r].bbox[3]
+                if row_bottom <= y1 + 1.5:
+                    rowspan += 1
+                else:
+                    break
+
+            spans[(r, c)] = (rowspan, colspan)
+
+            for dr in range(rowspan):
+                for dc in range(colspan):
+                    if dr == 0 and dc == 0:
+                        continue
+                    covered[(r + dr, c + dc)] = True
+
+    # Xác định số dòng header k
+    k = 1
+    if header_rows_hint and header_rows_hint > 0:
+        k = header_rows_hint
+    elif hasattr(tab, "header") and tab.header and tab.header.bbox:
+        header_y1 = tab.header.bbox[3]
+        count = 0
+        for i, row in enumerate(tab.rows):
+            if row.bbox and row.bbox[3] <= header_y1 + 2.0:
+                count = i + 1
+            else:
+                break
+        k = max(1, count)
+
+    # Đảm bảo không cắt ngang ô có rowspan ở header
+    topo_k = k
+    for r in range(min(k, R)):
+        for c in range(C):
+            rs, _ = spans.get((r, c), (1, 1))
+            if rs > 1 and r + rs > topo_k:
+                topo_k = r + rs
+    k = min(topo_k, R)
+
+    return {
+        "row_count": R,
+        "col_count": C,
+        "header_rows": k,
+        "spans": spans,
+        "covered": covered,
+    }
+
+
+def get_table_tokens(obj) -> set[str]:
+    """Trích xuất tập hợp các từ và số đặc trưng để tính độ trùng lặp nội dung."""
+    if hasattr(obj, "get_text"):
+        text = obj.get_text(separator=" ")
+    elif isinstance(obj, (list, tuple)):
+        text = " ".join(" ".join(str(c) for c in r if c) for r in obj)
+    else:
+        text = str(obj)
+    return set(w.lower() for w in re.findall(r"[\w\.,]+", text) if len(w) >= 2)
+
+
+def flatten_table_headers(table, separator: str = " - "):
+    """
+    Làm phẳng các dòng header đa cấp (multi-level thead) thành duy nhất 1 dòng tr.
+    Nếu header có k >= 2 dòng với rowspan/colspan, hàm này ánh xạ phân cấp cha -> con
+    và ghép thành 1 chuỗi tên cột đầy đủ (ví dụ: 'Năm 2024 - Hợp nhất').
+    """
+    thead = table.find("thead")
+    if not thead:
+        return table
+
+    header_rows = thead.find_all("tr")
+    if len(header_rows) <= 1:
+        return table
+
+    R_head = len(header_rows)
+    grid = {}  # (r, c) -> text
+
+    for r, row in enumerate(header_rows):
+        c = 0
+        for cell in row.find_all(["th", "td"]):
+            while (r, c) in grid:
+                c += 1
+            try:
+                rowspan = int(cell.get("rowspan", 1) or 1)
+            except (ValueError, TypeError):
+                rowspan = 1
+            try:
+                colspan = int(cell.get("colspan", 1) or 1)
+            except (ValueError, TypeError):
+                colspan = 1
+
+            text = cell.get_text(separator=" ", strip=True).replace("\n", " ")
+            for dr in range(rowspan):
+                for dc in range(colspan):
+                    grid[(r + dr, c + dc)] = text
+            c += colspan
+
+    if not grid:
+        return table
+
+    C = max(col for (_, col) in grid.keys()) + 1
+
+    soup = BeautifulSoup("", "html.parser")
+    new_tr = soup.new_tag("tr")
+
+    for col_idx in range(C):
+        level_texts = []
+        for r in range(R_head):
+            t = grid.get((r, col_idx), "").strip()
+            if t and (not level_texts or level_texts[-1] != t):
+                level_texts.append(t)
+        col_name = separator.join(level_texts) if level_texts else ""
+        th = soup.new_tag("th")
+        th.string = col_name
+        new_tr.append(th)
+
+    thead.clear()
+    thead.append(new_tr)
+    return table
+
+
+def render_pymupdf_table_to_html(
+    tab: pymupdf.table.Table,
+    flatten_headers: bool = True,
+    header_separator: str = " - ",
+    header_rows_hint: int = 1,
+) -> str:
+    """
+    Render 1 đối tượng Table của PyMuPDF thành chuỗi HTML <table>...</table>
+    bảo toàn cấu trúc ô (rowspan, colspan) và làm phẳng header nếu flatten_headers=True.
+    """
+    topo = compute_table_topology(tab, header_rows_hint=header_rows_hint)
+    extract = tab.extract()
+    k = topo["header_rows"]
+
+    soup = BeautifulSoup("", "html.parser")
+    table = soup.new_tag("table")
+    thead = soup.new_tag("thead")
+    tbody = soup.new_tag("tbody")
+
+    for r in range(topo["row_count"]):
+        tr_tag = soup.new_tag("tr")
+        is_header = r < k
+        for c in range(topo["col_count"]):
+            if topo["covered"][(r, c)]:
+                continue
+
+            rowspan, colspan = topo["spans"].get((r, c), (1, 1))
+            tag_name = "th" if is_header else "td"
+            cell_tag = soup.new_tag(tag_name)
+
+            if rowspan > 1:
+                cell_tag["rowspan"] = str(rowspan)
+            if colspan > 1:
+                cell_tag["colspan"] = str(colspan)
+
+            cell_text = ""
+            if r < len(extract) and c < len(extract[r]):
+                cell_text = (extract[r][c] or "").strip().replace("\n", " ")
+
+            cell_tag.string = cell_text
+            tr_tag.append(cell_tag)
+
+        if is_header:
+            thead.append(tr_tag)
+        else:
+            tbody.append(tr_tag)
+
+    if len(thead.find_all("tr")) > 0:
+        table.append(thead)
+    if len(tbody.find_all("tr")) > 0:
+        table.append(tbody)
+
+    if flatten_headers:
+        flatten_table_headers(table, separator=header_separator)
+
+    return str(table)
+
+
+def prompt_unassigned_action(
+    pdf_page_num: Optional[int],
+    location: str,
+    total_raw_tabs: int,
+    unassigned_count: int,
+    action: Optional[str] = None,
+) -> str:
+    """
+    Hiển thị cảnh báo nguy cơ parse sai bảng và lấy lựa chọn xử lý từ người dùng hoặc CLI:
+    [1] Để nguyên như hiện tại (kết quả enhance thông thường)
+    [2] Không sử dụng PyMuPDF để enhance kết quả bảng ở page này nữa, sử dụng lại Gemini để parse lại cho bảng này
+    [3] Sử dụng kết quả các bảng từ PyMuPDF để thay vào table cho page này
+    """
+    banner = (
+        f"\n{'=' * 75}\n"
+        f"[!] CẢNH BÁO NGUY CƠ PARSE SAI BẢNG DO CÓ BẢNG CHƯA ĐƯỢC GÁN (UNASSIGNED):\n"
+        f"    - PDF Trang: {pdf_page_num if pdf_page_num is not None else 'N/A'} (Vị trí: '{location}')\n"
+        f"    - Tổng số bảng PyMuPDF phát hiện: {total_raw_tabs}\n"
+        f"    - Số bảng chưa được gán (unassigned): {unassigned_count}\n"
+        f"    Yêu cầu: Đã lưu kết quả parse hiện tại vào file 'temp_page.md'. Vui lòng mở file xem và chọn:\n"
+        f"    Lựa chọn xử lý:\n"
+        f"      [1] Để nguyên như hiện tại\n"
+        f"      [2] Không sử dụng PyMuPDF để enhance kết quả bảng ở page này nữa, sử dụng lại Gemini để parse lại cho bảng này\n"
+        f"      [3] Sử dụng kết quả các bảng từ PyMuPDF để thay vào table cho page này\n"
+    )
+
+    if action in ("1", "2", "3"):
+        print(banner + f"    => Tự động chọn [{action}] theo cấu hình CLI / tham số.\n{'=' * 75}\n")
+        return action
+
+    # Nếu đang chạy trong terminal tương tác (interactive)
+    if sys.stdin.isatty():
+        print(banner + f"{'=' * 75}")
+        choice = input("Nhập lựa chọn của bạn (1/2/3) [mặc định: 1]: ").strip()
+        if choice not in ("1", "2", "3"):
+            print("Lựa chọn không hợp lệ, mặc định chọn [1].")
+            return "1"
+        return choice
+    else:
+        # Chế độ non-interactive (CI, test, cron)
+        print(banner + f"    => Môi trường non-interactive: Mặc định chọn [1].\n{'=' * 75}\n")
+        return "1"
+
+
+def enhance_table_with_pymupdf_headers(
+    content: str,
+    page: pymupdf.Page,
+    location: str = "all",
+    flatten_headers: bool = True,
+    header_separator: str = " - ",
+    pdf_page_num: Optional[int] = None,
+    unassigned_action: Optional[str] = None,
+) -> str:
+    """
+    Tự động chuẩn hóa và thay thế bảng Gemini bằng bảng chuẩn xác 100% từ PyMuPDF:
+    - Với mỗi raw_tab từ PyMuPDF: gán cho bảng Gemini có độ tương đồng token cao nhất (>= 60%).
+    - Đồng thời gom các phần bảng collinear liền kề (giải quyết case 1 bảng bị PyMuPDF tách đôi do subheader/dòng không viền).
+    - Tái tạo bảng HTML trực tiếp từ 100% dữ liệu PyMuPDF (giữ nguyên độ chuẩn xác của số liệu, STT, tỷ lệ %, subheader và rowspan/colspan).
+    - Làm phẳng các dòng header đa cấp nếu flatten_headers=True.
+    - Phát hiện các bảng unassigned và đưa ra 3 lựa chọn xử lý cho người dùng.
+    """
+    try:
+        w, h = page.rect.width, page.rect.height
+        scope = page.rect
+        if location == "left":
+            scope = pymupdf.Rect(0, 0, w / 2 + 5, h)
+        elif location == "right":
+            scope = pymupdf.Rect(w / 2 - 5, 0, w, h)
+
+        raw_tabs = [t for t in page.find_tables().tables if scope.intersects(pymupdf.Rect(t.bbox))]
+        soup = BeautifulSoup(content, "html.parser")
+        tables = soup.find_all("table")
+        if not tables and not raw_tabs:
+            return content
+
+        # 1. Gán mỗi raw_tab cho bảng Gemini phù hợp nhất (best-match >= 60%)
+        gem_tokens_list = [get_table_tokens(t) for t in tables]
+        gem_table_map = {i: [] for i in range(len(tables))}
+
+        for t in raw_tabs:
+            t_tokens = get_table_tokens(t.extract())
+            if not t_tokens:
+                continue
+            best_i = None
+            best_ov = 0.0
+            for g_idx, g_tokens in enumerate(gem_tokens_list):
+                if not g_tokens:
+                    continue
+                ov = len(t_tokens & g_tokens) / len(t_tokens)
+                if ov > best_ov:
+                    best_ov = ov
+                    best_i = g_idx
+            if best_i is not None and best_ov >= 0.60:
+                gem_table_map[best_i].append((best_ov, t))
+
+        # Gom thêm các phần bảng collinear chưa được gán nhưng nằm liền kề (trong vòng 40pt)
+        for g_idx in range(len(tables)):
+            if gem_table_map[g_idx]:
+                anchor = max(gem_table_map[g_idx], key=lambda x: x[0])[1]
+                for t in raw_tabs:
+                    # Bỏ qua nếu bảng t đã được gán vào bất kỳ bảng Gemini nào
+                    if any(t in [x[1] for x in gem_table_map[k]] for k in range(len(tables))):
+                        continue
+                    t_tokens = get_table_tokens(t.extract())
+                    if not t_tokens:
+                        continue
+                    ov = len(t_tokens & gem_tokens_list[g_idx]) / len(t_tokens)
+                    if ov >= 0.25:
+                        is_collinear = abs(t.bbox[0] - anchor.bbox[0]) <= 5.0 and abs(t.bbox[2] - anchor.bbox[2]) <= 5.0
+                        is_nearby = abs(t.bbox[1] - anchor.bbox[3]) <= 40.0 or abs(anchor.bbox[1] - t.bbox[3]) <= 40.0
+                        if is_collinear and is_nearby and t.col_count == anchor.col_count:
+                            gem_table_map[g_idx].append((ov, t))
+
+        # Xác định collinear_tabs cho từng bảng Gemini và tổng hợp các assigned_tabs
+        table_collinear_tabs: dict[int, list] = {}
+        assigned_tabs = set()
+
+        for g_idx, table in enumerate(tables):
+            gem_rows = table.find_all("tr")
+            if not gem_rows:
+                continue
+            gem_row_count = len(gem_rows)
+            matched_tabs = [x[1] for x in gem_table_map.get(g_idx, [])]
+            collinear_tabs = []
+
+            if len(matched_tabs) > 1:
+                anchor = max(gem_table_map[g_idx], key=lambda x: x[0])[1]
+                collinear = [
+                    t
+                    for t in matched_tabs
+                    if abs(t.bbox[0] - anchor.bbox[0]) <= 5.0 and abs(t.bbox[2] - anchor.bbox[2]) <= 5.0
+                ]
+                collinear.sort(key=lambda t: t.bbox[1])
+                valid_split = True
+                for t_prev, t_next in zip(collinear[:-1], collinear[1:]):
+                    gap = t_next.bbox[1] - t_prev.bbox[3]
+                    if gap > 40.0 or t_next.col_count != t_prev.col_count:
+                        valid_split = False
+                        break
+                if valid_split:
+                    collinear_tabs = collinear
+                else:
+                    collinear_tabs = [anchor]
+            elif len(matched_tabs) == 1:
+                collinear_tabs = matched_tabs
+            else:
+                # Fallback: định vị bằng text anchor nếu không khớp raw_tabs
+                bbox = locate_table_bbox_from_gemini(page, table, location=location)
+                if bbox:
+                    fb_tab = extract_table_from_bbox(page, bbox)
+                    if fb_tab:
+                        collinear_tabs = [fb_tab]
+
+            if collinear_tabs:
+                total_rows = sum(t.row_count for t in collinear_tabs)
+                if 0.4 <= total_rows / gem_row_count <= 3.0:
+                    table_collinear_tabs[g_idx] = collinear_tabs
+                    assigned_tabs.update(collinear_tabs)
+
+        unassigned_tabs = [t for t in raw_tabs if t not in assigned_tabs]
+
+        # Kiểm tra nếu có bảng chưa được gán (unassigned)
+        if unassigned_tabs:
+            # Ghi toàn bộ nội dung parse hiện tại ra temp_page.md để người dùng tiện mở xem
+            try:
+                temp_file = Path("temp_page.md")
+                preview_header = (
+                    f"# BẢN XEM TRƯỚC: PDF TRANG {pdf_page_num if pdf_page_num else 'N/A'} (Vị trí: {location})\n\n"
+                    f"> **Lưu ý:** Trang này có {len(raw_tabs)} bảng PyMuPDF nhưng có {len(unassigned_tabs)} bảng chưa được gán.\n\n"
+                    f"---\n\n"
+                )
+                temp_file.write_text(preview_header + content + "\n", encoding="utf-8")
+            except Exception:
+                pass
+
+            chosen = prompt_unassigned_action(
+                pdf_page_num=pdf_page_num,
+                location=location,
+                total_raw_tabs=len(raw_tabs),
+                unassigned_count=len(unassigned_tabs),
+                action=unassigned_action,
+            )
+            if chosen == "2":
+                # Lựa chọn 2: Sử dụng lại Gemini OCR gốc, không can thiệp PyMuPDF
+                return content
+            elif chosen == "3":
+                # Lựa chọn 3: Thay thế bằng toàn bộ các bảng từ PyMuPDF
+                sorted_tabs = sorted(raw_tabs, key=lambda t: (t.bbox[1], t.bbox[0]))
+                rendered_htmls = [
+                    render_pymupdf_table_to_html(
+                        t,
+                        flatten_headers=flatten_headers,
+                        header_separator=header_separator,
+                    )
+                    for t in sorted_tabs
+                ]
+                tables_fragment = BeautifulSoup("\n\n".join(rendered_htmls), "html.parser")
+                if tables:
+                    tables[0].replace_with(tables_fragment)
+                    for extra_tbl in tables[1:]:
+                        extra_tbl.decompose()
+                else:
+                    soup.append(tables_fragment)
+                return str(soup)
+            # chosen == "1": tiếp tục theo logic collinear_tabs chuẩn hóa bên dưới
+
+        # 2. Xử lý từng bảng Gemini
+        for g_idx, table in enumerate(tables):
+            collinear_tabs = table_collinear_tabs.get(g_idx, [])
+            if not collinear_tabs:
+                continue
+
+            # 3. Tái tạo bảng HTML từ collinear_tabs (bảo toàn 100% dữ liệu PyMuPDF)
+            new_table = soup.new_tag("table")
+            new_thead = soup.new_tag("thead")
+            new_tbody = soup.new_tag("tbody")
+
+            thead = table.find("thead")
+            hint_k = len(thead.find_all("tr")) if thead else 1
+
+            collinear_tabs.sort(key=lambda t: t.bbox[1])
+            t_top = collinear_tabs[0]
+            topo_top = compute_table_topology(t_top, header_rows_hint=hint_k)
+            extract_top = t_top.extract()
+            k = topo_top["header_rows"]
+            col_count = t_top.col_count
+
+            # 3a. Render bảng trên cùng (header + các dòng data đầu tiên nếu có)
+            for r in range(topo_top["row_count"]):
+                tr_tag = soup.new_tag("tr")
+                is_header = r < k
+                for c in range(topo_top["col_count"]):
+                    if topo_top["covered"][(r, c)]:
+                        continue
+
+                    rowspan, colspan = topo_top["spans"].get((r, c), (1, 1))
+                    tag_name = "th" if is_header else "td"
+                    cell_tag = soup.new_tag(tag_name)
+
+                    if rowspan > 1:
+                        cell_tag["rowspan"] = str(rowspan)
+                    if colspan > 1:
+                        cell_tag["colspan"] = str(colspan)
+
+                    cell_text = ""
+                    if r < len(extract_top) and c < len(extract_top[r]):
+                        cell_text = (extract_top[r][c] or "").strip().replace("\n", " ")
+
+                    cell_tag.string = cell_text
+                    tr_tag.append(cell_tag)
+
+                if is_header:
+                    new_thead.append(tr_tag)
+                else:
+                    new_tbody.append(tr_tag)
+
+            # 3b. Render các bảng kế tiếp và text nằm trong khoảng cách (gap) giữa các bảng
+            for prev_t, next_t in zip(collinear_tabs[:-1], collinear_tabs[1:]):
+                gap_rect = pymupdf.Rect(prev_t.bbox[0] - 2, prev_t.bbox[3], prev_t.bbox[2] + 2, next_t.bbox[1])
+                gap_words = page.get_text("words", clip=gap_rect)
+                if gap_words:
+                    gap_words.sort(key=lambda w: (w[1], w[0]))
+                    gap_text = " ".join(w[4] for w in gap_words).strip()
+                    if gap_text:
+                        tr_tag = soup.new_tag("tr")
+                        td_tag = soup.new_tag("td", colspan=str(col_count))
+                        td_tag.string = gap_text
+                        tr_tag.append(td_tag)
+                        new_tbody.append(tr_tag)
+
+                topo_next = compute_table_topology(next_t, header_rows_hint=0)
+                extract_next = next_t.extract()
+                for r in range(topo_next["row_count"]):
+                    tr_tag = soup.new_tag("tr")
+                    for c in range(topo_next["col_count"]):
+                        if topo_next["covered"][(r, c)]:
+                            continue
+
+                        rowspan, colspan = topo_next["spans"].get((r, c), (1, 1))
+                        cell_tag = soup.new_tag("td")
+
+                        if rowspan > 1:
+                            cell_tag["rowspan"] = str(rowspan)
+                        if colspan > 1:
+                            cell_tag["colspan"] = str(colspan)
+
+                        cell_text = ""
+                        if r < len(extract_next) and c < len(extract_next[r]):
+                            cell_text = (extract_next[r][c] or "").strip().replace("\n", " ")
+
+                        cell_tag.string = cell_text
+                        tr_tag.append(cell_tag)
+
+                    new_tbody.append(tr_tag)
+
+            if len(new_thead.find_all("tr")) > 0:
+                new_table.append(new_thead)
+            if len(new_tbody.find_all("tr")) > 0:
+                new_table.append(new_tbody)
+
+            table.replace_with(new_table)
+
+        if flatten_headers:
+            for tbl in soup.find_all("table"):
+                flatten_table_headers(tbl, separator=header_separator)
 
         return str(soup)
     except Exception:
@@ -365,19 +974,22 @@ def enhance_table_with_pymupdf_headers(content: str, page: pymupdf.Page) -> str:
 def render_page_to_png_bytes(page: pymupdf.Page, is_cover: bool = False, dpi: int = 200) -> bytes:
     """
     Render toàn bộ trang PDF thực tế thành dữ liệu ảnh PNG (bytes).
-    Nếu không phải trang bìa (is_cover=False), vẽ một đường kẻ xám siêu mảnh (0.5 pt)
-    ở chính giữa nếp gấp (x = width / 2) để hỗ trợ Gemini OCR phân định left / right / all.
+    Nếu không phải trang bìa (is_cover=False), vẽ một đường kẻ xám siêu mảnh (1px)
+    ở chính giữa nếp gấp (x = width / 2) bằng Pillow trên ảnh render để KHÔNG làm thay đổi
+    đối tượng vector `page` (tránh việc PyMuPDF nhận nhầm đường kẻ giữa trang thành đường viền cột bảng).
     """
-    if not is_cover:
-        mid_x = page.rect.width / 2.0
-        page.draw_line(
-            p1=pymupdf.Point(mid_x, 0),
-            p2=pymupdf.Point(mid_x, page.rect.height),
-            color=(0.75, 0.75, 0.75),  # Xám nhạt
-            width=0.5,  # Siêu mảnh (~1 pixel ở 200 DPI)
-        )
     pix = page.get_pixmap(dpi=dpi)
-    return pix.tobytes("png")
+    raw_png = pix.tobytes("png")
+    if is_cover:
+        return raw_png
+
+    img = Image.open(io.BytesIO(raw_png))
+    draw = ImageDraw.Draw(img)
+    mid_x = round(img.width / 2.0)
+    draw.line([(mid_x, 0), (mid_x, img.height)], fill=(192, 192, 192), width=1)
+    buf = io.BytesIO()
+    img.save(buf, format="PNG")
+    return buf.getvalue()
 
 
 def clean_and_parse_json(text: str) -> dict:
@@ -737,6 +1349,7 @@ def extract_pdf_with_gemini(
     delay_seconds: float = 1.0,
     save_images_dir: Path | None = None,
     resume: bool = False,
+    unassigned_action: Optional[str] = None,
 ) -> None:
     """
     Xử lý file PDF:
@@ -840,6 +1453,19 @@ def extract_pdf_with_gemini(
             print(f"    [✓] Đã tạo thành công {toc_output_path.name} ({len(toc_dict)} phần/chương)")
         except Exception as e:
             print(f"    [!] Cảnh báo không thể tự động trích xuất mục lục: {e}")
+
+    # Đồng bộ file markdown khi resume: loại bỏ các trang từ start_page trở đi để tránh trùng lặp
+    if resume and output_path.exists() and start_idx > 0:
+        pattern = rf"(?m)(?:\n+# [^\n]+)*(?:\n+## [^\n]+)*\n+<!-- Trang logic [^()]*\(PDF Trang {start_idx + 1}\) -->"
+        try:
+            old_md = output_path.read_text(encoding="utf-8")
+            match = re.search(pattern, old_md)
+            if match:
+                truncated_md = old_md[: match.start()].rstrip() + "\n\n"
+                output_path.write_text(truncated_md, encoding="utf-8")
+                print(f"[i] Chế độ Resume: Đã đồng bộ file Markdown, cắt bỏ dữ liệu cũ từ PDF Trang {start_idx + 1}")
+        except Exception as e:
+            print(f"[!] Cảnh báo không thể đồng bộ Markdown cũ khi resume: {e}")
 
     file_mode = "a" if (resume and output_path.exists()) else "w"
     with open(output_path, file_mode, encoding="utf-8") as f:
@@ -971,10 +1597,26 @@ def extract_pdf_with_gemini(
             for b in raw_blocks:
                 b["content"] = sanitize_content_headings(b.get("content", ""))
 
-            # Chuẩn hóa bảng: nếu bảng có header đa cấp từ PyMuPDF thì cập nhật cột
+            # Chuẩn hóa bảng: nếu bảng có header đa cấp từ PyMuPDF hoặc có bảng unassigned
             for b in raw_blocks:
-                if "<table" in b.get("content", ""):
-                    b["content"] = enhance_table_with_pymupdf_headers(b["content"], page)
+                has_gemini_table = "<table" in b.get("content", "")
+                w, h = page.rect.width, page.rect.height
+                loc = b.get("location", "all")
+                scope = page.rect
+                if loc == "left":
+                    scope = pymupdf.Rect(0, 0, w / 2 + 5, h)
+                elif loc == "right":
+                    scope = pymupdf.Rect(w / 2 - 5, 0, w, h)
+                has_pymupdf_tables = any(scope.intersects(pymupdf.Rect(t.bbox)) for t in page.find_tables().tables)
+
+                if has_gemini_table or has_pymupdf_tables:
+                    b["content"] = enhance_table_with_pymupdf_headers(
+                        b.get("content", ""),
+                        page,
+                        location=loc,
+                        pdf_page_num=pdf_page_num,
+                        unassigned_action=unassigned_action,
+                    )
 
             # Ánh xạ nội dung vào các trang logic
             mapped_pages = map_blocks_to_logical_pages(raw_blocks, plan)
@@ -1105,6 +1747,13 @@ def main():
         action="store_true",
         help="Tiếp tục chạy nối tiếp từ dữ liệu đã có (append vào file JSON và Markdown hiện tại)",
     )
+    parser.add_argument(
+        "--unassigned-action",
+        type=str,
+        choices=["1", "2", "3"],
+        default=None,
+        help="Lựa chọn xử lý khi phát hiện bảng chưa gán (1: để nguyên, 2: dùng Gemini gốc, 3: dùng tất cả bảng PyMuPDF; mặc định: hỏi người dùng)",
+    )
 
     args = parser.parse_args()
 
@@ -1118,6 +1767,7 @@ def main():
         delay_seconds=args.delay,
         save_images_dir=args.save_images_dir,
         resume=args.resume,
+        unassigned_action=args.unassigned_action,
     )
 
 
