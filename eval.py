@@ -8,15 +8,12 @@ Script đánh giá hiệu năng hệ thống Hybrid Search trên tập câu hỏ
 - So khớp với gold_printed_pages để xác định tính liên quan (relevance).
 - Tính toán và báo cáo các chỉ số chuẩn:
   + Recall@k (k = 1, 3, 5, 10, 20)
-  + nDCG@k  (k = 1, 3, 5, 10, 20)
-  + MAP@k   (k = 1, 3, 5, 10, 20)
 - Xuất báo cáo chi tiết ra màn hình và file eval_results.json.
 """
 
 import argparse
 import json
 import logging
-import math
 from typing import Any, Dict, List
 
 from search_qdrant import HybridSearchEngine
@@ -25,46 +22,25 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(me
 logger = logging.getLogger(__name__)
 
 
-def compute_recall_at_k(binary_relevance: List[int], k: int) -> float:
+def compute_recall_at_k(
+    retrieved_pages: List[List[int]],
+    gold_pages: List[int],
+    k: int,
+) -> float:
     """
-    Recall@k: 1.0 nếu có ít nhất 1 chunk liên quan xuất hiện trong Top k, ngược lại 0.0.
+    Tính Recall@k theo tỷ lệ bao phủ các trang nguồn cần thiết (Page Coverage Recall):
+      Recall@k = (Số trang trong gold_pages xuất hiện trong Top k chunks) / len(gold_pages)
+    Hỗ trợ chính xác cho cả câu hỏi đơn trang (1 trang) lẫn đa trang (nhiều trang).
     """
-    return 1.0 if any(binary_relevance[:k]) else 0.0
-
-
-def compute_ndcg_at_k(binary_relevance: List[int], k: int, total_relevant: int) -> float:
-    """
-    Normalized Discounted Cumulative Gain tại k (nDCG@k).
-    """
-    if total_relevant <= 0:
+    if not gold_pages:
         return 0.0
 
-    # DCG@k = sum( rel_i / log2(i + 1) ) với i tính từ 1 (tức log2(idx + 2))
-    dcg = sum(rel / math.log2(idx + 2) for idx, rel in enumerate(binary_relevance[:k]))
+    seen_pages = set()
+    for pages in retrieved_pages[:k]:
+        seen_pages.update(pages)
 
-    # IDCG@k: Xếp tất cả các phần tử liên quan (tối đa min(total_relevant, k)) lên đầu
-    ideal_k = min(total_relevant, k)
-    idcg = sum(1.0 / math.log2(idx + 2) for idx in range(ideal_k))
-
-    return dcg / idcg if idcg > 0.0 else 0.0
-
-
-def compute_ap_at_k(binary_relevance: List[int], k: int, total_relevant: int) -> float:
-    """
-    Average Precision tại k (AP@k).
-    """
-    if total_relevant <= 0:
-        return 0.0
-
-    hits = 0
-    sum_precisions = 0.0
-    for idx, rel in enumerate(binary_relevance[:k]):
-        if rel:
-            hits += 1
-            sum_precisions += hits / (idx + 1)
-
-    norm_factor = min(total_relevant, k)
-    return sum_precisions / norm_factor if norm_factor > 0.0 else 0.0
+    hits = sum(1 for p in gold_pages if p in seen_pages)
+    return hits / len(gold_pages)
 
 
 def evaluate_dataset(
@@ -76,7 +52,7 @@ def evaluate_dataset(
     output_file: str = "eval_results.json",
 ) -> Dict[str, Any]:
     """
-    Chạy đánh giá toàn bộ tập test và tính các chỉ số Recall@k, nDCG@k, MAP@k.
+    Chạy đánh giá toàn bộ tập test và tính chỉ số Recall@k.
     """
     with open(questions_file, "r", encoding="utf-8") as f:
         questions: List[Dict[str, Any]] = json.load(f)
@@ -91,8 +67,6 @@ def evaluate_dataset(
     eval_queries_count = 0
 
     metric_sums = {f"recall@{k}": 0.0 for k in k_list}
-    metric_sums.update({f"ndcg@{k}": 0.0 for k in k_list})
-    metric_sums.update({f"map@{k}": 0.0 for k in k_list})
 
     print("\n" + "=" * 90)
     print(f"BẮT ĐẦU ĐÁNH GIÁ TRÊN {len(questions)} CÂU HỎI TỪ: {questions_file}")
@@ -105,15 +79,9 @@ def evaluate_dataset(
         gold_ans = item.get("gold_answer", "")
         answerable = item.get("answerable", True)
 
-        # Đếm tổng số chunk thực tế trong toàn bộ corpus thuộc về gold_pages
-        total_relevant_in_corpus = 0
-        if gold_pages:
-            total_relevant_in_corpus = sum(
-                1 for c in engine.chunks if any(p in gold_pages for p in c.get("logical_page", []))
-            )
-
         # Retrieve Top K chunks
         retrieved_chunks = engine.search(query=q_text, top_k=top_k)
+        retrieved_pages = [res.logical_page for res in retrieved_chunks]
 
         # Xác định binary relevance cho từng chunk được retrieve
         binary_rel = []
@@ -147,28 +115,15 @@ def evaluate_dataset(
         if answerable and gold_pages:
             eval_queries_count += 1
             for k in k_list:
-                r_k = compute_recall_at_k(binary_rel, k)
-                n_k = compute_ndcg_at_k(binary_rel, k, total_relevant_in_corpus)
-                ap_k = compute_ap_at_k(binary_rel, k, total_relevant_in_corpus)
-
+                r_k = compute_recall_at_k(retrieved_pages, gold_pages, k)
                 query_metrics[f"recall@{k}"] = round(r_k, 4)
-                query_metrics[f"ndcg@{k}"] = round(n_k, 4)
-                query_metrics[f"ap@{k}"] = round(ap_k, 4)
-
                 metric_sums[f"recall@{k}"] += r_k
-                metric_sums[f"ndcg@{k}"] += n_k
-                metric_sums[f"map@{k}"] += ap_k
 
             status_str = f"First Hit: #{first_hit_rank}" if first_hit_rank else "MISS"
             print(f"[{qid}] {q_text[:70]}...")
+            print(f"  • Gold Pages: {gold_pages} | {status_str}")
             print(
-                f"  • Gold Pages: {gold_pages} | {status_str} | Chunks liên quan trong corpus: {total_relevant_in_corpus}"
-            )
-            print(
-                f"  • Recall@1={query_metrics['recall@1']} | Recall@5={query_metrics['recall@5']} | Recall@20={query_metrics['recall@20']}"
-            )
-            print(
-                f"  • nDCG@10={query_metrics['ndcg@10']} | nDCG@20={query_metrics['ndcg@20']} | AP@20={query_metrics['ap@20']}"
+                f"  • Recall@1={query_metrics['recall@1']} | Recall@3={query_metrics['recall@3']} | Recall@5={query_metrics['recall@5']} | Recall@10={query_metrics['recall@10']} | Recall@20={query_metrics['recall@20']}"
             )
             print("-" * 90)
         else:
@@ -186,7 +141,6 @@ def evaluate_dataset(
                 "answerable": answerable,
                 "gold_printed_pages": gold_pages,
                 "gold_answer": gold_ans,
-                "total_relevant_in_corpus": total_relevant_in_corpus,
                 "first_hit_rank": first_hit_rank,
                 "metrics": query_metrics,
                 "retrieved_top_k": retrieved_info,
@@ -198,8 +152,6 @@ def evaluate_dataset(
     if eval_queries_count > 0:
         for k in k_list:
             aggregated_metrics[f"Recall@{k}"] = round(metric_sums[f"recall@{k}"] / eval_queries_count, 4)
-            aggregated_metrics[f"nDCG@{k}"] = round(metric_sums[f"ndcg@{k}"] / eval_queries_count, 4)
-            aggregated_metrics[f"MAP@{k}"] = round(metric_sums[f"map@{k}"] / eval_queries_count, 4)
 
     # Hiển thị bảng tổng kết
     print("\n" + "=" * 90)
@@ -207,13 +159,12 @@ def evaluate_dataset(
     print("=" * 90)
     print(f"{'Metric':<15} | {'@1':<10} | {'@3':<10} | {'@5':<10} | {'@10':<10} | {'@20':<10}")
     print("-" * 75)
-    for metric_name in ["Recall", "nDCG", "MAP"]:
-        row = f"{metric_name:<15} | "
-        for k in k_list:
-            key = f"{metric_name}@{k}"
-            val = aggregated_metrics.get(key, 0.0)
-            row += f"{val:<10.4f} | "
-        print(row)
+    row = f"{'Recall':<15} | "
+    for k in k_list:
+        key = f"Recall@{k}"
+        val = aggregated_metrics.get(key, 0.0)
+        row += f"{val:<10.4f} | "
+    print(row)
     print("=" * 90 + "\n")
 
     # Ghi file kết quả JSON

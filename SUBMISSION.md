@@ -30,7 +30,7 @@
     uv run python chatbot.py --batch sample_questions.json
     ```
   - **Đánh giá hiệu năng truy xuất (Retrieval Evaluation)** qua `eval.py`:
-    *(Lưu ý: Script này chỉ thực hiện đánh giá giai đoạn Retrieval — tính toán Recall@k, nDCG@k, MAP@k bằng cách đối chiếu số trang của các chunk tìm được với `gold_printed_pages`, **không** gọi LLM để sinh câu trả lời tự động)*:
+    *(Lưu ý: Script này chỉ thực hiện đánh giá giai đoạn Retrieval — tính toán Recall@k bằng cách đối chiếu số trang của các chunk tìm được với `gold_printed_pages`, **không** gọi LLM để sinh câu trả lời tự động)*:
     ```bash
     uv run python eval.py --questions sample_questions.json --output eval_results.json
     ```
@@ -40,7 +40,7 @@
   - `GEMINI_EMBEDDING_MODEL`: Tên mô hình tạo vector nhúng ngữ nghĩa cho tài liệu và câu hỏi (mặc định: `gemini-embedding-001`).
 - **Shipped index**:
   - Vector Database & Metadata đã được build và lưu trữ sẵn tại:
-    - Metadata & Dense Embeddings: [`output_indexs.json`](file:///home/quanganh/techcombank/output_indexs.json) (52.6 MB, gồm 842 chunks hoàn chỉnh với vector 3072 chiều).
+    - Metadata & Dense Embeddings: [`output_indexs.json`](file:///home/quanganh/techcombank/output_indexs.json) (52.2 MB, gồm 836 chunks hoàn chỉnh với vector 3072 chiều).
     - Local Vector Database: thư mục [`qdrant_storage/`](file:///home/quanganh/techcombank/qdrant_storage) (collection `techcombank_chunks` sẵn sàng truy vấn không cần build lại).
     - Chunks đã qua hậu xử lý thuật ngữ: [`pp_output_chunks.json`](file:///home/quanganh/techcombank/pp_output_chunks.json).
     - Từ điển thuật ngữ viết tắt: [`abbreviations.json`](file:///home/quanganh/techcombank/abbreviations.json).
@@ -58,12 +58,12 @@ Dự án quyết định tập trung chuyên sâu duy nhất vào track **Docume
 
 - **Những giải pháp kỹ thuật chuyên sâu đã triển khai**:
   1. **Seam Recovery & Layout-aware Ingestion ([extract_pdf_gemini.py](file:///home/quanganh/techcombank/extract_pdf_gemini.py))**:
-     - Thay vì cắt đôi ảnh PDF bằng tọa độ hình học thuần túy (vốn sẽ xé toạc các bảng biểu và dòng chữ nằm đè lên nếp gấp giữa hai trang), hệ thống giữ nguyên trang đôi vật lý và vẽ rãnh đệm mảnh (0.5 pt center seam buffer) ở nếp gấp để định hướng thị giác.
+     - Thay vì cắt đôi ảnh PDF bằng tọa độ hình học thuần túy (vốn sẽ xé toạc các bảng biểu và dòng chữ nằm đè lên nếp gấp giữa hai trang), hệ thống giữ nguyên trang đôi vật lý và vẽ một đường phân tách xám siêu mảnh (1px trên ảnh PNG render bằng Pillow, không làm biến đổi vector drawing của PDF) ở chính giữa nếp gấp để định hướng thị giác cho Gemini Vision.
      - Gemini Vision nhận diện và gắn nhãn vị trí trực quan cho từng khối nội dung:
        - `left`: Thuộc nửa trang trái $\rightarrow$ tự động ánh xạ vào trang in logic bên trái (ví dụ: `[tr 18]`).
        - `right`: Thuộc nửa trang phải $\rightarrow$ tự động ánh xạ vào trang in logic bên phải (ví dụ: `[tr 19]`).
        - `all`: Bảng biểu tài chính nhiều cột hoặc biểu đồ lớn nằm tràn qua nếp gấp $\rightarrow$ **được giữ nguyên vẹn 100% không cắt rời**, đồng thời gán nhãn thuộc cả 2 trang (ví dụ: `[tr 18, 19]`).
-     - Nhờ vậy, hệ thống khôi phục hoàn chỉnh 185 trang PDF đôi thành đúng **370 trang in logic thực tế** của báo cáo, đảm bảo chatbot luôn trích dẫn số trang `[tr x, y]` trùng khớp tuyệt đối với bản in sách giấy.
+     - Nhờ vậy, hệ thống khôi phục hoàn chỉnh các trang PDF đôi vật lý (197 trang PDF, trong đó 189 trang đôi chứa nội dung thực tế) thành đúng **366 trang in logic** của báo cáo (trải dài từ trang 4 đến trang 393), đảm bảo chatbot luôn trích dẫn số trang `[tr x, y]` trùng khớp tuyệt đối với bản in sách giấy.
   2. **Bảo toàn nguyên vẹn bảng biểu (Atomic Table Protection - (chunker.py))**:
      - Xây dựng cơ chế `extract_atomic_blocks` coi mỗi thẻ `<table>...</table>` của báo cáo tài chính kiểm toán là một khối nguyên tử không thể chia cắt.
      - Dù bảng tài chính dài vượt quá ngưỡng kích thước chunk thông thường (2000+ ký tự), bảng vẫn được giữ nguyên vẹn cùng toàn bộ header cột, tuyệt đối không bị cắt ngang giữa các dòng `<tr>`/`<td>`.
@@ -87,7 +87,7 @@ Toàn bộ quá trình từ file PDF thô đến câu trả lời hoàn chỉnh 
 | - Gemini OCR trích xuất JSON blocks [left, right, all] + Table HTML + Biểu đồ số liệu đầy đủ.    |
 | - LayoutTracker theo dõi ngăn xếp tiêu đề (#, ##, ###) liên trang, truyền context cho trang sau.  |
 | - Ánh xạ về đúng trang in logic thực tế của báo cáo.                                             |
-| ➔ Outputs: toc.json (cây mục lục), output_gemini.json (370 trang logic), output_gemini.md.       |
+| ➔ Outputs: toc.json (cây mục lục), output_gemini.json (366 trang logic), output_gemini.md.       |
 +--------------------------------------------------------------------------------------------------+
                                                  │
                                                  ▼
@@ -98,12 +98,12 @@ Toàn bộ quá trình từ file PDF thô đến câu trả lời hoàn chỉnh 
 | - Trích xuất phụ lục viết tắt ngân hàng thành từ điển tra cứu.                                   |
 | - Bung từ viết tắt lần đầu trong mỗi chunk (Abbreviation Expansion) & chuẩn hóa văn bản.          |
 | ➔ Outputs: output_chunks.json (chunks thô), abbreviations.json (từ điển),                         |
-|            pp_output_chunks.json (842 enriched chunks đã làm giàu).                              |
+|            pp_output_chunks.json (836 enriched chunks đã làm giàu).                              |
 +--------------------------------------------------------------------------------------------------+
                                                  │
                                                  ▼
 +--------------------------------------------------------------------------------------------------+
-| 3. CONTEXTUAL INDEXING (index_chunks.py)                                                         |
+| 3. CONTEXTUAL INDEXING (index_chunks.py + search_qdrant.py)                                      |
 | - Tạo Contextual Text: "Chương: ... | Mục: ... | Tiêu đề: ...\n\n{content}".                     |
 | - Gemini Embedding API (task_type=RETRIEVAL_DOCUMENT) theo batch 50 + Adaptive Split.            |
 | - Đóng gói vector 3072 chiều cùng metadata phân cấp vào JSON và lưu trữ vào Qdrant Local.        |
@@ -134,7 +134,7 @@ Toàn bộ quá trình từ file PDF thô đến câu trả lời hoàn chỉnh 
 ## What I tried that did not work
 1. **Cắt đôi trang PDF vật lý bằng tọa độ hình học thuần túy (`width / 2`)**:
    - *Vấn đề*: Trong báo cáo thường niên, nhiều bảng biểu số liệu (như Báo cáo Kết quả Hoạt động kinh doanh hợp nhất) và ảnh chụp đồ họa trải ngang (panorama) nằm đè trực tiếp qua nếp gấp giữa hai trang. Việc cắt cứng bằng tọa độ làm xé toạc các dòng dữ liệu của bảng, khiến OCR nhận diện sai hoàn toàn các con số ở cột giữa.
-   - *Giải pháp thay thế*: Giữ nguyên trang đôi vật lý, chỉ vẽ một vệt ngăn cách mảnh (0.5 pt) ở nếp gấp, yêu cầu Gemini OCR phân loại các block theo `left`, `right`, hoặc `all`. Sau đó mới dùng logic ánh xạ sang trang in logic.
+   - *Giải pháp thay thế*: Giữ nguyên trang đôi vật lý, chỉ vẽ một đường kẻ ngăn cách siêu mảnh (1px bằng Pillow trên ảnh render PNG để không làm biến đổi vector drawing của trang PDF) ở nếp gấp, yêu cầu Gemini OCR phân loại các block theo `left`, `right`, hoặc `all`. Sau đó mới dùng logic ánh xạ sang trang in logic.
 2. **Cắt chunk dựa trên độ dài ký tự/token thông thường (Recursive Character Splitter)**:
    - *Vấn đề*: Bộ chia văn bản thông thường cắt ngang giữa các hàng của bảng HTML hoặc Markdown pipe, phá vỡ thẻ `<tr>`/`<td>`, làm mất hoàn toàn ngữ cảnh tiêu đề cột của bảng số liệu tài chính.
    - *Giải pháp thay thế*: Xây dựng `extract_atomic_blocks()` trong `chunker.py` coi mỗi thẻ `<table>...</table>` là một khối nguyên tử (atomic block) không thể chia cắt. Bảng dài hơn 2000 ký tự vẫn được giữ nguyên khối.
@@ -148,27 +148,25 @@ Toàn bộ quá trình từ file PDF thô đến câu trả lời hoàn chỉnh 
 - **Method**:
   - Đánh giá tự động hiệu năng truy xuất (Retrieval) bằng script [`eval.py`](eval.py) trên tập 10 câu hỏi chuẩn (`sample_questions.json`) bao gồm đầy đủ các khía cạnh: hồ sơ doanh nghiệp (`company_profile`), số liệu tài chính cốt lõi (`key_figures`), phân khúc khách hàng (`segment_performance`), thuật ngữ viết tắt (`terminology`), và câu hỏi không thể trả lời (`unanswerable`).
   - Đối chiếu số trang logic của các chunk được truy xuất với `gold_printed_pages` thực tế (đánh giá khả năng tìm đúng tài liệu nguồn, không bao gồm bước sinh câu trả lời bằng LLM).
-  - Sử dụng các thước đo chuẩn Information Retrieval (IR): **Recall@k**, **nDCG@k** và **MAP@k** với $k \in \{1, 3, 5, 10, 20\}$.
+  - Sử dụng thước đo chuẩn Information Retrieval (IR): **Recall@k** với $k \in \{1, 3, 5, 10, 20\}$ (tính theo tỷ lệ bao phủ các trang nguồn cần thiết - Page Coverage Recall).
 - **Results on the 10 published questions**:
   *(Đo lường trên 9 câu hỏi có đáp án trong tài liệu; 1 câu hỏi `unanswerable` được hệ thống từ chối thành công theo đúng yêu cầu)*
 
   | Metric | @1 | @3 | @5 | @10 | @20 |
   | :--- | :---: | :---: | :---: | :---: | :---: |
-  | **Recall** | **0.3333** | **0.4444** | **0.7778** | **0.8889** | **0.8889** |
-  | **nDCG** | 0.3333 | 0.3445 | 0.4003 | 0.3901 | 0.3856 |
-  | **MAP** | 0.3333 | 0.3148 | 0.3294 | 0.3177 | 0.3152 |
+  | **Recall** | **0.4444** | **0.4444** | **0.8889** | **1.0000** | **1.0000** |
 
   - Chi tiết từng câu hỏi:
-    - **Top-1 Exact Hits**: `sq-03` (Tổng tài sản - Trang 5, Hit #1), `sq-04` (CASA - Trang 5, Hit #1), `sq-06` (Thu nhập hoạt động & CAGR - Trang 5, Hit #1).
-    - **Top-5 Hits**: `sq-01` (Mạng lưới chi nhánh - Trang 4, Hit #5), `sq-02` (Xếp hạng tín nhiệm - Trang 4, Hit #5), `sq-05` (Tỷ lệ nợ xấu - Trang 5, Hit #4), `sq-07` (Dư nợ Bán lẻ - Trang 59, Hit #4).
-    - **Terminology Hits**: `sq-08` (RBG - Trang 387, Hit #8), `sq-09` (CASA - Trang 386, Hit #7).
+    - **Top-1 Exact Hits**: `sq-06` (Thu nhập hoạt động & CAGR - Trang 5, Hit #1), `sq-07` (Dư nợ Bán lẻ - Trang 59, Hit #1), `sq-08` (RBG - Trang 387, Hit #1), `sq-09` (CASA - Trang 386, Hit #1).
+    - **Top-5 Hits**: `sq-01` (Mạng lưới chi nhánh - Trang 4, Hit #4), `sq-02` (Xếp hạng tín nhiệm - Trang 4, Hit #4), `sq-04` (CASA - Trang 5, Hit #4), `sq-05` (Tỷ lệ nợ xấu - Trang 5, Hit #4).
+    - **Top-10 Hits**: `sq-03` (Tổng tài sản - Trang 5, Hit #7).
     - **Unanswerable Case (`sq-10`)**: Hệ thống nhận diện không có tài liệu liên quan phù hợp và kích hoạt cơ chế Safe Refusal: *"Tôi không đủ thông tin để trả lời câu hỏi này."*
 
 ---
 
 ## Cost and latency
 - **Ingestion**:
-  - *Wall-clock*: ~18 phút (chạy toàn bộ 370 trang logic từ PDF gốc sang markdown, chunking, hậu xử lý thuật ngữ và embedding toàn bộ 842 chunks).
+  - *Wall-clock*: ~18 phút (chạy toàn bộ 366 trang logic từ PDF gốc sang markdown, chunking, hậu xử lý thuật ngữ và embedding toàn bộ 836 chunks).
   - *Cost*: **$0.00** Miễn phí do sử dụng gói Free Tier của Google AI Studio.
 - **Per query**:
   - *Độ trễ trung vị (P50 Latency)*: **~2.4 giây** (Embed câu hỏi: ~350ms; Qdrant + BM25 Hybrid Search: ~15ms; Gemini sinh câu trả lời: ~1.5s; đo lường thực tế trên tập 10 câu hỏi chuẩn).
@@ -187,7 +185,7 @@ Toàn bộ quá trình từ file PDF thô đến câu trả lời hoàn chỉnh 
 
 ## With 10x time and budget
 1. **Cây mục lục phân cấp & Định tuyến lọc metadata thông minh (Hierarchical Layout Tree & LLM-Guided Pre-Retrieval Routing)**:
-   - *Bối cảnh & Điểm đau*: Qdrant hiện đã hỗ trợ metadata filtering theo trường, nhưng hệ thống đang tìm kiếm phẳng trên toàn bộ 842 chunks của tài liệu. Điều này dễ dẫn đến việc các chỉ số tài chính ở những chương giới thiệu chung làm loãng hoặc tranh chấp vị trí với số liệu kiểm toán chi tiết ở chương Báo cáo Tài chính.
+   - *Bối cảnh & Điểm đau*: Qdrant hiện đã hỗ trợ metadata filtering theo trường, nhưng hệ thống đang tìm kiếm phẳng trên toàn bộ 836 chunks của tài liệu. Điều này dễ dẫn đến việc các chỉ số tài chính ở những chương giới thiệu chung làm loãng hoặc tranh chấp vị trí với số liệu kiểm toán chi tiết ở chương Báo cáo Tài chính.
    - *Quy trình thực hiện*:
      - **Giai đoạn Ingestion (Offline)**: Tận dụng cấu trúc phân cấp tự nhiên của báo cáo để dựng cây mục lục hoàn chỉnh: **Chương $\rightarrow$ Đề mục $\rightarrow$ Tiểu mục**. Chạy một pipeline LLM duyệt qua các đoạn đã parse của từng trang logic để sinh bản tóm tắt ngắn gọn (executive summary) cho từng Tiểu mục.
      - **Giai đoạn Suy luận (Online - Pre-retrieval Routing)**: Ngay sau bước chuẩn hóa truy vấn (Query Rewriter) và trước khi thực hiện tìm kiếm, câu hỏi sẽ được chuyển qua một LLM Router nhẹ kèm nội dung cây Layout và tóm tắt tiểu mục. LLM sẽ dự đoán danh sách metadata filter phù hợp (ví dụ: chỉ giới hạn trong `Chapter 05: Báo cáo tài chính` hoặc `Section: Báo cáo của Ban Điều hành`). Bộ lọc này được nạp trực tiếp vào Qdrant/Hybrid Search để thu hẹp không gian tìm kiếm, loại bỏ hoàn toàn nhiễu từ các chương khác và đảm bảo 7 chunks context được nạp vào bước sinh câu trả lời có độ chính xác cao nhất.
